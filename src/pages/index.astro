@@ -20,7 +20,7 @@ const projects = [
   {
     title: "nlp-analysis-agent",
     tagline:
-      "Korean public-procurement notice classification (bidNLP). RoBERTa-large + LoRA Teacher-Student, UltimateTrainer (FocalLoss + R-Drop + FGM). Hybrid weak labels: hard-rule routing + SBERT (0.9) / finetuned-RoBERTa (0.1) max-sim ensemble. Static INT8 ONNX (LoRA-merge → AVX512-VNNI per-tensor, 200-sample MinMax calib): 1.3 GB → 330 MB, 150 ms → 50 ms, <1% F1 loss. FastAPI service, 1+ year in production. Processing 7,000 notices/week: 40 hr manual → 2 min automated. F1 96.4% vs GPT-4o 35.1% (2.75×).",
+      "Korean public-procurement notice classification (bidNLP). RoBERTa-large + LoRA Teacher-Student, UltimateTrainer (FocalLoss + R-Drop + FGM). Hybrid weak labels: hard-rule routing + SBERT (0.9) / finetuned-RoBERTa (0.1) max-sim ensemble. Static INT8 ONNX (LoRA-merge → AVX512-VNNI per-tensor, 200-sample MinMax calib): 1.3 GB → 330 MB, 150 ms → 50 ms, <1% F1 loss. FastAPI service, 1+ year in production. Processing 70,000 notices/week: 40 hr manual → 2 min automated. F1 96.4% vs GPT-4o 35.1% (2.75×).",
     href: "https://github.com/HarimxChoi/nlp-analysis-agent",
     stack: "Python · RoBERTa · ONNX · FastAPI",
     stat: "F1 96.4% · 50 ms CPU · 1+ yr prod",
