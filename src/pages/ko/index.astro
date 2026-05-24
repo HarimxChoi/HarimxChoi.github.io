@@ -1,0 +1,114 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import AboutCard from "../../components/AboutCard.astro";
+import StatsCard from "../../components/StatsCard.astro";
+import ThemeSwitcher from "../../components/ThemeSwitcher.astro";
+
+const projects = [
+  {
+    title: "wsss-refined-pseudolabels",
+    tagline:
+      "약지도 시맨틱 segmentation, refined pseudo-labels. Frozen CLIP (ViT-B/16) + DINOv2 backbone, Multi-Signal Reliability Estimation, Phase-Adaptive Refinement, Boundary-Aware loss. COCO-Val mIoU 56.2%: WeCLIP+ 80K baseline 대비 +4.3pp, WeCLIP (CVPR 2024) 대비 +9.1pp. 출시 시점 SOTA. 3개월 만에 delivery. 외부 contracted 리서치, 개인 수주.",
+    href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
+    stack: "PyTorch · CLIP · DINOv2 · WSSS",
+    stat: "56.2% mIoU · 출시 시점 SOTA · 3개월",
+    span: "col-span-12 md:col-span-6",
+    tone: "accent" as const,
+  },
+  {
+    title: "nlp-analysis-agent",
+    tagline:
+      "한국 공공조달 공고 분류 (bidNLP). RoBERTa-large + LoRA Teacher-Student, UltimateTrainer (FocalLoss + R-Drop + FGM). Hybrid 약지도: hard-rule routing + SBERT (0.9) / finetuned-RoBERTa (0.1) max-sim ensemble. Static INT8 ONNX (LoRA-merge → AVX512-VNNI per-tensor, 200-sample MinMax calib): 1.3 GB → 330 MB, 150ms → 50ms, F1 손실 <1%. FastAPI 서비스, 1년+ production. 주당 7,000건 공고 처리: 수작업 40시간 → 자동화 2분. F1 96.4% vs GPT-4o 35.1% (2.75×).",
+    href: "https://github.com/HarimxChoi/nlp-analysis-agent",
+    stack: "Python · RoBERTa · ONNX · FastAPI",
+    stat: "F1 96.4% · 50ms CPU · 1년+ prod",
+    span: "col-span-12 md:col-span-6",
+    tone: "accent" as const,
+  },
+  {
+    title: "monogram",
+    tagline:
+      "Telegram에 던지면 알아서 wiki로 저장. 아침엔 dashboard로. 5-stage LLM pipeline, atomic Git Tree commit, 13-tool MCP server.",
+    href: "https://github.com/HarimxChoi/monogram",
+    stack: "Python · LLM · MCP",
+    stat: "PyPI · mono-gram",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/monogram-demo.gif",
+  },
+  {
+    title: "google-surf-mcp",
+    tagline:
+      "vendor-agnostic Google search MCP server. Claude Desktop, Cursor 등 MCP 클라이언트에 drop-in. SSRF-hardened, test case 11개, npm 배포.",
+    href: "https://github.com/HarimxChoi/google-surf-mcp",
+    stack: "TypeScript · MCP · npm",
+    stat: "209 stars · 27 forks",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/google-surf-demo.gif",
+  },
+  {
+    title: "ensemble-bid-prediction",
+    tagline:
+      "tender bid rate prediction R2CCP. 공개 구현체의 interval collapse 발견 (cumulative-mass interval이 bimodal 두 봉우리 합쳐버림). per-bin threshold + entropy regularization으로 수정 → bimodal 그대로 보존. +25-40% bid win rate, 1년+ deployed.",
+    href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
+    stack: "Python · R2CCP · Conformal",
+    stat: "+25-40% win rate",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/r2ccp-comparison.png",
+  },
+  {
+    title: "langgraph-travel-agent",
+    tagline:
+      "Multi-agent 여행 예약. 4-API 병렬 + human-in-the-loop checkpoint. 1707줄 monolith를 7 모듈로 분해.",
+    href: "https://github.com/HarimxChoi/langgraph-travel-agent",
+    stack: "Python · LangGraph · HITL",
+    stat: "7 모듈 · 4 APIs",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/langgraph-demo.png",
+  },
+  {
+    title: "claude-setup",
+    tagline:
+      "Claude Code 개인 설정. Hooks, slash commands, statusline, MCP servers, project-level CLAUDE.md priors. 머신간 재현 가능.",
+    href: "https://github.com/HarimxChoi/claude-setup",
+    stack: "Shell · Hooks · MCP",
+    stat: "dotfiles",
+    span: "col-span-12",
+  },
+];
+---
+
+<Layout
+  title="최하림 · Production ML Engineer"
+  description="Production ML engineer, 6년+ end-to-end. CV, NLP, 예측 모델. 비전공 self-taught. 빠른 ship cycle이 차별점. Production ML + OSS + research."
+  lang="ko"
+>
+  <ThemeSwitcher lang="ko" />
+  <main class="mx-auto max-w-7xl px-4 md:px-8 py-8 md:py-12">
+    <div class="grid grid-cols-12 gap-3 md:gap-4">
+      <Hero lang="ko" />
+
+      {projects.map((p) => <ProjectCard {...p} />)}
+
+      <AboutCard lang="ko" />
+      <StatsCard lang="ko" />
+
+      <footer class="col-span-12 mt-8 pt-6 border-t border-zinc-800 flex flex-col md:flex-row md:items-center md:justify-between gap-3 font-mono text-xs text-zinc-500">
+        <div>© 2026 최하림 · 서울</div>
+        <div class="flex gap-4">
+          <a
+            href="https://github.com/HarimxChoi"
+            class="hover:text-orange-400 transition-colors"
+            >github.com/HarimxChoi</a
+          >
+          <a
+            href="mailto:2.harim.choi@gmail.com"
+            class="hover:text-orange-400 transition-colors"
+            >2.harim.choi@gmail.com</a
+          >
+        </div>
+      </footer>
+    </div>
+  </main>
+</Layout>

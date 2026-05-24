@@ -1,0 +1,110 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import AboutCard from "../components/AboutCard.astro";
+import StatsCard from "../components/StatsCard.astro";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+
+const projects = [
+  {
+    title: "wsss-refined-pseudolabels",
+    tagline:
+      "Weakly-supervised semantic segmentation, refined pseudo-labels. Frozen CLIP (ViT-B/16) + DINOv2 backbone, Multi-Signal Reliability Estimation, Phase-Adaptive Refinement, Boundary-Aware loss. 56.2% mIoU on COCO-Val: +4.3pp over WeCLIP+ 80K baseline, +9.1pp over WeCLIP (CVPR 2024). SOTA at release. Delivered in 3 months. External contracted research, independently secured.",
+    href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
+    stack: "PyTorch · CLIP · DINOv2 · WSSS",
+    stat: "56.2% mIoU · SOTA at release · 3 mo",
+    span: "col-span-12 md:col-span-6",
+    tone: "accent" as const,
+  },
+  {
+    title: "nlp-analysis-agent",
+    tagline:
+      "Korean public-procurement notice classification (bidNLP). RoBERTa-large + LoRA Teacher-Student, UltimateTrainer (FocalLoss + R-Drop + FGM). Hybrid weak labels: hard-rule routing + SBERT (0.9) / finetuned-RoBERTa (0.1) max-sim ensemble. Static INT8 ONNX (LoRA-merge → AVX512-VNNI per-tensor, 200-sample MinMax calib): 1.3 GB → 330 MB, 150 ms → 50 ms, <1% F1 loss. FastAPI service, 1+ year in production. Processing 7,000 notices/week: 40 hr manual → 2 min automated. F1 96.4% vs GPT-4o 35.1% (2.75×).",
+    href: "https://github.com/HarimxChoi/nlp-analysis-agent",
+    stack: "Python · RoBERTa · ONNX · FastAPI",
+    stat: "F1 96.4% · 50 ms CPU · 1+ yr prod",
+    span: "col-span-12 md:col-span-6",
+    tone: "accent" as const,
+  },
+  {
+    title: "monogram",
+    tagline:
+      "Drop into Telegram. Auto-save as wiki. Wake up to a project dashboard. 5-stage LLM pipeline, atomic Git Tree commits, MCP server (13 tools).",
+    href: "https://github.com/HarimxChoi/monogram",
+    stack: "Python · LLM · MCP",
+    stat: "PyPI · mono-gram",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/monogram-demo.gif",
+  },
+  {
+    title: "google-surf-mcp",
+    tagline:
+      "Vendor-agnostic Google search MCP server. Drop-in for Claude Desktop, Cursor, or any MCP-compatible client. SSRF-hardened, 11 test cases, npm-published.",
+    href: "https://github.com/HarimxChoi/google-surf-mcp",
+    stack: "TypeScript · MCP · npm",
+    stat: "209 stars · 27 forks",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/google-surf-demo.gif",
+  },
+  {
+    title: "ensemble-bid-prediction",
+    tagline:
+      "R2CCP for tender bid rate prediction. Identified interval collapse in the public implementation (cumulative-mass intervals merge bimodal peaks). Fixed via per-bin threshold + entropy regularization → bimodal preserved. +25 to 40% bid win rate, 1+ year deployed.",
+    href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
+    stack: "Python · R2CCP · Conformal",
+    stat: "+25-40% win rate",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/r2ccp-comparison.png",
+  },
+  {
+    title: "langgraph-travel-agent",
+    tagline:
+      "Multi-agent travel booking with 4-API parallel orchestration and human-in-the-loop checkpointing. Refactored 1707-line monolith into 7 clean modules.",
+    href: "https://github.com/HarimxChoi/langgraph-travel-agent",
+    stack: "Python · LangGraph · HITL",
+    stat: "7 modules · 4 APIs",
+    span: "col-span-12 md:col-span-6",
+    image: "/img/langgraph-demo.png",
+  },
+  {
+    title: "claude-setup",
+    tagline:
+      "Personal Claude Code configuration. Hooks, slash commands, statusline, MCP servers, project-level CLAUDE.md priors. Reproducible across machines.",
+    href: "https://github.com/HarimxChoi/claude-setup",
+    stack: "Shell · Hooks · MCP",
+    stat: "dotfiles",
+    span: "col-span-12",
+  },
+];
+---
+
+<Layout>
+  <ThemeSwitcher lang="en" />
+  <main class="mx-auto max-w-7xl px-4 md:px-8 py-8 md:py-12">
+    <div class="grid grid-cols-12 gap-3 md:gap-4">
+      <Hero lang="en" />
+
+      {projects.map((p) => <ProjectCard {...p} />)}
+
+      <AboutCard lang="en" />
+      <StatsCard lang="en" />
+
+      <footer class="col-span-12 mt-8 pt-6 border-t border-zinc-800 flex flex-col md:flex-row md:items-center md:justify-between gap-3 font-mono text-xs text-zinc-500">
+        <div>© 2026 Harim Choi · Seoul</div>
+        <div class="flex gap-4">
+          <a
+            href="https://github.com/HarimxChoi"
+            class="hover:text-orange-400 transition-colors"
+            >github.com/HarimxChoi</a
+          >
+          <a
+            href="mailto:2.harim.choi@gmail.com"
+            class="hover:text-orange-400 transition-colors"
+            >2.harim.choi@gmail.com</a
+          >
+        </div>
+      </footer>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,77 @@
+---
+interface Props {
+  lang?: "en" | "ko";
+}
+const { lang = "en" } = Astro.props;
+
+const links = [
+  { label: "github", href: "https://github.com/HarimxChoi" },
+  { label: "linkedin", href: "https://www.linkedin.com/in/harimxchoi" },
+  { label: "email", href: "mailto:2.harim.choi@gmail.com" },
+];
+
+const copy = {
+  en: {
+    eyebrow: "Seoul",
+    name1: "Harim",
+    name2: "Choi.",
+    body: "Production ML engineer, 6+ years end-to-end across CV, NLP, predictive. Self-taught, non-traditional path. Ship cycles: MCP server in 2 days, Monogram in 2 weeks, bidNLP and langgraph in 1 month each, R2CCP in 2 months, WSSS in 3 months (SOTA at release). All projects in 1+ year production unless research.",
+    anchor: "Production ML + OSS + research.",
+    stack: [
+      "Python · TypeScript · PyTorch",
+      "MCP · LangGraph · Agent infra",
+      "Conformal · Calibration · Weak supervision",
+      "ONNX INT8 · FastAPI · GitHub Actions",
+    ],
+  },
+  ko: {
+    eyebrow: "서울",
+    name1: "최하림",
+    name2: "",
+    body: "Production ML engineer, 6년+ end-to-end. CV / NLP / 예측 모델. 비전공 self-taught. 빠른 ship cycle이 차별점. MCP 2일, monogram 2주, bidNLP·langgraph 각 1개월, R2CCP 2개월, WSSS 3개월(출시 시점 SOTA). 리서치 외 전부 1년+ 프로덕션 운영.",
+    anchor: "Production ML + OSS + research.",
+    stack: [
+      "Python · TypeScript · PyTorch",
+      "MCP · LangGraph · 에이전트 인프라",
+      "Conformal · Calibration · 약지도",
+      "ONNX INT8 · FastAPI · GitHub Actions",
+    ],
+  },
+};
+
+const c = copy[lang];
+---
+
+<header class="col-span-12 rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-950 p-8 md:p-12">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+    <div class="flex flex-col gap-4 max-w-2xl">
+      <div class="text-xs font-mono uppercase tracking-[0.2em] text-orange-400">
+        {c.eyebrow}
+      </div>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
+        {c.name1}{c.name2 && <><br/>{c.name2}</>}
+      </h1>
+      <p class="text-lg md:text-xl text-zinc-300 leading-relaxed">
+        {c.body}
+      </p>
+      <p class="text-base md:text-lg font-mono text-orange-400 mt-1">
+        {c.anchor}
+      </p>
+      <div class="flex flex-wrap gap-3 mt-2">
+        {links.map((l) => (
+          <a
+            href={l.href}
+            target="_blank"
+            rel="noopener"
+            class="font-mono text-xs px-3 py-1.5 rounded-full border border-zinc-700 hover:border-orange-400 hover:text-orange-400 transition-colors"
+          >
+            {l.label} →
+          </a>
+        ))}
+      </div>
+    </div>
+    <div class="flex flex-col gap-1 font-mono text-xs text-zinc-400 md:text-right">
+      {c.stack.map((s) => <div>{s}</div>)}
+    </div>
+  </div>
+</header>

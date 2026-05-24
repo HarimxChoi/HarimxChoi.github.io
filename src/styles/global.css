@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Pretendard", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { font-feature-settings: "ss01", "cv11"; }
+
+.text-orange-400 { color: #818cf8; }
+.bg-orange-500 { background-color: #6366f1; color: #ffffff; }
+.border-orange-400\/40 { border-color: rgba(129, 140, 248, 0.4); }
+.bg-orange-500\/\[0\.08\] { background-color: rgba(99, 102, 241, 0.10); }
+.hover\:border-orange-400:hover { border-color: #818cf8; }
+.hover\:text-orange-400:hover { color: #818cf8; }
+
+body.light { background-color: #fafafa; color: #0a0a0a; }
+body.light .bg-zinc-950 { background-color: #fafafa; }
+body.light .bg-zinc-900 { background-color: #ffffff; }
+body.light .bg-zinc-900\/80 { background-color: rgba(255, 255, 255, 0.85); }
+body.light .text-zinc-100 { color: #0a0a0a; }
+body.light .text-zinc-300 { color: #404040; }
+body.light .text-zinc-400 { color: #525252; }
+body.light .text-zinc-500 { color: #71717a; }
+body.light .border-zinc-800 { border-color: #e4e4e7; }
+body.light .border-zinc-700 { border-color: #d4d4d8; }
+body.light .from-zinc-900 { --tw-gradient-from: #f4f4f5; }
+body.light .via-zinc-900 { --tw-gradient-via: #ffffff; }
+body.light .to-zinc-950 { --tw-gradient-to: #fafafa; }
+body.light .text-orange-400 { color: #6366f1; }
+body.light .bg-orange-500 { background-color: #6366f1; color: #ffffff; }
+body.light .border-orange-400\/40 { border-color: rgba(99, 102, 241, 0.4); }
+body.light .bg-orange-500\/\[0\.08\] { background-color: rgba(99, 102, 241, 0.08); }
+body.light .hover\:border-orange-400:hover { border-color: #6366f1; }
+body.light .hover\:text-orange-400:hover { color: #6366f1; }

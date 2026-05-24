@@ -1,0 +1,62 @@
+---
+interface Props {
+  title: string;
+  tagline: string;
+  href: string;
+  stack: string;
+  stat?: string;
+  span?: string;
+  image?: string;
+  tone?: "dark" | "accent" | "light";
+}
+
+const {
+  title,
+  tagline,
+  href,
+  stack,
+  stat,
+  span = "col-span-12 md:col-span-6",
+  image,
+  tone = "dark",
+} = Astro.props;
+
+const toneClasses = {
+  dark: "bg-zinc-900 border-zinc-800 hover:border-zinc-600 text-zinc-100",
+  accent: "bg-orange-500 border-orange-400 hover:border-orange-200 text-zinc-950",
+  light: "bg-zinc-100 border-zinc-300 hover:border-zinc-500 text-zinc-900",
+};
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener"
+  class={`group relative block rounded-2xl border overflow-hidden transition-all duration-200 hover:-translate-y-1 ${toneClasses[tone]} ${span}`}
+>
+  {image && (
+    <div class="aspect-[16/9] overflow-hidden bg-zinc-950">
+      <img
+        src={image}
+        alt={`${title} preview`}
+        loading="lazy"
+        class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+      />
+    </div>
+  )}
+  <div class="p-6 flex flex-col gap-3">
+    <div class="flex items-baseline justify-between gap-2">
+      <h3 class="text-xl font-semibold tracking-tight">{title}</h3>
+      {stat && (
+        <span class="text-xs font-mono opacity-70">{stat}</span>
+      )}
+    </div>
+    <p class="text-sm leading-relaxed opacity-80">{tagline}</p>
+    <div class="flex items-center justify-between mt-auto pt-2">
+      <span class="text-xs font-mono opacity-60">{stack}</span>
+      <span class="text-xs font-mono opacity-60 group-hover:opacity-100 transition-opacity">
+        github →
+      </span>
+    </div>
+  </div>
+</a>

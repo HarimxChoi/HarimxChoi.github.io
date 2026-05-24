@@ -1,0 +1,43 @@
+---
+interface Props {
+  lang?: "en" | "ko";
+}
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: "numbers",
+    stats: [
+      ["1+ yr", "bidNLP & R2CCP, both in production"],
+      ["+25-40%", "tender win-rate lift (R2CCP custom)"],
+      ["40 hr → 2 min", "weekly: 7,000 notices, manual → automated (bidNLP)"],
+      ["209 stars", "google-surf-mcp · 141 in first 5 days"],
+    ],
+  },
+  ko: {
+    eyebrow: "숫자",
+    stats: [
+      ["1년+", "bidNLP, R2CCP 둘 다 production"],
+      ["+25-40%", "tender win rate lift (R2CCP custom)"],
+      ["40시간 → 2분", "주당 7,000건 공고 처리 (bidNLP)"],
+      ["209 stars", "google-surf-mcp · 5일 안에 141"],
+    ],
+  },
+};
+
+const c = copy[lang];
+---
+
+<aside class="col-span-12 md:col-span-4 rounded-2xl border border-orange-400/40 bg-orange-500/[0.08] p-8 md:p-10 flex flex-col gap-6">
+  <div class="text-xs font-mono uppercase tracking-[0.2em] text-orange-400">
+    {c.eyebrow}
+  </div>
+  <dl class="flex flex-col gap-5">
+    {c.stats.map(([n, label]) => (
+      <div class="flex flex-col gap-1">
+        <dt class="text-3xl md:text-4xl font-bold tracking-tight tabular-nums">{n}</dt>
+        <dd class="text-xs font-mono text-zinc-400">{label}</dd>
+      </div>
+    ))}
+  </dl>
+</aside>
