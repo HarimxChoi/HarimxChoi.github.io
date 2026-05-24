@@ -7,22 +7,20 @@ const { lang = "en" } = Astro.props;
 const copy = {
   en: {
     eyebrow: "recently",
-    title: "Active across four tracks in parallel.",
+    title: "Active across three tracks in parallel.",
     facts: [
       ["production", "bidNLP: F1 96.4%, 50 ms CPU, 1+ year in production. R2CCP custom impl: +25-40% win rate, 1+ year deployed. NGBoost × XGBoost bid price: win rate 3× baseline."],
       ["research", "DSSP: 12-branch decision-science taxonomy for LLM agents, 14 audits, arXiv preprint coming. E-AT: entropy-based adversarial calibration, LAPC loss family v1-v7."],
       ["agent infra", "monogram: 5-stage LLM pipeline + 13-tool MCP server, atomic Git Tree commits. google-surf-mcp: vendor-agnostic Google search MCP, 209 stars (141 in first 5 days), npm-published."],
-      ["current engagement", "Sejong Analytics. Korean public-procurement ML. Found Pearson -0.48 between engineering metric and customer KPI, redesigned objective. End-customer win rate 0.3 → 0.6% in first month."],
     ],
   },
   ko: {
     eyebrow: "최근",
-    title: "4개 트랙 병렬 진행 중.",
+    title: "3개 트랙 병렬 진행 중.",
     facts: [
-      ["production", "bidNLP. F1 96.4%, 50ms CPU, 1년+ production. R2CCP 커스텀 구현. +25-40% win rate, 1년+ deployed. NGBoost × XGBoost 2단계 스태킹. 낙찰률 기존 대비 3배."],
-      ["research", "DSSP. LLM 에이전트 12-branch decision-science taxonomy. 14 agents 적용. arXiv preprint 곧 공개. E-AT. Entropy 기반 calibration. LAPC loss family v1-v7."],
-      ["agent infra", "monogram. 5-stage LLM pipeline + 13-tool MCP server. atomic Git Tree commit. google-surf-mcp. vendor-agnostic Google search MCP. 209 stars (5일 안에 141), npm 배포."],
-      ["current engagement", "세종분석연구원. 한국 공공조달 ML. 엔지니어링 metric과 매출 KPI 사이 Pearson -0.48 발견. objective 재설계. End-customer 낙찰률 0.3 → 0.6% 첫 달."],
+      ["production", "bidNLP: F1 96.4%, 50ms CPU, 1년+ production. R2CCP custom impl: +25-40% win rate, 1년+ deployed. NGBoost × XGBoost 2단계 스태킹: win rate 기존 대비 3배."],
+      ["research", "DSSP: LLM agent 12-branch decision-science taxonomy, 14 audits, arXiv preprint 곧 공개. E-AT: entropy-based adversarial calibration, LAPC loss family v1-v7."],
+      ["agent infra", "monogram: 5-stage LLM pipeline + 13-tool MCP server, atomic Git Tree commits. google-surf-mcp: vendor-agnostic Google search MCP, 209 stars (5일 만에 141), npm published."],
     ],
   },
 };

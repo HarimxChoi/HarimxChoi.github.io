@@ -30,7 +30,7 @@ const projects = [
   {
     title: "monogram",
     tagline:
-      "Telegram에 던지면 알아서 wiki로 저장. 아침엔 dashboard로. 5-stage LLM pipeline, atomic Git Tree commit, 13-tool MCP server.",
+      "Telegram에 보내면 자동으로 wiki에 저장, 아침엔 project dashboard로 정리해서 보여줌. 5-stage LLM pipeline + atomic Git Tree commit + 13-tool MCP server.",
     href: "https://github.com/HarimxChoi/monogram",
     stack: "Python · LLM · MCP",
     stat: "PyPI · mono-gram",
@@ -50,7 +50,7 @@ const projects = [
   {
     title: "ensemble-bid-prediction",
     tagline:
-      "tender bid rate prediction R2CCP. 공개 구현체의 interval collapse 발견 (cumulative-mass interval이 bimodal 두 봉우리 합쳐버림). per-bin threshold + entropy regularization으로 수정 → bimodal 그대로 보존. +25-40% bid win rate, 1년+ deployed.",
+      "R2CCP 기반 tender bid rate 예측. 공개 구현체에서 interval collapse 문제 발견 (cumulative-mass interval이 bimodal 두 봉우리를 한 덩어리로 합쳐버림). per-bin threshold + entropy regularization으로 수정해서 bimodal 그대로 보존. bid win rate +25-40%, 1년+ 운영 중.",
     href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
     stack: "Python · R2CCP · Conformal",
     stat: "+25-40% win rate",
@@ -60,7 +60,7 @@ const projects = [
   {
     title: "langgraph-travel-agent",
     tagline:
-      "Multi-agent 여행 예약. 4-API 병렬 + human-in-the-loop checkpoint. 1707줄 monolith를 7 모듈로 분해.",
+      "Multi-agent travel booking 시스템. 4개 API를 비동기 병렬로 호출하고, 중간에 human-in-the-loop checkpoint로 사용자 입력 받음. 1707줄 monolith를 7개 모듈로 refactor.",
     href: "https://github.com/HarimxChoi/langgraph-travel-agent",
     stack: "Python · LangGraph · HITL",
     stat: "7 모듈 · 4 APIs",
@@ -70,7 +70,7 @@ const projects = [
   {
     title: "claude-setup",
     tagline:
-      "Claude Code 개인 설정. Hooks, slash commands, statusline, MCP servers, project-level CLAUDE.md priors. 머신간 재현 가능.",
+      "개인용 Claude Code 환경 설정 모음. Hooks, slash commands, statusline, MCP servers, project-level CLAUDE.md priors까지 한 번에 정리. 어느 머신에서도 동일하게 재현 가능.",
     href: "https://github.com/HarimxChoi/claude-setup",
     stack: "Shell · Hooks · MCP",
     stat: "dotfiles",
