@@ -1,5 +1,7 @@
 # harimxchoi.github.io
 
+English | [한국어](./README.ko.md)
+
 Personal portfolio. Astro + Tailwind v4, deployed to GitHub Pages.
 
 Live: https://harimxchoi.github.io
