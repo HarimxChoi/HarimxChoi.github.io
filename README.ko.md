@@ -6,7 +6,7 @@
 
 Live: https://harimxchoi.github.io
 
-사이트 자체도 다국어 지원: `/` (영어) / `/ko/` (한국어). 라이브 사이트에서 우상단 토글로 전환 가능.
+사이트도 이중언어. `/` 영어, `/ko/` 한국어. 우상단 토글로 전환.
 
 ## Local
 
@@ -19,11 +19,11 @@ npm run build    # dist/
 ## Stack
 
 - Astro 5 (static)
-- Tailwind v4, `@tailwindcss/vite` 경유
-- Inter + JetBrains Mono, Google Fonts 경유
+- Tailwind v4 (`@tailwindcss/vite`)
+- Inter + JetBrains Mono (Google Fonts)
 - 1페이지, 벤토 그리드 레이아웃
 
 ## Deploy
 
-`main`에 push. GitHub Actions가 빌드해서 Pages로 배포.
+`main`에 push하면 GitHub Actions가 빌드, Pages로 배포.
 Source: Settings → Pages → Build and deployment → GitHub Actions.
