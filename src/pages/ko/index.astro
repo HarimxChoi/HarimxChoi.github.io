@@ -10,10 +10,10 @@ const projects = [
   {
     title: "wsss-refined-pseudolabels",
     tagline:
-      "약지도 시맨틱 segmentation, refined pseudo-labels. Frozen CLIP (ViT-B/16) + DINOv2 backbone, Multi-Signal Reliability Estimation, Phase-Adaptive Refinement, Boundary-Aware loss. COCO-Val mIoU 56.2%: WeCLIP+ 80K baseline 대비 +4.3pp, WeCLIP (CVPR 2024) 대비 +9.1pp. 출시 시점 SOTA. 3개월 만에 delivery. 외부 contracted 리서치, 개인 수주.",
+      "약지도 시맨틱 segmentation, refined pseudo-labels. Frozen CLIP (ViT-B/16) + DINOv2 backbone, RFM (Region Feature Matching) refinement, disagreement-aware self-training, Boundary-Aware loss. COCO-Val mIoU 54.4% (ViT-B/16): WeCLIP+ (TPAMI 2025) 대비 +2.5pp, WeCLIP (CVPR 2024) 대비 +7.3pp. 3개월 만에 delivery. 외부 contracted 리서치, 개인 수주.",
     href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
     stack: "PyTorch · CLIP · DINOv2 · WSSS",
-    stat: "56.2% mIoU · 출시 시점 SOTA · 3개월",
+    stat: "54.4% mIoU (ViT-B/16) · 3개월",
     span: "col-span-12 md:col-span-6",
     tone: "accent" as const,
     image: "/img/wsss-architecture.png",
