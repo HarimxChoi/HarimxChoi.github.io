@@ -1,0 +1,42 @@
+---
+interface Props {
+  item: any;
+  index: number;
+}
+
+const { item, index } = Astro.props;
+---
+
+<article class="career-card">
+  <div class="career-marker" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
+  <div class="career-content">
+    <div class="career-head">
+      <div>
+        <h3>{item.company}</h3>
+        <p class="career-role">{item.role}</p>
+      </div>
+      <p class="period">{item.period}</p>
+    </div>
+
+    <p class="career-context">{item.context}</p>
+
+    <div class="tag-row category-row" aria-label="Categories">
+      {item.categories.map((tag: string) => <span>{tag}</span>)}
+    </div>
+
+    <ul class="evidence-list">
+      {item.bullets.map((bullet: string) => <li>{bullet}</li>)}
+    </ul>
+
+    <div class="tool-line">
+      {item.tools.map((tool: string) => <span>{tool}</span>)}
+    </div>
+
+    {item.evidenceImage && (
+      <figure class="career-evidence">
+        <img src={item.evidenceImage} alt={item.evidenceAlt} loading="lazy" />
+        {item.evidenceCaption && <figcaption>{item.evidenceCaption}</figcaption>}
+      </figure>
+    )}
+  </div>
+</article>
