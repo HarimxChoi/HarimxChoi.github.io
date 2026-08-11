@@ -2,28 +2,27 @@
 
 [English](./README.md) | 한국어
 
-개인 포트폴리오. Astro + Tailwind v4, GitHub Pages 배포.
+Applied ML, 오픈소스 Agent 인프라와 연구 프로젝트를 함께 보여주는 최하림의 영문·국문 포트폴리오입니다.
 
 Live: https://harimxchoi.github.io
 
-사이트도 이중언어. `/` 영어, `/ko/` 한국어. 우상단 토글로 전환.
+포트폴리오 파일: https://harimxchoi.github.io/files/harim-choi-ml-portfolio.pptx
 
-## Local
+## 로컬 실행
 
 ```bash
 npm install
-npm run dev      # localhost:4321
-npm run build    # dist/
+npm run dev
+npm run build
 ```
 
-## Stack
+## 구성
 
-- Astro 5 (static)
-- Tailwind v4 (`@tailwindcss/vite`)
-- Inter + JetBrains Mono (Google Fonts)
-- 1페이지, 벤토 그리드 레이아웃
+- Astro 6 정적 사이트
+- `@tailwindcss/vite` 기반 Tailwind CSS 4
+- Inter, Noto Sans KR, JetBrains Mono
+- 영문 `/`, 국문 `/ko/`
 
-## Deploy
+## 배포
 
-`main`에 push하면 GitHub Actions가 빌드, Pages로 배포.
-Source: Settings → Pages → Build and deployment → GitHub Actions.
+`main`에 push하면 GitHub Actions가 빌드한 뒤 GitHub Pages에 배포합니다.

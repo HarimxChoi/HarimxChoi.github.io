@@ -2,26 +2,27 @@
 
 English | [한국어](./README.ko.md)
 
-Personal portfolio. Astro + Tailwind v4, deployed to GitHub Pages.
+Bilingual portfolio for Harim Choi, an applied machine learning engineer working across production ML, open-source agent infrastructure, and research.
 
 Live: https://harimxchoi.github.io
 
-## Local
+Portfolio deck: https://harimxchoi.github.io/files/harim-choi-ml-portfolio.pptx
+
+## Local development
 
 ```bash
 npm install
-npm run dev      # localhost:4321
-npm run build    # dist/
+npm run dev
+npm run build
 ```
 
 ## Stack
 
-- Astro 5 (static)
-- Tailwind v4 via `@tailwindcss/vite`
-- Inter + JetBrains Mono via Google Fonts
-- One page, bento grid layout
+- Astro 6 static site
+- Tailwind CSS 4 via `@tailwindcss/vite`
+- Inter, Noto Sans KR, and JetBrains Mono
+- English at `/`, Korean at `/ko/`
 
-## Deploy
+## Deployment
 
-Push to `main`. GitHub Actions builds and deploys to Pages.
-Source: Settings → Pages → Build and deployment → GitHub Actions.
+Pushes to `main` are built and deployed to GitHub Pages through GitHub Actions.

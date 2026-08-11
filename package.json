@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "guard": "node tools/check-no-premature-closure.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

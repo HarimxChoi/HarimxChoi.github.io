@@ -1,62 +1,57 @@
 ---
 interface Props {
-  title: string;
-  tagline: string;
-  href: string;
-  stack: string;
-  stat?: string;
-  span?: string;
-  image?: string;
-  tone?: "dark" | "accent" | "light";
+  project: any;
+  index: string;
+  lang: "en" | "ko";
 }
 
-const {
-  title,
-  tagline,
-  href,
-  stack,
-  stat,
-  span = "col-span-12 md:col-span-6",
-  image,
-  tone = "dark",
-} = Astro.props;
-
-const toneClasses = {
-  dark: "bg-zinc-900 border-zinc-800 hover:border-zinc-600 text-zinc-100",
-  accent: "bg-orange-500 border-orange-400 hover:border-orange-200 text-zinc-950",
-  light: "bg-zinc-100 border-zinc-300 hover:border-zinc-500 text-zinc-900",
-};
+const { project, index, lang } = Astro.props;
+const repositoryLabel = lang === "ko" ? "저장소" : "Repository";
+const privateLabel = lang === "ko" ? "비공개" : "Private";
 ---
 
-<a
-  href={href}
-  target="_blank"
-  rel="noopener"
-  class={`group relative block rounded-2xl border overflow-hidden transition-all duration-200 hover:-translate-y-1 ${toneClasses[tone]} ${span}`}
->
-  {image && (
-    <div class="aspect-[16/9] overflow-hidden bg-zinc-950">
-      <img
-        src={image}
-        alt={`${title} preview`}
-        loading="lazy"
-        class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-      />
-    </div>
+<article class:list={["project-card", project.image && "project-card--visual"]}>
+  {project.image && (
+    <figure class="project-media">
+      <img src={project.image} alt={project.imageAlt} loading="lazy" />
+      {project.imageCaption && <figcaption>{project.imageCaption}</figcaption>}
+    </figure>
   )}
-  <div class="p-6 flex flex-col gap-3">
-    <div class="flex items-baseline justify-between gap-2">
-      <h3 class="text-xl font-semibold tracking-tight">{title}</h3>
-      {stat && (
-        <span class="text-xs font-mono opacity-70">{stat}</span>
+
+  <div class="project-body">
+    <div class="project-topline">
+      <span class="project-number">{index}</span>
+      <span class="period">{project.period}</span>
+    </div>
+
+    <div class="project-title-row">
+      <div>
+        <h4>{project.title}</h4>
+        <p class="project-status">{project.status}</p>
+      </div>
+      {project.href ? (
+        <a class="project-link" href={project.href} target="_blank" rel="noopener">
+          {repositoryLabel} <span aria-hidden="true">↗</span>
+        </a>
+      ) : (
+        <span class="private-label">{privateLabel}</span>
       )}
     </div>
-    <p class="text-sm leading-relaxed opacity-80">{tagline}</p>
-    <div class="flex items-center justify-between mt-auto pt-2">
-      <span class="text-xs font-mono opacity-60">{stack}</span>
-      <span class="text-xs font-mono opacity-60 group-hover:opacity-100 transition-opacity">
-        github →
-      </span>
+
+    <p class="project-summary">{project.summary}</p>
+
+    <div class="project-metric">{project.metric}</div>
+
+    <div class="tag-row category-row" aria-label="Categories">
+      {project.categories.map((tag: string) => <span>{tag}</span>)}
+    </div>
+
+    <ul class="evidence-list compact">
+      {project.bullets.map((bullet: string) => <li>{bullet}</li>)}
+    </ul>
+
+    <div class="tool-line">
+      {project.tools.map((tool: string) => <span>{tool}</span>)}
     </div>
   </div>
-</a>
+</article>
