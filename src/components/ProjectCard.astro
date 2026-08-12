@@ -2,23 +2,35 @@
 interface Props {
   title: string;
   tagline: string;
-  href: string;
-  stack: string;
+  proof: string;
+  domains: string[];
+  methods: string[];
+  access: "public" | "private";
+  evidence: "A" | "B" | "C";
+  href?: string;
   stat?: string;
   span?: string;
   image?: string;
+  imageAlt?: string;
   tone?: "dark" | "accent" | "light";
+  lang?: "en" | "ko";
 }
 
 const {
   title,
   tagline,
+  proof,
+  domains,
+  methods,
+  access,
+  evidence,
   href,
-  stack,
   stat,
   span = "col-span-12 md:col-span-6",
   image,
+  imageAlt = "",
   tone = "dark",
+  lang = "en",
 } = Astro.props;
 
 const toneClasses = {
@@ -28,35 +40,54 @@ const toneClasses = {
 };
 ---
 
-<a
-  href={href}
-  target="_blank"
-  rel="noopener"
-  class={`group relative block rounded-2xl border overflow-hidden transition-all duration-200 hover:-translate-y-1 ${toneClasses[tone]} ${span}`}
+<article
+  class={`group relative flex flex-col rounded-2xl border overflow-hidden transition-all duration-200 hover:-translate-y-1 ${toneClasses[tone]} ${span}`}
 >
   {image && (
     <div class="aspect-[16/9] overflow-hidden bg-zinc-950">
       <img
         src={image}
-        alt={`${title} preview`}
+        alt={imageAlt}
         loading="lazy"
         class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
       />
     </div>
   )}
-  <div class="p-6 flex flex-col gap-3">
-    <div class="flex items-baseline justify-between gap-2">
+  <div class="p-6 flex flex-1 flex-col gap-4">
+    <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-wide">
+      <div class="flex flex-wrap gap-2">
+        {domains.map((domain) => (
+          <span class="rounded-full border border-current/30 px-2 py-1">{domain}</span>
+        ))}
+      </div>
+      <span class="opacity-60">{access} · evidence {evidence}</span>
+    </div>
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
       <h3 class="text-xl font-semibold tracking-tight">{title}</h3>
-      {stat && (
-        <span class="text-xs font-mono opacity-70">{stat}</span>
-      )}
+      {stat && <span class="text-xs font-mono opacity-70">{stat}</span>}
     </div>
     <p class="text-sm leading-relaxed opacity-80">{tagline}</p>
-    <div class="flex items-center justify-between mt-auto pt-2">
-      <span class="text-xs font-mono opacity-60">{stack}</span>
-      <span class="text-xs font-mono opacity-60 group-hover:opacity-100 transition-opacity">
-        github →
-      </span>
+    <p class="border-l-2 border-current/50 pl-3 text-sm leading-relaxed opacity-90">{proof}</p>
+    <div class="mt-auto flex flex-wrap gap-2 pt-2">
+      {methods.map((method) => (
+        <span class="rounded-md bg-black/10 px-2 py-1 font-mono text-[10px] opacity-70 dark:bg-white/10">
+          {method}
+        </span>
+      ))}
     </div>
+    {href ? (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener"
+        class="mt-1 font-mono text-xs opacity-60 hover:opacity-100"
+      >
+        {lang === "ko" ? "repository →" : "repository →"}
+      </a>
+    ) : (
+      <span class="mt-1 font-mono text-xs opacity-45">
+        {lang === "ko" ? "비공개 artifact" : "private artifact"}
+      </span>
+    )}
   </div>
-</a>
+</article>

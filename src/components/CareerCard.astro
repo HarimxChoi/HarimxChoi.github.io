@@ -1,0 +1,59 @@
+---
+interface Props {
+  company: string;
+  role: string;
+  period: string;
+  context: string;
+  proof: string;
+  domains: string[];
+  methods: string[];
+  evidence: "A" | "B" | "C";
+  lang?: "en" | "ko";
+}
+
+const {
+  company,
+  role,
+  period,
+  context,
+  proof,
+  domains,
+  methods,
+  evidence,
+  lang = "en",
+} = Astro.props;
+---
+
+<article class="col-span-12 md:col-span-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-6 md:p-8 flex flex-col gap-5">
+  <div class="flex flex-col gap-3">
+    <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
+      <span class="text-orange-400">{period}</span>
+      <span class="rounded-full border border-zinc-700 px-2.5 py-1 opacity-70">
+        {lang === "ko" ? `고용 경력 · 근거 ${evidence}` : `employment · evidence ${evidence}`}
+      </span>
+    </div>
+    <div>
+      <h3 class="text-2xl font-semibold tracking-tight">{company}</h3>
+      <p class="mt-1 font-mono text-xs text-zinc-400">{role}</p>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    {domains.map((domain) => (
+      <span class="rounded-full border border-orange-400/40 bg-orange-500/[0.08] px-2.5 py-1 font-mono text-[11px] text-orange-400">
+        {domain}
+      </span>
+    ))}
+  </div>
+
+  <p class="text-sm leading-relaxed text-zinc-300">{context}</p>
+  <p class="border-l-2 border-orange-400 pl-4 text-sm leading-relaxed text-zinc-300">{proof}</p>
+
+  <div class="mt-auto flex flex-wrap gap-2 pt-1">
+    {methods.map((method) => (
+      <span class="rounded-md bg-zinc-950/70 px-2 py-1 font-mono text-[10px] text-zinc-400">
+        {method}
+      </span>
+    ))}
+  </div>
+</article>
