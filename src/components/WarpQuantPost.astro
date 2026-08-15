@@ -32,10 +32,10 @@ const references = [
 ];
 
 const qwen27 = [
-  { format: "BF16", bpw: "16.00", payload: "50.11", ppl: "6.9548", arc: "52.17", mmlu: "43.07", commonsense: "79.23", gsm: "—" },
-  { format: "Q4_K_M", bpw: "4.92", payload: "15.41", ppl: "6.9656", arc: "50.84", mmlu: "42.90", commonsense: "79.23", gsm: "—" },
-  { format: "IQ3_S", bpw: "3.6940", payload: "11.57", ppl: "7.1820", arc: "52.17", mmlu: "42.97", commonsense: "78.83", gsm: "—" },
-  { format: "WarpQuant R16E4H4", bpw: "3.6165", payload: "11.32", ppl: "7.4737", arc: "56.86", mmlu: "42.72", commonsense: "78.83", gsm: "—", ours: true },
+  { format: "BF16", bpw: "16.00", payload: "50.11", ppl: "6.9548", arc: "52.17", mmlu: "43.07", commonsense: "79.23", gsm: "70.40" },
+  { format: "Q4_K_M", bpw: "4.92", payload: "15.41", ppl: "6.9656", arc: "50.84", mmlu: "42.90", commonsense: "79.23", gsm: "75.20" },
+  { format: "IQ3_S", bpw: "3.6940", payload: "11.57", ppl: "7.1820", arc: "52.17", mmlu: "42.97", commonsense: "78.83", gsm: "59.40" },
+  { format: "WarpQuant R16E4H4", bpw: "3.6165", payload: "11.32", ppl: "7.4737", arc: "56.86", mmlu: "42.72", commonsense: "78.83", gsm: "61.00", ours: true },
 ];
 
 const qwen4 = [
@@ -261,7 +261,7 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
 
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Format</th><th>Text bpw</th><th>Payload</th><th>WT2 PPL ↓</th><th>ARC-299 ↑</th><th>MMLU-13,943 ↑</th><th>Commonsense ↑</th><th>GSM8K-500 ↑</th></tr></thead>
+            <thead><tr><th>Format</th><th>Text bpw</th><th>Payload</th><th>WT2 PPL ↓</th><th>ARC-299 ↑</th><th>MMLU-13,943 ↑</th><th>Commonsense ↑</th><th>GSM8K-500 flex ↑</th></tr></thead>
             <tbody>
               {qwen27.map((row) => (
                 <tr class:list={[row.ours && "ours"]}><td>{row.format}</td><td>{row.bpw}</td><td>{row.payload} GiB</td><td>{row.ppl}</td><td>{row.arc}</td><td>{row.mmlu}</td><td>{row.commonsense}</td><td>{row.gsm}</td></tr>
@@ -271,8 +271,8 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
         </div>
         <p class="table-note">
           {ko
-            ? "PPL, ARC, MMLU는 모두 같은 llama.cpp 평가 경로에서 측정했습니다. GSM8K는 네 모델에 동일한 첫 500문항과 5-shot 설정을 적용한 결과가 끝나는 대로 반영합니다."
-            : "PPL, ARC, and MMLU use the same llama.cpp evaluation path. GSM8K will use the verified final results from the same first 500 examples under a 5-shot setting."}
+            ? "PPL, ARC, MMLU는 같은 llama.cpp 평가 경로에서 측정했습니다. GSM8K는 네 모델에 동일한 첫 500문항과 5-shot 설정을 적용했으며, lm-evaluation-harness의 flexible-extract 정확도를 표시했습니다."
+            : "PPL, ARC, and MMLU use the same llama.cpp evaluation path. GSM8K uses the same first 500 examples and 5-shot prompts for all four models; the table reports lm-evaluation-harness flexible-extract accuracy."}
         </p>
 
         <div class="result-callouts">
