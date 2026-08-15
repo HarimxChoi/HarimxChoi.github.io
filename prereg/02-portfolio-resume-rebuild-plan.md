@@ -24,7 +24,7 @@ WarpQuant is the fixed reference page and is not rewritten in this project. It i
 - Public GitHub Pages baseline: commit `6f7e24f`.
 - Remote backup tag: `portfolio-pre-redesign-2026-08-16`.
 - Remote backup branch: `feat/portfolio-pre-redesign-backup`.
-- Local bundle: `C:\Users\user\resume\_backups\HarimxChoi.github.io-pre-redesign-2026-08-16.bundle`.
+- Offline Git bundle stored outside the public repository.
 - Local redesign baseline: branch `feat/list-redesign`, commit `44dcbd6`.
 - Before editing any external profile, save its current text and project list under the private career repository.
 
@@ -76,6 +76,19 @@ Put implementation details on one `Built with` line. Do not render a cloud of te
 - Cards may omit dates when chronology is not useful.
 - Private work is not moved to a false period to avoid overlap with employment.
 
+### 3.5 Korean tone reference
+
+Use the direct structure from the Jihyun Lim portfolio as a Korean-language reference:
+
+- 프로젝트 목적
+- 프로젝트 구성과 역할
+- 사용 기술과 모델
+- 데이터와 operating context
+- 분석 또는 구현 시나리오
+- 결과와 성과
+
+The website may expose these as short sections or expandable technical notes. The resume does not copy the full Notion outline; it compresses the same content into two result-led bullets. Avoid decorative emoji headings, generic self-introductions, and repeated `고도화`, `혁신`, or `기여` phrasing.
+
 ## 4. Visual-first project-page contract
 
 Every project page except WarpQuant uses the same reader-facing structure, but it does not need to match WarpQuant's length.
@@ -112,6 +125,8 @@ All visuals need:
 - a private source pointer in the content manifest to the generating log, table, script, or original capture; public captions stay clean.
 
 If a suitable image does not exist, generate it from local experiment data or code structure. Do not invent a result to fill a visual slot.
+
+The default is raw-artifact-first regeneration, not image hunting. Prefer CSV, JSON, NPZ, TensorBoard events, evaluation tables, saved predictions, checkpoints, and executable graph definitions as inputs. For each generated visual, preserve the input path, transformation script, metric definition, denominator, and output hash in the private manifest. Method diagrams are rebuilt from the actual code path; result charts are rebuilt from recorded outputs; qualitative panels are rendered from saved inputs and predictions.
 
 ## 6. Project inventory and planned visuals
 
@@ -294,7 +309,9 @@ Supporting projects found during the authenticated 35-repository inventory will 
 
 ## 8. Resume family
 
-All three resumes share one career source and differ only in summary, skills order, and selected projects.
+All three resume variants share one career source and differ only in summary, skills order, and selected projects. Each variant is produced in Korean and English, for six DOCX outputs in total.
+
+These three resumes and the portfolio are the primary deliverables. External job-site profiles are downstream copies of the General ML version, except that LinkedIn Projects receives its own project summaries and media.
 
 ### General ML
 
@@ -369,8 +386,8 @@ Browser edits that publish profile text or transmit resume files are executed on
 
 1. Enumerate all 35 GitHub repositories using authenticated owner access.
 2. Map every resume/project claim to its local repository, Drive folder, artifact, chart, or demo.
-3. Index image/video/log/table assets with provenance and reuse rights.
-4. Mark missing visuals that must be rendered from existing data.
+3. Index raw logs, tables, predictions, checkpoints, images, and videos with provenance and reuse rights.
+4. Define at least two reproducible visual specifications per project, including source inputs, transformation steps, axes or layout, caption, and public-safety treatment.
 
 ### Phase B: content model
 
@@ -392,13 +409,19 @@ Browser edits that publish profile text or transmit resume files are executed on
 3. Build Korean and English portfolio decks from the same source.
 4. Render and inspect every page/slide.
 
-### Phase E: profiles
+### Phase E: primary publication
+
+1. Complete the three resumes and bilingual portfolio decks.
+2. Complete every visual-first project page and the project index.
+3. Validate the local site before copying content to external profiles.
+
+### Phase F: profiles
 
 1. Update GitHub README, bio, website, descriptions, topics, and pins.
 2. Update LinkedIn About, experience, skills, and projects.
 3. Update Saramin, Remember, Wanted, and PeopleNJob.
 
-### Phase F: publication
+### Phase G: publication
 
 1. Run repository guards, type checks, and static build.
 2. Inspect desktop and mobile rendering for every route.
