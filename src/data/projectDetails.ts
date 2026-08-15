@@ -373,6 +373,137 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       category: "Calibration & Uncertainty",
       builtWith: ["PyTorch", "ConvNeXt V2", "Focal loss", "R-Drop", "ISIC"],
     },
+    "langgraph-travel-agent": {
+      claim: "Travel advisor delivered to a U.S. agency · concurrent supplier search with resumable human review",
+      lead: [
+        "A travel request is not one model call: missing customer information, supplier latency, budget constraints, package comparison, CRM handoff, and outbound communication all have to remain consistent across a long-running workflow.",
+        "This system keeps that state in LangGraph, pauses when customer information is incomplete, searches Amadeus and Hotelbeds concurrently, and turns the results into Budget, Balanced, and Premium packages before a human reviews the next action.",
+      ],
+      metricCards: [
+        { label: "Supplier search", value: "Concurrent", note: "Amadeus and Hotelbeds via asyncio.gather" },
+        { label: "Package synthesis", value: "3 tiers", note: "Budget, Balanced, and Premium" },
+        { label: "Delivery", value: "U.S. agency", note: "Contract work released later as public OSS" },
+      ],
+      flow: {
+        title: "A resumable path from request to reviewable travel package",
+        intro: "Each node has one operational responsibility, while the graph retains enough state to pause and resume without rebuilding the request.",
+        steps: [
+          { label: "Collect constraints", description: "Normalize traveler, dates, budget, and preferences; pause when required customer information is missing." },
+          { label: "Search concurrently", description: "Run flight and hotel supplier queries in parallel and return results through asynchronous task polling." },
+          { label: "Synthesize packages", description: "Build three comparable package tiers and calculate the full trip cost from the same typed schema." },
+          { label: "Review and handoff", description: "Save the selected context to HubSpot and keep outbound actions behind an explicit review boundary." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/langgraph-travel-agent/travel-architecture.svg",
+          alt: "Architecture diagram of a LangGraph travel advisor with FastAPI task polling, customer-information handoff, concurrent Amadeus and Hotelbeds search, package synthesis, HubSpot handoff, and a review boundary",
+          caption: "Code-grounded workflow · InMemorySaver and in-memory job store in the public implementation",
+        },
+        {
+          src: "/img/projects/langgraph-travel-agent/travel-package-example.svg",
+          alt: "Synthetic example comparing Budget, Balanced, and Premium travel packages with itemized total-cost arithmetic",
+          caption: "Schema-based synthetic example · not live supplier or client data",
+        },
+      ],
+      contribution: [
+        "Designed and implemented the LangGraph state, conditional routing, asynchronous supplier search, package synthesis, API task lifecycle, and CRM handoff.",
+        "Delivered the system to a U.S. travel agency and retained the contractual IP for a later public-source release.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/langgraph-travel-agent", note: "Graph, API, supplier tools, and typed travel-package models" },
+      ],
+      category: "Agent Systems",
+      builtWith: ["Python", "LangGraph", "FastAPI", "AsyncIO", "Amadeus / Hotelbeds"],
+    },
+    myshot: {
+      claim: "Single-camera golf swing reconstruction · mean |r| 0.95 on six independent motion-capture trials",
+      lead: [
+        "MyShot turns a smartphone golf video into a time-aligned 3D skeleton and measures how the torso and pelvis rotate through the swing. The difficult part is not drawing a pose on one frame, but preserving the motion pattern when depth is inferred from a single camera.",
+        "A 2D pose detector first tracks the golfer, then a 243-frame MotionAGFormer model lifts the sequence into 3D. Training data, evaluation clips, and motion-capture trials are kept disjoint so that the temporal biomechanics can be checked outside the source video domain.",
+      ],
+      metricCards: [
+        { label: "Independent mocap", value: "6 trials", note: "CMU golf swings not used for training" },
+        { label: "X-Factor pattern", value: "mean |r| 0.95", note: "Predicted vs. motion-capture torso rotation" },
+        { label: "Clean-2D study", value: "35.6 mm", note: "Mean 3D joint error on synchronized validation" },
+      ],
+      flow: {
+        title: "From a monocular video to a biomechanical time series",
+        intro: "The pipeline separates 2D detection error from 3D lifting and evaluates both joint geometry and the motion pattern used in golf analysis.",
+        steps: [
+          { label: "Video and 2D joints", description: "Detect the golfer and normalize 17 joints across the full swing rather than treating frames independently." },
+          { label: "Temporal 3D lifting", description: "Use a 243-frame MotionAGFormer window to infer depth and preserve motion continuity." },
+          { label: "Biomechanics", description: "Derive torso, pelvis, X-Factor, and knee trajectories from the reconstructed skeleton." },
+          { label: "Cross-domain evaluation", description: "Compare time-aligned curves with independent CMU motion capture and inspect domain shift separately." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/myshot/myshot-golfdb-2d-to-3d.png",
+          alt: "An anonymized four-phase golf swing example showing the source frame, detected 2D joints, and reconstructed 3D skeleton at address, top, impact, and finish",
+          caption: "Anonymized research-dataset example · current model · address, top, impact, and finish",
+        },
+        {
+          src: "/img/projects/myshot/myshot-method.svg",
+          alt: "Method diagram from monocular golf video through 2D pose detection and 243-frame MotionAGFormer lifting to 3D joints and biomechanical curves",
+          caption: "Detection, temporal lifting, biomechanics, and cross-domain validation are evaluated separately",
+        },
+        {
+          src: "/img/projects/myshot/myshot-cmu-xfactor.png",
+          alt: "Six small-multiple plots comparing predicted and ground-truth normalized X-Factor curves on independent CMU golf motion-capture trials",
+          caption: "Independent CMU motion capture · six trials · mean absolute correlation 0.95",
+        },
+      ],
+      contribution: [
+        "Built the 2D-to-3D training and inference path, phase-aligned biomechanics, disjoint data split, leakage audit, and cross-domain evaluation.",
+        "Separated clean-2D lifting accuracy from real-video detection error so model limits remain visible at deployment time.",
+      ],
+      category: "Computer Vision",
+      builtWith: ["PyTorch", "MotionAGFormer", "2D pose", "Monocular 3D pose", "Motion capture"],
+    },
+    "google-surf-mcp": {
+      claim: "Search and extraction infrastructure for AI agents · 6 MCP tools · 388 tests",
+      lead: [
+        "Agent search fails in more places than the search box: providers throttle, redirects hide internal targets, pages change markup, PDFs lose reading order, and CAPTCHA interrupts automation. google-surf-mcp turns those failures into one recoverable tool boundary.",
+        "The server combines Google and academic search with web and PDF extraction, parallel execution, provider fallback, CAPTCHA handoff, cache control, parser self-healing, and SSRF protection. Agents receive structured results without carrying browser-specific recovery logic into every workflow.",
+      ],
+      metricCards: [
+        { label: "MCP interface", value: "6 tools", note: "Search, parallel search, web, PDF, and academic retrieval" },
+        { label: "Validation", value: "388 / 388", note: "Full Vitest suite across 44 test files" },
+        { label: "Runtime boundary", value: "Recoverable", note: "Fallback, cache, CAPTCHA handoff, and self-healing parsers" },
+      ],
+      flow: {
+        title: "One agent interface across unstable search and document sources",
+        intro: "Provider selection, extraction, recovery, and security are separated so a failure can be handled at the layer that owns it.",
+        steps: [
+          { label: "Agent request", description: "Expose search and extraction as typed MCP tools with a consistent response schema." },
+          { label: "Provider routing", description: "Choose browser or API search, run parallel queries, and fall back per query instead of failing the full batch." },
+          { label: "Document extraction", description: "Recover readable web text and spatially ordered PDF content behind the same interface." },
+          { label: "Recovery and safety", description: "Handle CAPTCHA, cache, rate limits, parser drift, redirects, and SSRF before returning structured results." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/google-surf-mcp/google-surf-architecture.svg",
+          alt: "Architecture diagram showing six MCP tools routed through search providers, web and PDF extraction, recovery, caching, CAPTCHA handoff, parser healing, and SSRF protection",
+          caption: "Six tools share provider, extraction, recovery, and safety layers",
+        },
+        {
+          src: "/img/projects/google-surf-mcp/google-surf-validation.svg",
+          alt: "Validation chart showing 388 passing tests across search and providers, extraction and SSRF, recovery and healing, and runtime state",
+          caption: "Full Vitest run · 388 tests in 44 files",
+        },
+      ],
+      contribution: [
+        "Designed the MCP API and implemented provider routing, concurrent search, web and PDF extraction, caching, recovery, and security boundaries.",
+        "Published the package and built a regression suite around real markup drift, redirect, CAPTCHA, parser, and cloud-runtime failure modes.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/google-surf-mcp", note: "Published MCP server, tests, and runtime documentation" },
+      ],
+      category: "Production ML Infrastructure",
+      builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
+    },
   },
   ko: {
     wsss: {
@@ -696,6 +827,137 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       category: "Calibration & Uncertainty",
       builtWith: ["PyTorch", "ConvNeXt V2", "Focal loss", "R-Drop", "ISIC"],
+    },
+    "langgraph-travel-agent": {
+      claim: "미국 여행사 납품 · 공급사 병렬 검색과 중단 후 재개가 가능한 여행 상담 Agent",
+      lead: [
+        "여행 상담은 한 번의 모델 호출로 끝나지 않습니다. 누락된 고객 정보, 공급사 응답 지연, 예산 제약, 패키지 비교, CRM 연동과 외부 전송이 긴 workflow 안에서 일관되게 이어져야 합니다.",
+        "이 시스템은 상태를 LangGraph에 유지하고 고객 정보가 부족하면 멈춘 뒤 이어서 실행합니다. Amadeus와 Hotelbeds를 병렬 검색하고 Budget, Balanced, Premium 패키지로 정리한 다음 사람이 다음 action을 검토할 수 있게 했습니다.",
+      ],
+      metricCards: [
+        { label: "공급사 검색", value: "병렬 실행", note: "Amadeus와 Hotelbeds를 asyncio.gather로 호출" },
+        { label: "패키지 생성", value: "3단계", note: "Budget, Balanced, Premium" },
+        { label: "납품", value: "미국 여행사", note: "계약 후 IP를 받아 Public OSS로 공개" },
+      ],
+      flow: {
+        title: "상담 요청에서 검토 가능한 여행 패키지까지",
+        intro: "각 node는 하나의 운영 책임만 맡고, graph state는 중간에 멈춰도 같은 요청을 다시 만들지 않고 이어갈 수 있게 합니다.",
+        steps: [
+          { label: "조건 수집", description: "여행자, 일정, 예산과 선호를 정리하고 필수 고객 정보가 부족하면 입력을 기다립니다." },
+          { label: "병렬 검색", description: "항공과 호텔 공급사를 동시에 검색하고 FastAPI 비동기 task polling으로 결과를 전달합니다." },
+          { label: "패키지 합성", description: "같은 typed schema에서 세 가지 패키지를 만들고 전체 여행 비용을 일관된 방식으로 계산합니다." },
+          { label: "검토와 연동", description: "선택 맥락을 HubSpot에 연결하고 외부 action은 명시적 검토 경계 뒤에 둡니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/langgraph-travel-agent/travel-architecture.svg",
+          alt: "FastAPI task polling, 고객 정보 handoff, Amadeus와 Hotelbeds 병렬 검색, 패키지 합성, HubSpot 연동과 검토 경계로 구성된 LangGraph 여행 상담 Agent 구조도",
+          caption: "실제 코드 기반 구조 · 공개 구현은 InMemorySaver와 in-memory job store 사용",
+        },
+        {
+          src: "/img/projects/langgraph-travel-agent/travel-package-example.svg",
+          alt: "Budget, Balanced, Premium 여행 패키지와 항목별 전체 비용 계산을 비교한 합성 예시",
+          caption: "Schema 기반 합성 예시 · 실제 공급사 가격이나 고객 데이터가 아닙니다",
+        },
+      ],
+      contribution: [
+        "LangGraph state와 conditional routing, 공급사 비동기 검색, 패키지 합성, API task lifecycle과 CRM handoff를 설계하고 구현했습니다.",
+        "미국 여행사에 시스템을 납품했고 계약에 따라 IP를 받아 이후 Public OSS로 공개했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/langgraph-travel-agent", note: "Graph, API, supplier tool과 typed travel-package model" },
+      ],
+      category: "Agent Systems",
+      builtWith: ["Python", "LangGraph", "FastAPI", "AsyncIO", "Amadeus / Hotelbeds"],
+    },
+    myshot: {
+      claim: "스마트폰 골프 스윙 3D 복원 · 독립 모션캡처 6개에서 X-Factor 평균 |r| 0.95",
+      lead: [
+        "MyShot은 스마트폰으로 촬영한 골프 영상을 시간축이 맞는 3D skeleton으로 바꾸고, 스윙 중 몸통과 골반의 회전을 측정합니다. 한 프레임에 pose를 그리는 것보다 단안 영상에서 추정한 깊이가 전체 스윙의 동작 패턴을 유지하게 만드는 것이 핵심 문제였습니다.",
+        "먼저 2D pose detector로 관절을 추적하고, 243-frame MotionAGFormer가 sequence를 3D로 변환합니다. 학습 데이터와 평가 clip, motion-capture trial을 분리해 source video 밖에서도 시간적 biomechanics가 유지되는지 확인했습니다.",
+      ],
+      metricCards: [
+        { label: "독립 mocap", value: "6 trials", note: "학습에 사용하지 않은 CMU 골프 스윙" },
+        { label: "X-Factor 패턴", value: "평균 |r| 0.95", note: "예측값과 motion-capture 몸통 회전 비교" },
+        { label: "Clean-2D 실험", value: "35.6 mm", note: "동기화 validation의 평균 3D 관절 오차" },
+      ],
+      flow: {
+        title: "단안 영상에서 biomechanics time series까지",
+        intro: "2D detection 오차와 3D lifting 오차를 분리하고, 관절 위치와 실제 골프 분석에 쓰는 동작 패턴을 함께 평가했습니다.",
+        steps: [
+          { label: "영상과 2D 관절", description: "프레임을 따로 처리하지 않고 전체 스윙의 17개 관절을 검출하고 정규화합니다." },
+          { label: "Temporal 3D lifting", description: "243-frame MotionAGFormer window로 깊이를 추정하고 동작의 연속성을 유지합니다." },
+          { label: "Biomechanics", description: "복원된 skeleton에서 몸통, 골반, X-Factor와 무릎 움직임을 계산합니다." },
+          { label: "Cross-domain 평가", description: "독립 CMU motion capture의 시간 곡선과 비교하고 domain shift를 별도로 확인합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/myshot/myshot-golfdb-2d-to-3d.png",
+          alt: "익명화한 골프 스윙의 address, top, impact, finish에서 원본 frame, 2D 관절과 3D skeleton 복원 결과를 비교한 예시",
+          caption: "익명화한 연구 데이터 예시 · 현재 모델 · address, top, impact, finish",
+        },
+        {
+          src: "/img/projects/myshot/myshot-method.svg",
+          alt: "단안 골프 영상에서 2D pose detection, 243-frame MotionAGFormer 3D lifting, biomechanics curve와 cross-domain validation으로 이어지는 구조도",
+          caption: "Detection, temporal lifting, biomechanics와 cross-domain validation을 분리해 평가했습니다",
+        },
+        {
+          src: "/img/projects/myshot/myshot-cmu-xfactor.png",
+          alt: "독립 CMU 골프 motion-capture 6개에서 예측 X-Factor와 정답 곡선을 비교한 그래프",
+          caption: "독립 CMU motion capture · 6 trials · 평균 절대상관 0.95",
+        },
+      ],
+      contribution: [
+        "2D-to-3D 학습·추론 경로, phase-aligned biomechanics, disjoint split, leakage audit와 cross-domain 평가를 구현했습니다.",
+        "Clean-2D lifting 성능과 실제 영상의 detection error를 분리해 deployment에서의 한계를 함께 확인했습니다.",
+      ],
+      category: "Computer Vision",
+      builtWith: ["PyTorch", "MotionAGFormer", "2D pose", "Monocular 3D pose", "Motion capture"],
+    },
+    "google-surf-mcp": {
+      claim: "AI Agent 검색·문서 추출 인프라 · MCP 도구 6개 · 테스트 388개",
+      lead: [
+        "Agent 검색은 검색창 밖에서 더 자주 실패합니다. Provider가 차단되고, redirect가 내부 주소를 숨기며, 웹 markup이 바뀌고, PDF의 읽기 순서가 무너지거나 CAPTCHA가 자동화를 중단시킵니다. google-surf-mcp는 이런 실패를 복구 가능한 하나의 tool boundary로 묶었습니다.",
+        "Google·학술 검색, 웹·PDF 추출, 병렬 실행, provider fallback, CAPTCHA handoff, cache, parser self-healing과 SSRF 방어를 결합했습니다. Agent는 각 workflow마다 브라우저 복구 로직을 다시 만들지 않고 구조화된 결과를 받을 수 있습니다.",
+      ],
+      metricCards: [
+        { label: "MCP interface", value: "6 tools", note: "검색, 병렬 검색, 웹, PDF와 학술 검색" },
+        { label: "검증", value: "388 / 388", note: "44개 test file 전체 Vitest 통과" },
+        { label: "Runtime 경계", value: "복구 가능", note: "Fallback, cache, CAPTCHA handoff와 self-healing parser" },
+      ],
+      flow: {
+        title: "불안정한 검색과 문서 소스를 하나의 Agent interface로",
+        intro: "Provider 선택, 추출, 복구와 보안을 분리해 실패가 발생한 layer에서 처리하도록 설계했습니다.",
+        steps: [
+          { label: "Agent request", description: "검색과 추출을 일관된 response schema의 typed MCP tool로 제공합니다." },
+          { label: "Provider routing", description: "Browser 또는 API 검색을 선택하고 병렬 query 중 실패한 query만 개별 fallback합니다." },
+          { label: "Document extraction", description: "웹 본문과 공간 순서를 보존한 PDF text를 같은 interface에서 추출합니다." },
+          { label: "Recovery와 safety", description: "CAPTCHA, cache, rate limit, parser drift, redirect와 SSRF를 처리한 뒤 구조화된 결과를 반환합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/google-surf-mcp/google-surf-architecture.svg",
+          alt: "6개 MCP tool이 검색 provider, 웹과 PDF 추출, cache, CAPTCHA handoff, parser healing과 SSRF 방어로 연결되는 구조도",
+          caption: "6개 tool이 provider, extraction, recovery와 safety layer를 공유합니다",
+        },
+        {
+          src: "/img/projects/google-surf-mcp/google-surf-validation.svg",
+          alt: "Search와 provider, extraction과 SSRF, recovery와 healing, runtime state 영역에서 388개 테스트가 통과한 결과",
+          caption: "전체 Vitest · 44개 file, 388개 test",
+        },
+      ],
+      contribution: [
+        "MCP API와 provider routing, 병렬 검색, 웹·PDF 추출, cache, recovery와 security boundary를 설계하고 구현했습니다.",
+        "실제 markup drift, redirect, CAPTCHA, parser와 cloud runtime 실패 조건을 regression test로 만들고 package를 공개했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/google-surf-mcp", note: "배포된 MCP server, test와 runtime 문서" },
+      ],
+      category: "Production ML Infrastructure",
+      builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
   },
 };

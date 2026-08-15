@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+<title id="title">Google Surf MCP automated validation surface</title>
+<desc id="desc">Version 0.8.0 passes 388 of 388 automated behavior tests across 44 files.</desc>
+<style>
+.bg{fill:#f7f6f2}.surface{fill:#ffffff}.soft{fill:#dfe9e6}.soft2{fill:#eef2ef}.ink{fill:#202827}.muted{fill:#566361}.faint{fill:#75817f}.line{stroke:#c7ceca}.accent{fill:#587776}.accent-line{stroke:#587776}.risk{fill:#c25a35}.risk-soft{fill:#f5e4dc}.title{font:650 36px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}.head{font:650 24px ui-sans-serif,system-ui,sans-serif}.body{font:19px ui-sans-serif,system-ui,sans-serif}.small{font:17px ui-sans-serif,system-ui,sans-serif}.mono{font:600 17px ui-monospace,SFMono-Regular,monospace}.stat{font:700 42px ui-monospace,SFMono-Regular,monospace}.arrow{fill:none;stroke:#587776;stroke-width:3}.dash{fill:none;stroke:#75817f;stroke-width:2;stroke-dasharray:7 7}
+@media (prefers-color-scheme:dark){.bg{fill:#1b2423}.surface{fill:#222e2d}.soft{fill:#29423f}.soft2{fill:#293735}.ink{fill:#eef2ef}.muted{fill:#b7c3c0}.faint{fill:#93a29f}.line{stroke:#465754}.accent{fill:#8db0ab}.accent-line{stroke:#8db0ab}.risk{fill:#e07a56}.risk-soft{fill:#4a332c}.arrow{stroke:#8db0ab}.dash{stroke:#93a29f}}
+</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" class="accent"/></marker></defs>
+<rect class="bg" width="1200" height="820" rx="18"/>
+<text class="title ink" x="60" y="62" text-anchor="start">Validation surface, not a feature checklist</text>
+<text class="subtitle muted" x="60" y="94" text-anchor="start">Current source exercised across routing, extraction, recovery, and runtime state</text>
+<rect class="soft line" x="60" y="126" width="1080" height="130" rx="18" stroke-width="1.5"/>
+<text class="stat ink" x="90" y="183" text-anchor="start">388 / 388</text>
+<text class="body muted" x="90" y="222" text-anchor="start">automated behavior tests passed</text>
+<text class="stat ink" x="430" y="181" text-anchor="start">44</text>
+<text class="body muted" x="430" y="222" text-anchor="start">test files</text>
+<text class="stat ink" x="710" y="181" text-anchor="start">v0.8.0</text>
+<text class="body muted" x="710" y="222" text-anchor="start">verified source version</text>
+<rect class="soft2" x="90" y="237" width="1020" height="8" rx="4"/>
+<rect class="accent" x="90" y="237" width="1020" height="8" rx="4"/>
+<rect class="surface line" x="60" y="300" width="520" height="178" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="86" y="340" text-anchor="start">Search &amp; providers</text>
+<text class="stat ink" x="86" y="382" text-anchor="start">129</text>
+<text class="body muted" x="184" y="379" text-anchor="start">tests · 14 files</text>
+<text class="small ink" x="86" y="412" text-anchor="start">Google + Scholar parsing</text>
+<text class="small ink" x="86" y="438" text-anchor="start">SearchApi mapping + fallback</text>
+<text class="small ink" x="86" y="464" text-anchor="start">scoring, triage, partial drift</text>
+<rect class="surface line" x="620" y="300" width="520" height="178" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="646" y="340" text-anchor="start">Extraction &amp; SSRF</text>
+<text class="stat ink" x="646" y="382" text-anchor="start">56</text>
+<text class="body muted" x="744" y="379" text-anchor="start">tests · 7 files</text>
+<text class="small ink" x="646" y="412" text-anchor="start">URL, DNS, redirect guards</text>
+<text class="small ink" x="646" y="438" text-anchor="start">Playwright navigation guard</text>
+<text class="small ink" x="646" y="464" text-anchor="start">HTML, PDF, malformed PDF</text>
+<rect class="surface line" x="60" y="510" width="520" height="178" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="86" y="550" text-anchor="start">Recovery &amp; healing</text>
+<text class="stat ink" x="86" y="592" text-anchor="start">120</text>
+<text class="body muted" x="184" y="589" text-anchor="start">tests · 13 files</text>
+<text class="small ink" x="86" y="622" text-anchor="start">CAPTCHA state + recovery</text>
+<text class="small ink" x="86" y="648" text-anchor="start">parser strategy validation</text>
+<text class="small ink" x="86" y="674" text-anchor="start">backoff, timeout, error contracts</text>
+<rect class="surface line" x="620" y="510" width="520" height="178" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="646" y="550" text-anchor="start">Runtime &amp; state</text>
+<text class="stat ink" x="646" y="592" text-anchor="start">83</text>
+<text class="body muted" x="744" y="589" text-anchor="start">tests · 10 files</text>
+<text class="small ink" x="646" y="622" text-anchor="start">pool deadlock + dead workers</text>
+<text class="small ink" x="646" y="648" text-anchor="start">cache, cascade, limiter</text>
+<text class="small ink" x="646" y="674" text-anchor="start">telemetry + health data</text>
+<rect class="soft2 line" x="60" y="728" width="1080" height="55" rx="18" stroke-width="1.5"/>
+<text class="body muted" x="85" y="763" text-anchor="start">Measured here: behavior tests. No statement-coverage percentage is implied.</text>
+</svg>

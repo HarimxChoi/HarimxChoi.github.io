@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1040" role="img" aria-labelledby="title desc">
+<title id="title">Google Surf MCP architecture</title>
+<desc id="desc">Six MCP tools route through browser or SearchApi providers, guarded extraction, parser recovery, cache, telemetry, and health controls.</desc>
+<style>
+.bg{fill:#f7f6f2}.surface{fill:#ffffff}.soft{fill:#dfe9e6}.soft2{fill:#eef2ef}.ink{fill:#202827}.muted{fill:#566361}.faint{fill:#75817f}.line{stroke:#c7ceca}.accent{fill:#587776}.accent-line{stroke:#587776}.risk{fill:#c25a35}.risk-soft{fill:#f5e4dc}.title{font:650 36px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}.head{font:650 24px ui-sans-serif,system-ui,sans-serif}.body{font:19px ui-sans-serif,system-ui,sans-serif}.small{font:17px ui-sans-serif,system-ui,sans-serif}.mono{font:600 17px ui-monospace,SFMono-Regular,monospace}.stat{font:700 42px ui-monospace,SFMono-Regular,monospace}.arrow{fill:none;stroke:#587776;stroke-width:3}.dash{fill:none;stroke:#75817f;stroke-width:2;stroke-dasharray:7 7}
+@media (prefers-color-scheme:dark){.bg{fill:#1b2423}.surface{fill:#222e2d}.soft{fill:#29423f}.soft2{fill:#293735}.ink{fill:#eef2ef}.muted{fill:#b7c3c0}.faint{fill:#93a29f}.line{stroke:#465754}.accent{fill:#8db0ab}.accent-line{stroke:#8db0ab}.risk{fill:#e07a56}.risk-soft{fill:#4a332c}.arrow{stroke:#8db0ab}.dash{stroke:#93a29f}}
+</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" class="accent"/></marker></defs>
+<rect class="bg" width="1440" height="1040" rx="18"/>
+<text class="title ink" x="60" y="62" text-anchor="start">Google Surf MCP · search that survives real web failure modes</text>
+<text class="subtitle muted" x="60" y="94" text-anchor="start">v0.8.0 · browser-first, API-routable, extraction-aware</text>
+<rect class="surface line" x="60" y="125" width="1320" height="125" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="88" y="161" text-anchor="start">MCP tool surface</text>
+<rect class="soft" x="88" y="184" width="132" height="42" rx="21"/>
+<text class="mono ink" x="154" y="211" text-anchor="middle">search</text>
+<rect class="soft" x="238" y="184" width="188" height="42" rx="21"/>
+<text class="mono ink" x="332" y="211" text-anchor="middle">scholar_search</text>
+<rect class="soft" x="444" y="184" width="200" height="42" rx="21"/>
+<text class="mono ink" x="544" y="211" text-anchor="middle">search_parallel</text>
+<rect class="soft" x="662" y="184" width="125" height="42" rx="21"/>
+<text class="mono ink" x="724" y="211" text-anchor="middle">extract</text>
+<rect class="soft" x="805" y="184" width="180" height="42" rx="21"/>
+<text class="mono ink" x="895" y="211" text-anchor="middle">search_extract</text>
+<rect class="soft" x="1003" y="184" width="110" height="42" rx="21"/>
+<text class="mono ink" x="1058" y="211" text-anchor="middle">health</text>
+<rect class="surface line" x="60" y="310" width="360" height="275" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="88" y="353" text-anchor="start">Routing + orchestration</text>
+<circle class="accent" cx="88" cy="391" r="4"/>
+<text class="body ink" x="104" y="397" text-anchor="start">browser · searchapi · fallback</text>
+<circle class="accent" cx="88" cy="425" r="4"/>
+<text class="body ink" x="104" y="431" text-anchor="start">single request or 2–10 query fan-out</text>
+<circle class="accent" cx="88" cy="459" r="4"/>
+<text class="body ink" x="104" y="465" text-anchor="start">per-query fallback keeps successful rows</text>
+<circle class="accent" cx="88" cy="493" r="4"/>
+<text class="body ink" x="104" y="499" text-anchor="start">structured, retryable error contracts</text>
+<rect class="soft line" x="470" y="310" width="440" height="275" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="498" y="353" text-anchor="start">Browser provider</text>
+<circle class="accent" cx="498" cy="391" r="4"/>
+<text class="body ink" x="514" y="397" text-anchor="start">persistent Playwright profile</text>
+<circle class="accent" cx="498" cy="425" r="4"/>
+<text class="body ink" x="514" y="431" text-anchor="start">sequential context + parallel worker pool</text>
+<circle class="accent" cx="498" cy="459" r="4"/>
+<text class="body ink" x="514" y="465" text-anchor="start">Google Search + Scholar parsers</text>
+<circle class="accent" cx="498" cy="493" r="4"/>
+<text class="body ink" x="514" y="499" text-anchor="start">normal → stealth → human CAPTCHA recovery</text>
+<rect class="soft2 line" x="960" y="310" width="420" height="275" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="988" y="353" text-anchor="start">SearchApi provider</text>
+<circle class="accent" cx="988" cy="391" r="4"/>
+<text class="body ink" x="1004" y="397" text-anchor="start">Google Search + Scholar engines</text>
+<circle class="accent" cx="988" cy="425" r="4"/>
+<text class="body ink" x="1004" y="431" text-anchor="start">primary route or browser fallback</text>
+<circle class="accent" cx="988" cy="459" r="4"/>
+<text class="body ink" x="1004" y="465" text-anchor="start">cloud-compatible execution path</text>
+<circle class="accent" cx="988" cy="493" r="4"/>
+<text class="body ink" x="1004" y="499" text-anchor="start">fallback reason preserved in metadata</text>
+<rect class="surface line" x="60" y="650" width="360" height="245" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="88" y="693" text-anchor="start">Operating controls</text>
+<circle class="accent" cx="88" cy="731" r="4"/>
+<text class="body ink" x="104" y="737" text-anchor="start">rate limiter + unified TTL cache</text>
+<circle class="accent" cx="88" cy="765" r="4"/>
+<text class="body ink" x="104" y="771" text-anchor="start">parser drift detection + strategy healing</text>
+<circle class="accent" cx="88" cy="799" r="4"/>
+<text class="body ink" x="104" y="805" text-anchor="start">telemetry events + health snapshot</text>
+<circle class="accent" cx="88" cy="833" r="4"/>
+<text class="body ink" x="104" y="839" text-anchor="start">pool reset and dead-worker recovery</text>
+<rect class="surface line" x="470" y="650" width="910" height="245" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="498" y="693" text-anchor="start">HTML + academic PDF extraction</text>
+<rect class="risk-soft" x="498" y="720" width="854" height="48" rx="12"/>
+<text class="body risk" x="522" y="751" text-anchor="start">SSRF boundary: URL · DNS · every redirect · Playwright navigation</text>
+<circle class="accent" cx="498" cy="798" r="4"/>
+<text class="body ink" x="514" y="804" text-anchor="start">HTML: metadata → Mozilla Readability → clean Markdown</text>
+<circle class="accent" cx="498" cy="829" r="4"/>
+<text class="body ink" x="514" y="835" text-anchor="start">PDF: content type + magic bytes + citation/domain discovery → LiteParse</text>
+<circle class="accent" cx="498" cy="860" r="4"/>
+<text class="body ink" x="514" y="866" text-anchor="start">metadata / abstract / full modes · untrusted content fenced</text>
+<rect class="soft line" x="60" y="940" width="1320" height="68" rx="18" stroke-width="1.5"/>
+<text class="head ink" x="88" y="982" text-anchor="start">Output</text>
+<text class="body ink" x="188" y="982" text-anchor="start">content + provider + cache + parser strategy + quality + bounded error</text>
+<path class="arrow" d="M240 250 V310" marker-end="url(#arrow)"/>
+<path class="arrow" d="M420 438 H470" marker-end="url(#arrow)"/>
+<path class="arrow" d="M420 390 C470 275 1170 275 1170 310" marker-end="url(#arrow)"/>
+<path class="arrow" d="M690 585 V650" marker-end="url(#arrow)"/>
+<path class="arrow" d="M1170 585 V620 C1170 620 900 620 900 650" marker-end="url(#arrow)"/>
+<path class="arrow" d="M925 895 V940" marker-end="url(#arrow)"/>
+<path class="dash" d="M240 585 V650"/>
+<path class="dash" d="M240 895 V940"/>
+</svg>
