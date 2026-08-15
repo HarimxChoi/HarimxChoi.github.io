@@ -102,6 +102,11 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           alt: "Bar chart comparing WSSS performance of WeCLIP+ at 51.8 percent mIoU and the refined method at 53.31 percent mIoU on all 40,137 COCO-Val 2014 images",
           caption: "COCO-Val 2014 · all 40,137 validation images · mIoU",
         },
+        {
+          src: "/img/wsss-architecture.png",
+          alt: "Weakly supervised segmentation architecture using frozen CLIP and DINOv2 representations, selective pseudo-mask repair, and self-training",
+          caption: "Frozen visual representations, reliability mapping, selective pixel repair, and retraining",
+        },
       ],
       resultTables: [
         {
@@ -649,6 +654,11 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           src: "/img/projects/wsss/wsss-performance.svg",
           alt: "COCO-Val 2014 전체 40,137개 이미지에서 WeCLIP+ 51.8% mIoU와 refined method 53.31% mIoU를 비교한 막대그래프",
           caption: "COCO-Val 2014 · validation image 40,137개 전체 · mIoU",
+        },
+        {
+          src: "/img/wsss-architecture.png",
+          alt: "고정한 CLIP과 DINOv2 표현, 선택적 pseudo-mask 복원과 self-training으로 구성된 weakly supervised segmentation 구조",
+          caption: "Frozen representation, reliability map, 선택적 pixel 복원과 재학습",
         },
       ],
       resultTables: [
