@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+<title id="title">Monogram hybrid retrieval</title>
+<desc id="desc">Monogram creates local EmbeddingGemma vectors, stores symmetric int8 embeddings in Git-backed area-and-month JSONL shards, and combines semantic dot-product ranking with BM25 via reciprocal rank fusion.</desc>
+<style>
+  .bg{fill:#f7f5ef}.panel{fill:#efede7}.panel2{fill:#e8e4dc}.ink{fill:#272b31}.muted{fill:#6d7480}
+  .line{stroke:#aaa59b}.grid{stroke:#d8d4ca}.accent{fill:#c25a35}.accent-line{stroke:#c25a35}
+  .blue{fill:#557a92}.blue-line{stroke:#557a92}.green{fill:#63836b}.green-line{stroke:#63836b}
+  .purple{fill:#7867a4}.purple-line{stroke:#7867a4}.arrow-fill{fill:#aaa59b}
+  .title{font:600 36px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}
+  .heading{font:600 24px ui-sans-serif,system-ui,sans-serif}.label{font:20px ui-sans-serif,system-ui,sans-serif}
+  .small{font:17px ui-sans-serif,system-ui,sans-serif}.tiny{font:15px ui-sans-serif,system-ui,sans-serif}
+  .metric{font:600 25px ui-monospace,SFMono-Regular,monospace}.mono{font:17px ui-monospace,SFMono-Regular,monospace}
+  @media(prefers-color-scheme:dark){
+    .bg{fill:#1d1f21}.panel{fill:#282a2d}.panel2{fill:#313338}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}
+    .line{stroke:#6b6d71}.grid{stroke:#3b3d40}.accent{fill:#e07a56}.accent-line{stroke:#e07a56}
+    .blue{fill:#72a3be}.blue-line{stroke:#72a3be}.green{fill:#83aa8b}.green-line{stroke:#83aa8b}
+    .purple{fill:#a99add}.purple-line{stroke:#a99add}.arrow-fill{fill:#6b6d71}
+  }
+</style>
+<defs><marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path class="arrow-fill" d="M0,0 L10,5.5 L0,11 Z"/></marker></defs>
+<rect class="bg" width="1500" height="900" rx="18"/>
+<text class="title ink" x="72" y="58" text-anchor="start">Hybrid retrieval without a vector database</text>
+<text class="subtitle muted" x="72" y="91" text-anchor="start">EmbeddingGemma ONNX + int8 JSONL shards + BM25/RRF · no FAISS or hosted vector service</text>
+<rect class="panel" x="72" y="120" width="300" height="96" rx="14"/>
+<text class="metric accent" x="100" y="152" text-anchor="start">256 dims</text>
+<text class="small muted" x="100" y="184" text-anchor="start">default MRL slice</text>
+<rect class="panel" x="388" y="120" width="300" height="96" rx="14"/>
+<text class="metric blue" x="416" y="152" text-anchor="start">INT8</text>
+<text class="small muted" x="416" y="184" text-anchor="start">symmetric [-127, 127]</text>
+<rect class="panel" x="704" y="120" width="300" height="96" rx="14"/>
+<text class="metric green" x="732" y="152" text-anchor="start">4x smaller</text>
+<text class="small muted" x="732" y="184" text-anchor="start">raw vector vs float32</text>
+<rect class="panel" x="1020" y="120" width="408" height="96" rx="14"/>
+<text class="metric purple" x="1048" y="152" text-anchor="start">Area × month</text>
+<text class="small muted" x="1048" y="184" text-anchor="start">self-routing, Git-versioned shards</text>
+<text class="small muted" x="72" y="264" text-anchor="start">INDEX BUILD</text>
+<rect class="panel" x="72" y="282" width="210" height="110" rx="14"/>
+<text class="heading ink" x="94" y="323" text-anchor="start">Markdown vault</text>
+<text class="small muted" x="94" y="359" text-anchor="start">wiki · projects · life · daily</text>
+<line class="line" x1="282" y1="337" x2="294" y2="337" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel2" x="306" y="282" width="226" height="110" rx="14"/>
+<text class="heading ink" x="328" y="323" text-anchor="start">Chunk + route</text>
+<text class="small muted" x="328" y="359" text-anchor="start">H2 split · area/month key</text>
+<line class="line" x1="532" y1="337" x2="544" y2="337" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="556" y="282" width="266" height="110" rx="14"/>
+<text class="heading ink" x="578" y="323" text-anchor="start">EmbeddingGemma</text>
+<text class="small muted" x="578" y="359" text-anchor="start">300M · ONNX CPU · 768→256</text>
+<line class="line" x1="822" y1="337" x2="834" y2="337" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel2" x="846" y="282" width="230" height="110" rx="14"/>
+<text class="heading ink" x="868" y="323" text-anchor="start">Normalize + INT8</text>
+<text class="small muted" x="868" y="359" text-anchor="start">L2 · base64 payload</text>
+<line class="line" x1="1076" y1="337" x2="1080" y2="337" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="1092" y="282" width="336" height="110" rx="14"/>
+<text class="heading ink" x="1114" y="323" text-anchor="start">JSONL shards</text>
+<text class="small muted" x="1114" y="359" text-anchor="start">manifest + changed shards only</text>
+<text class="small muted" x="72" y="448" text-anchor="start">QUERY</text>
+<rect class="panel2" x="72" y="468" width="276" height="86" rx="14"/>
+<text class="heading ink" x="98" y="503" text-anchor="start">Natural-language query</text>
+<text class="small muted" x="98" y="532" text-anchor="start">optional area filter</text>
+<line class="line" x1="348" y1="511" x2="380" y2="511" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="392" y="468" width="250" height="86" rx="14"/>
+<text class="heading ink" x="418" y="503" text-anchor="start">Embed once</text>
+<text class="small muted" x="418" y="532" text-anchor="start">same prompt + INT8 path</text>
+<line class="line" x1="642" y1="511" x2="662" y2="511" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="676" y="446" width="276" height="244" rx="14"/>
+<text class="heading ink" x="700" y="484" text-anchor="start">Semantic lane</text>
+<circle class="accent" cx="706" cy="521" r="13" opacity=".18"/>
+<text class="mono ink" x="706" y="527" text-anchor="middle">1</text>
+<rect class="panel2" x="730" y="503" width="194" height="36" rx="8"/>
+<text class="mono ink" x="746" y="527" text-anchor="start">A · concept match</text>
+<circle class="accent" cx="706" cy="573" r="13" opacity=".18"/>
+<text class="mono ink" x="706" y="579" text-anchor="middle">2</text>
+<rect class="panel2" x="730" y="555" width="194" height="36" rx="8"/>
+<text class="mono ink" x="746" y="579" text-anchor="start">C · nearby context</text>
+<circle class="accent" cx="706" cy="625" r="13" opacity=".18"/>
+<text class="mono ink" x="706" y="631" text-anchor="middle">3</text>
+<rect class="panel2" x="730" y="607" width="194" height="36" rx="8"/>
+<text class="mono ink" x="746" y="631" text-anchor="start">B · related note</text>
+<rect class="panel" x="972" y="446" width="276" height="244" rx="14"/>
+<text class="heading ink" x="996" y="484" text-anchor="start">Lexical lane</text>
+<circle class="blue" cx="1002" cy="521" r="13" opacity=".18"/>
+<text class="mono ink" x="1002" y="527" text-anchor="middle">1</text>
+<rect class="panel2" x="1026" y="503" width="194" height="36" rx="8"/>
+<text class="mono ink" x="1042" y="527" text-anchor="start">B · exact terms</text>
+<circle class="blue" cx="1002" cy="573" r="13" opacity=".18"/>
+<text class="mono ink" x="1002" y="579" text-anchor="middle">2</text>
+<rect class="panel2" x="1026" y="555" width="194" height="36" rx="8"/>
+<text class="mono ink" x="1042" y="579" text-anchor="start">A · partial terms</text>
+<circle class="blue" cx="1002" cy="625" r="13" opacity=".18"/>
+<text class="mono ink" x="1002" y="631" text-anchor="middle">3</text>
+<rect class="panel2" x="1026" y="607" width="194" height="36" rx="8"/>
+<text class="mono ink" x="1042" y="631" text-anchor="start">D · keyword hit</text>
+<text class="tiny muted" x="814" y="713" text-anchor="middle">NumPy int16 matmul</text>
+<text class="tiny muted" x="814" y="736" text-anchor="middle">pure-Python dot fallback</text>
+<text class="tiny muted" x="1110" y="713" text-anchor="middle">BM25 k1=1.5 · b=0.75</text>
+<line class="line" x1="814" y1="690" x2="814" y2="762" stroke-width="3" marker-end="url(#arrow)"/>
+<line class="line" x1="1110" y1="690" x2="1110" y2="762" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel2" x="690" y="774" width="350" height="82" rx="14"/>
+<text class="heading ink" x="720" y="808" text-anchor="start">Reciprocal Rank Fusion</text>
+<text class="small muted" x="720" y="838" text-anchor="start">fusion without score calibration</text>
+<line class="line" x1="1040" y1="815" x2="1052" y2="815" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="1064" y="774" width="238" height="82" rx="14"/>
+<text class="heading ink" x="1086" y="808" text-anchor="start">Optional reranker</text>
+<text class="small muted" x="1086" y="838" text-anchor="start">ONNX cross-encoder</text>
+<line class="line" x1="1302" y1="815" x2="1314" y2="815" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="1326" y="742" width="102" height="114" rx="14"/>
+<text class="heading ink" x="1377" y="780" text-anchor="middle">Top k</text>
+<text class="mono muted" x="1377" y="811" text-anchor="middle">path</text>
+<text class="mono muted" x="1377" y="835" text-anchor="middle">heading</text>
+<text class="mono muted" x="1377" y="859" text-anchor="middle">excerpt</text>
+<text class="small muted" x="72" y="604" text-anchor="start">FALLBACK</text>
+<rect class="panel" x="72" y="626" width="520" height="110" rx="14"/>
+<text class="heading ink" x="100" y="664" text-anchor="start">No service dependency</text>
+<text class="small muted" x="100" y="696" text-anchor="start">NumPy unavailable → pure-Python dot scan</text>
+<text class="small muted" x="100" y="722" text-anchor="start">Reranker unavailable → keep RRF order</text>
+<text class="small muted" x="72" y="866" text-anchor="start">Ranking cards illustrate the fusion path; they are not benchmark results. Raw-size comparison is derived from 256 × 1-byte INT8 vs 256 × 4-byte float32.</text>
+</svg>

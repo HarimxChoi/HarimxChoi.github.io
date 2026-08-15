@@ -504,6 +504,99 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       category: "Production ML Infrastructure",
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
+    monogram: {
+      claim: "Local-first knowledge pipeline · validated capture, atomic Git storage, and hybrid retrieval",
+      lead: [
+        "Personal knowledge systems usually split capture, structure, search, and backup into separate tools. Monogram treats them as one path: accept a message or document, verify what should be saved, commit all related files atomically, and make the result searchable from the same local knowledge base.",
+        "Semantic retrieval uses EmbeddingGemma-300M with an ONNX backend and a Git-backed sharded INT8 index. Dense similarity and BM25 are fused with RRF, with optional graph expansion and reranking; the implementation does not depend on FAISS or an external vector database.",
+      ],
+      metricCards: [
+        { label: "Capture pipeline", value: "5 stages", note: "Orchestrator, classifier, extractor, verifier, writer" },
+        { label: "Storage boundary", value: "1 Git commit", note: "Related notes and assets written atomically" },
+        { label: "Semantic index", value: "256-d INT8", note: "Domain-by-month JSONL shards" },
+      ],
+      flow: {
+        title: "From an unstructured input to a searchable, versioned note",
+        intro: "The system separates understanding from writing, then uses Git as both the storage transaction and recovery boundary.",
+        steps: [
+          { label: "Capture", description: "Accept Telegram, MCP, Obsidian, or document inputs through the same ingestion boundary." },
+          { label: "Structure and verify", description: "Classify the input, extract fields, and verify the proposed note before writing." },
+          { label: "Atomic storage", description: "Create or update all files with one Git Tree commit so partial writes cannot split the knowledge item." },
+          { label: "Hybrid retrieval", description: "Combine sharded semantic search and BM25 through RRF, with optional graph expansion, MMR, and reranking." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/monogram/monogram-architecture.svg",
+          alt: "Monogram architecture showing Telegram, MCP and document inputs through a five-stage validation pipeline into an atomic Git Tree commit and searchable outputs",
+          caption: "One path from capture and verification to atomic storage and retrieval",
+        },
+        {
+          src: "/img/projects/monogram/monogram-hybrid-retrieval.svg",
+          alt: "Hybrid retrieval diagram showing EmbeddingGemma ONNX embeddings, a sharded INT8 JSONL index, NumPy similarity scan, BM25, RRF, and optional reranking",
+          caption: "Custom sharded vector index + BM25/RRF · no FAISS dependency",
+        },
+        {
+          src: "/img/monogram-dashboard.png",
+          alt: "Monogram dashboard rendered with synthetic example data",
+          caption: "Encrypted dashboard · synthetic example data",
+        },
+      ],
+      contribution: [
+        "Designed the five-stage capture pipeline, atomic Git Tree writer, sharded semantic index, hybrid retrieval path, MCP surface, and recovery controls.",
+        "Added SSRF defense, secret redaction, cassette evaluation, backup, and a kill switch around automatic capture and retrieval.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/monogram", note: "Capture pipeline, Git storage, retrieval, MCP server, and dashboard" },
+      ],
+      category: "RAG & Retrieval",
+      builtWith: ["Python", "EmbeddingGemma", "ONNX Runtime", "BM25 / RRF", "Git Tree API"],
+    },
+    "bau-browser": {
+      claim: "Agent-native browser with bounded actions · exact 17/36 → 36/36 and forbidden executions 6 → 0",
+      lead: [
+        "A browser agent can read untrusted pages and then act with a user's identity, so a fluent plan is not enough. Bau Browser keeps targets, verbs, origins, arguments, approval, execution, and receipts inside separate host-owned boundaries that remain inspectable before and after an action.",
+        "The local model selects a compact bound draft rather than writing executable arguments. Trusted bindings and TaskSpec data are compiled by the host, shown through a propose–approve–execute flow, and recorded with postconditions and a decision log.",
+      ],
+      metricCards: [
+        { label: "Synthetic exact", value: "17/36 → 36/36", note: "Base vs. bound-draft adapter" },
+        { label: "Forbidden execution", value: "6 → 0", note: "Origin-disjoint 36-case preflight" },
+        { label: "Safety gate", value: "12/12", note: "Adapter passed recovery and verification cases" },
+      ],
+      flow: {
+        title: "The model proposes identifiers; the host owns executable authority",
+        intro: "The browser keeps page understanding, action compilation, user approval, execution, and audit records as separate contracts.",
+        steps: [
+          { label: "Observe", description: "Build a PageGraph and TaskSpec from the active origin without granting an action yet." },
+          { label: "Bound draft", description: "Let the local model choose trusted target, verb, effect, and binding identifiers, not raw executable values." },
+          { label: "Compile and approve", description: "Reconstruct arguments from host-owned bindings, validate scope, and show the proposed action to the user." },
+          { label: "Execute and receipt", description: "Run only the approved action, verify postconditions, and write receipts and the DecisionLog." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/bau-browser/bau-execution-architecture.svg",
+          alt: "Bau Browser architecture from desktop browser and scoped PageGraph through bound draft, host compiler, propose approve execute flow, browser or MCP action, receipts, postconditions, and decision log",
+          caption: "Executable values and authority remain in the trusted host, not in model output",
+        },
+        {
+          src: "/img/projects/bau-browser/bau-bound-draft-preflight.svg",
+          alt: "Synthetic 36-case comparison showing base exact responses 17 of 36 and six forbidden executions versus adapter exact responses 36 of 36 and zero forbidden executions",
+          caption: "Origin-disjoint synthetic preflight · not a live or official browser benchmark",
+        },
+        {
+          src: "/img/bau-browser-synthetic.png",
+          alt: "Native Bau Browser desktop capture using a synthetic product-comparison fixture",
+          caption: "Native desktop capture · synthetic fixture",
+        },
+      ],
+      contribution: [
+        "Built the Electron browser surface, scoped agent contracts, host compiler, two-phase HITL, MCP boundary, receipts, postconditions, and SQLite decision log.",
+        "Designed and trained the compact Qwen3.5-4B bound-draft pilot, then evaluated the frozen 36-case synthetic gate across exactness, compilation, binding, safety, and forbidden actions.",
+      ],
+      category: "Agent Safety",
+      builtWith: ["TypeScript", "Electron", "MCP", "Qwen3.5-4B", "SQLite"],
+    },
   },
   ko: {
     wsss: {
@@ -958,6 +1051,99 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       category: "Production ML Infrastructure",
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
+    },
+    monogram: {
+      claim: "Local-first 지식 pipeline · 검증된 수집, 원자적 Git 저장과 hybrid retrieval",
+      lead: [
+        "개인 지식 시스템은 보통 수집, 구조화, 검색과 backup이 서로 다른 도구로 나뉩니다. Monogram은 메시지나 문서를 받고, 무엇을 저장할지 검증하고, 관련 파일을 한 번에 commit한 뒤 같은 local knowledge base에서 다시 찾는 과정을 하나로 연결합니다.",
+        "Semantic retrieval은 EmbeddingGemma-300M ONNX backend와 Git-backed sharded INT8 index를 사용합니다. Dense similarity와 BM25를 RRF로 결합하고 필요하면 graph expansion과 reranking을 적용하며, FAISS나 외부 vector database에 의존하지 않습니다.",
+      ],
+      metricCards: [
+        { label: "Capture pipeline", value: "5 stages", note: "Orchestrator, classifier, extractor, verifier, writer" },
+        { label: "Storage 경계", value: "1 Git commit", note: "연관 note와 asset을 원자적으로 저장" },
+        { label: "Semantic index", value: "256-d INT8", note: "Domain×월 단위 JSONL shard" },
+      ],
+      flow: {
+        title: "정리되지 않은 입력에서 검색 가능한 versioned note까지",
+        intro: "내용을 이해하는 단계와 실제 쓰기를 분리하고, Git을 storage transaction과 recovery 경계로 함께 사용합니다.",
+        steps: [
+          { label: "Capture", description: "Telegram, MCP, Obsidian과 document 입력을 같은 ingestion boundary에서 받습니다." },
+          { label: "구조화와 검증", description: "입력을 분류하고 field를 추출한 뒤 저장할 note를 검증합니다." },
+          { label: "원자적 저장", description: "관련 파일을 하나의 Git Tree commit으로 저장해 knowledge item이 부분적으로 쓰이지 않게 합니다." },
+          { label: "Hybrid retrieval", description: "Sharded semantic search와 BM25를 RRF로 결합하고 graph expansion, MMR과 reranking을 선택적으로 적용합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/monogram/monogram-architecture.svg",
+          alt: "Telegram, MCP와 document 입력이 5단계 검증 pipeline을 거쳐 원자적 Git Tree commit과 검색 output으로 이어지는 Monogram 구조도",
+          caption: "Capture와 검증에서 원자적 저장과 retrieval까지 하나의 경로",
+        },
+        {
+          src: "/img/projects/monogram/monogram-hybrid-retrieval.svg",
+          alt: "EmbeddingGemma ONNX embedding, sharded INT8 JSONL index, NumPy similarity scan, BM25, RRF와 선택적 reranking으로 구성된 hybrid retrieval 구조",
+          caption: "Custom sharded vector index + BM25/RRF · FAISS dependency 없음",
+        },
+        {
+          src: "/img/monogram-dashboard.png",
+          alt: "합성 예시 데이터로 렌더링한 Monogram dashboard",
+          caption: "암호화 dashboard · 합성 예시 데이터",
+        },
+      ],
+      contribution: [
+        "5단계 capture pipeline, 원자적 Git Tree writer, sharded semantic index, hybrid retrieval 경로, MCP surface와 recovery control을 설계하고 구현했습니다.",
+        "자동 수집과 검색 경로에 SSRF 방어, secret redaction, cassette evaluation, backup과 kill switch를 추가했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/monogram", note: "Capture pipeline, Git storage, retrieval, MCP server와 dashboard" },
+      ],
+      category: "RAG & Retrieval",
+      builtWith: ["Python", "EmbeddingGemma", "ONNX Runtime", "BM25 / RRF", "Git Tree API"],
+    },
+    "bau-browser": {
+      claim: "행동 범위를 제한한 Agent browser · exact 17/36 → 36/36, 금지 행동 6 → 0",
+      lead: [
+        "Browser Agent는 신뢰할 수 없는 페이지를 읽은 뒤 사용자의 권한으로 행동할 수 있기 때문에 자연스러운 plan만으로는 부족합니다. Bau Browser는 target, verb, origin, argument, 승인, 실행과 receipt를 서로 다른 host-owned boundary에 두고 action 전후를 사용자가 확인할 수 있게 했습니다.",
+        "Local model은 실행 argument를 직접 쓰지 않고 compact bound draft에서 identifier만 선택합니다. Trusted binding과 TaskSpec으로 host가 action을 compile하고 propose–approve–execute 흐름을 거친 뒤 postcondition과 decision log를 기록합니다.",
+      ],
+      metricCards: [
+        { label: "Synthetic exact", value: "17/36 → 36/36", note: "Base 대비 bound-draft adapter" },
+        { label: "금지 행동", value: "6 → 0", note: "Origin-disjoint 36-case preflight" },
+        { label: "Safety gate", value: "12/12", note: "Recovery와 verification case 통과" },
+      ],
+      flow: {
+        title: "모델은 identifier를 제안하고 실행 권한은 host가 보유합니다",
+        intro: "Page 이해, action compilation, 사용자 승인, 실행과 audit record를 각각 독립된 contract로 구성했습니다.",
+        steps: [
+          { label: "Observe", description: "Action 권한을 주기 전에 active origin에서 PageGraph와 TaskSpec을 구성합니다." },
+          { label: "Bound draft", description: "Local model은 raw 실행값 대신 trusted target, verb, effect와 binding identifier를 선택합니다." },
+          { label: "Compile과 승인", description: "Host-owned binding에서 argument를 복원하고 scope를 검증한 뒤 사용자에게 action을 보여줍니다." },
+          { label: "실행과 receipt", description: "승인된 action만 실행하고 postcondition을 확인한 뒤 receipt와 DecisionLog를 남깁니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/bau-browser/bau-execution-architecture.svg",
+          alt: "Desktop browser와 scoped PageGraph에서 bound draft, host compiler, propose approve execute, browser 또는 MCP action, receipt, postcondition과 decision log로 이어지는 Bau Browser 구조도",
+          caption: "실행값과 권한은 모델 출력이 아니라 trusted host에 남습니다",
+        },
+        {
+          src: "/img/projects/bau-browser/bau-bound-draft-preflight.svg",
+          alt: "합성 36개 case에서 base exact 17/36과 금지 행동 6건이 adapter exact 36/36과 금지 행동 0건으로 바뀐 비교 결과",
+          caption: "Origin-disjoint synthetic preflight · live 또는 공식 browser benchmark가 아닙니다",
+        },
+        {
+          src: "/img/bau-browser-synthetic.png",
+          alt: "합성 상품 비교 fixture를 사용한 Bau Browser native desktop 화면",
+          caption: "Native desktop capture · synthetic fixture",
+        },
+      ],
+      contribution: [
+        "Electron browser surface, scoped agent contract, host compiler, two-phase HITL, MCP boundary, receipt, postcondition과 SQLite decision log를 구현했습니다.",
+        "Compact Qwen3.5-4B bound-draft pilot을 설계·학습하고 frozen 36-case synthetic gate에서 exactness, compilation, binding, safety와 금지 행동을 평가했습니다.",
+      ],
+      category: "Agent Safety",
+      builtWith: ["TypeScript", "Electron", "MCP", "Qwen3.5-4B", "SQLite"],
     },
   },
 };
