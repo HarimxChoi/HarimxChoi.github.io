@@ -9,6 +9,9 @@ const { lang } = Astro.props;
 const ko = lang === "ko";
 const homeHref = ko ? "/ko/" : "/";
 const postUrl = "https://harimxchoi.github.io/projects/warpquant";
+const repoUrl = "https://github.com/HarimxChoi/WarpQuant";
+const vlmUrl = "https://huggingface.co/HarimxChoi/WarpQuant-Qwen3.8-27B-R16E4H4";
+const textModelUrl = "https://huggingface.co/HarimxChoi/WarpQuant-Qwen3.8-27B-R16E4H4-Text";
 const references = [
   { citation: "Elias Frantar, Saleh Ashkboos, Torsten Hoefler, and Dan Alistarh. “GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers.” ICLR, 2023.", href: "https://arxiv.org/abs/2210.17323" },
   { citation: "Ji Lin et al. “AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration.” MLSys, 2024.", href: "https://arxiv.org/abs/2306.00978" },
@@ -90,7 +93,16 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
           ? "이 글에서는 LLM 추론의 세 가지 메모리 경로인 가중치, KV Cache, Activation을 어떻게 함께 줄였는지 설명합니다. 가중치는 Hadamard 회전과 block-GPTQ로 압축하고, Output-Fisher가 민감하다고 판단한 column만 고정밀도로 복원했습니다. KV Cache에는 TurboQuant 기반의 저비트 저장 방식을, Activation에는 token별 INT8 양자화를 적용했습니다."
           : "WarpQuant creates INT3 weights in a rotated coordinate system and uses Output-Fisher sensitivity in the original coordinates to choose which columns to recover. A TurboQuant-style KV cache and per-token INT8 activations extend the same design to the three memory paths of M=1 decoding."}
       </p>
+      <nav class="release-links" aria-label={ko ? "공개 자료" : "Release links"}>
+        <a href={repoUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href={vlmUrl} target="_blank" rel="noreferrer">Qwen3.8-27B VLM ↗</a>
+        <a href={textModelUrl} target="_blank" rel="noreferrer">Qwen3.8-27B Text ↗</a>
+      </nav>
     </header>
+
+    <figure class="release-visual hero-visual">
+      <img src="/img/projects/warpquant/warpquant-social-cover.png" alt="WarpQuant dual-domain INT3 LLM quantization overview" loading="eager" />
+    </figure>
 
     <div class="metric-grid" aria-label={ko ? "핵심 결과" : "Key results"}>
       <div><strong>3.6165</strong><span>Qwen3.8-27B text bpw</span></div>
@@ -242,6 +254,11 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
           <figcaption>{ko ? "그림 4. Qwen3.8-27B 텍스트 백본 전체의 가중치 용량 비교" : "Figure 4. Full text-backbone payload. WarpQuant uses a packed-equivalent analytical value."}</figcaption>
         </figure>
 
+        <figure class="release-visual">
+          <img src="/img/projects/warpquant/qwen38-pareto.png" alt="Qwen3.8-27B quality and memory Pareto comparison" loading="lazy" />
+          <figcaption>{ko ? "그림 5. 동일한 텍스트 백본 분모에서 측정한 메모리–품질 Pareto 곡선과 ARC-Challenge 점수" : "Figure 5. Memory–quality Pareto frontier and ARC-Challenge accuracy under the same text-backbone denominator."}</figcaption>
+        </figure>
+
         <div class="table-wrap">
           <table>
             <thead><tr><th>Format</th><th>Text bpw</th><th>Payload</th><th>WT2 PPL ↓</th><th>ARC-299 ↑</th><th>MMLU-13,943 ↑</th><th>Commonsense ↑</th><th>GSM8K-500 ↑</th></tr></thead>
@@ -313,7 +330,7 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
             <div><span>128K</span><strong>8.00 → 2.32 GiB</strong><small>3.45×</small></div>
             <div><span>256K</span><strong>16.00 → 4.63 GiB</strong><small>3.46×</small></div>
           </div>
-          <figcaption>{ko ? "그림 5. Context가 길어질수록 최근 128개 token의 고정 비용이 작아지고, KV Cache 압축률은 3.46배에 가까워집니다." : "Figure 5. As context grows, the fixed recent-window cost shrinks and compression approaches 3.46×."}</figcaption>
+          <figcaption>{ko ? "그림 6. Context가 길어질수록 최근 128개 token의 고정 비용이 작아지고, KV Cache 압축률은 3.46배에 가까워집니다." : "Figure 6. As context grows, the fixed recent-window cost shrinks and compression approaches 3.46×."}</figcaption>
         </figure>
 
         <p>
@@ -398,6 +415,13 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
   .wq-meta .report-label { padding: 3px 8px; color: var(--accent-ink); border: 1px solid var(--accent); border-radius: 99px; font-weight: 500; }
   h1 { margin: 20px 0 0; max-width: 900px; font-size: clamp(2.5rem, 6.2vw, 5rem); font-weight: 600; letter-spacing: -.058em; line-height: 1.03; }
   .wq-header > p { max-width: 760px; margin: 28px 0 0; color: var(--muted); font-size: clamp(1.02rem, 2vw, 1.22rem); line-height: 1.75; }
+  .release-links { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+  .release-links a { padding: 8px 11px; border: 1px solid var(--line); border-radius: 6px; color: var(--accent-ink); font-size: .72rem; font-weight: 600; }
+  .release-links a:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .release-visual { margin: 34px 0 0; }
+  .release-visual img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+  .release-visual figcaption { margin-top: 12px; color: var(--faint); font-size: .7rem; line-height: 1.6; }
+  .hero-visual { max-width: 900px; margin-top: 42px; }
   .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 54px; border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
   .metric-grid div { min-height: 118px; padding: 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .metric-grid strong { display: block; font-family: var(--font-mono); font-size: 1.45rem; font-weight: 500; }
