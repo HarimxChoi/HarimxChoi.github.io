@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+<title id="title">ISIC reliability at an equal compute budget</title>
+<desc id="desc">At the same estimated compute budget, cross entropy at epoch 20 has ECE 12.79% and macro F1 84.32%; Focal plus R-Drop at epoch 10 has ECE 5.87% and macro F1 83.19%.</desc>
+<style>
+      .bg{fill:#f7f5ef}.panel{fill:#efede7}.ink{fill:#272b31}.muted{fill:#6d7480}.grid{stroke:#d8d4ca}.axis{stroke:#9e9a91}.ideal{stroke:#8d8f94;stroke-dasharray:8 7}.ce-stroke{stroke:#547a95}.ce-fill{fill:#547a95}.robust-stroke{stroke:#c25a35}.robust-fill{fill:#c25a35}.adaptive-stroke{stroke:#7867a4}.adaptive-fill{fill:#7867a4}.title{font:600 34px ui-sans-serif,system-ui,sans-serif}.subtitle{font:19px ui-sans-serif,system-ui,sans-serif}.heading{font:600 25px ui-sans-serif,system-ui,sans-serif}.label{font:20px ui-sans-serif,system-ui,sans-serif}.small{font:17px ui-sans-serif,system-ui,sans-serif}.metric{font:600 20px ui-monospace,SFMono-Regular,monospace}.note{font:16px ui-sans-serif,system-ui,sans-serif}
+      @media(prefers-color-scheme:dark){.bg{fill:#1d1f21}.panel{fill:#26282b}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.grid{stroke:#3b3d40}.axis{stroke:#6c6e72}.ideal{stroke:#9da0a5}.ce-stroke{stroke:#79a5c1}.ce-fill{fill:#79a5c1}.robust-stroke{stroke:#e07a56}.robust-fill{fill:#e07a56}.adaptive-stroke{stroke:#a99add}.adaptive-fill{fill:#a99add}}
+    </style>
+<rect class="bg" width="1500" height="900" rx="18"/>
+<text class="title ink" x="80" y="58">Reliability at the same compute budget</text>
+<text class="subtitle muted" x="80" y="88">ConvNeXt V2-Tiny · ISIC fold 3 · n=5,268 · seed 42 · 15 equal-width bins</text>
+<rect class="panel" x="80" y="112" width="410" height="84" rx="12"/>
+<circle class="ce-fill" cx="108" cy="141" r="7"/>
+<text class="label ink" x="128" y="148">CE · epoch 20</text>
+<text class="metric ink" x="108" y="180">ECE 12.79% · macro-F1 84.32%</text>
+<rect class="panel" x="508" y="112" width="450" height="84" rx="12"/>
+<circle class="robust-fill" cx="536" cy="141" r="7"/>
+<text class="label ink" x="556" y="148">Focal + R-Drop · epoch 10</text>
+<text class="metric ink" x="536" y="180">ECE 5.87% · macro-F1 83.19%</text>
+<rect class="panel" x="976" y="112" width="444" height="84" rx="12"/>
+<text class="small muted" x="1004" y="143">Matched cumulative compute estimate</text>
+<text class="metric ink" x="1004" y="178">5.52 × 10¹⁵ FLOPs</text>
+<text class="heading ink" x="100" y="226">Calibration curve</text>
+<text class="heading ink" x="910" y="226">Confidence distribution</text>
+<line class="grid" x1="100" y1="742.0" x2="800" y2="742.0" stroke-width="1"/>
+<text class="small muted" x="82" y="748.0" text-anchor="end">0.0</text>
+<text class="small muted" x="100.0" y="772" text-anchor="middle">0.0</text>
+<line class="grid" x1="100" y1="642.0" x2="800" y2="642.0" stroke-width="1"/>
+<text class="small muted" x="82" y="648.0" text-anchor="end">0.2</text>
+<text class="small muted" x="240.0" y="772" text-anchor="middle">0.2</text>
+<line class="grid" x1="100" y1="542.0" x2="800" y2="542.0" stroke-width="1"/>
+<text class="small muted" x="82" y="548.0" text-anchor="end">0.4</text>
+<text class="small muted" x="380.0" y="772" text-anchor="middle">0.4</text>
+<line class="grid" x1="100" y1="442.0" x2="800" y2="442.0" stroke-width="1"/>
+<text class="small muted" x="82" y="448.0" text-anchor="end">0.6</text>
+<text class="small muted" x="520.0" y="772" text-anchor="middle">0.6</text>
+<line class="grid" x1="100" y1="342.0" x2="800" y2="342.0" stroke-width="1"/>
+<text class="small muted" x="82" y="348.0" text-anchor="end">0.8</text>
+<text class="small muted" x="660.0" y="772" text-anchor="middle">0.8</text>
+<line class="grid" x1="100" y1="242.0" x2="800" y2="242.0" stroke-width="1"/>
+<text class="small muted" x="82" y="248.0" text-anchor="end">1.0</text>
+<text class="small muted" x="800.0" y="772" text-anchor="middle">1.0</text>
+<line class="axis" x1="100" y1="742" x2="800" y2="742" stroke-width="2"/>
+<line class="axis" x1="100" y1="242" x2="100" y2="742" stroke-width="2"/>
+<line class="ideal" x1="100.0" y1="742.0" x2="800.0" y2="242.0" stroke-width="2"/>
+<text class="small muted" x="792" y="268" text-anchor="end">perfect calibration</text>
+<text class="small muted" x="450.0" y="804" text-anchor="middle">mean confidence</text>
+<text class="small muted" x="34" y="492.0" text-anchor="middle" transform="rotate(-90 34 492.0)">empirical accuracy</text>
+<polyline points="354.9,242.0 410.9,575.3 457.5,544.6 496.1,460.8 544.6,440.4 589.3,482.4 641.2,498.8 685.8,479.9 731.4,485.8 797.9,300.8" fill="none" class="ce-stroke" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="ce-fill" cx="354.9" cy="242.0" r="6"/>
+<circle class="ce-fill" cx="410.9" cy="575.3" r="6"/>
+<circle class="ce-fill" cx="457.5" cy="544.6" r="6"/>
+<circle class="ce-fill" cx="496.1" cy="460.8" r="6"/>
+<circle class="ce-fill" cx="544.6" cy="440.4" r="6"/>
+<circle class="ce-fill" cx="589.3" cy="482.4" r="6"/>
+<circle class="ce-fill" cx="641.2" cy="498.8" r="6"/>
+<circle class="ce-fill" cx="685.8" cy="479.9" r="6"/>
+<circle class="ce-fill" cx="731.4" cy="485.8" r="6"/>
+<circle class="ce-fill" cx="797.9" cy="300.8" r="6"/>
+<polyline points="322.7,670.6 361.1,498.1 406.8,495.9 453.6,451.5 495.9,433.3 543.9,403.5 590.8,357.7 637.4,326.3 684.4,273.9 731.6,264.3 773.5,245.8" fill="none" class="robust-stroke" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="robust-fill" cx="322.7" cy="670.6" r="6"/>
+<circle class="robust-fill" cx="361.1" cy="498.1" r="6"/>
+<circle class="robust-fill" cx="406.8" cy="495.9" r="6"/>
+<circle class="robust-fill" cx="453.6" cy="451.5" r="6"/>
+<circle class="robust-fill" cx="495.9" cy="433.3" r="6"/>
+<circle class="robust-fill" cx="543.9" cy="403.5" r="6"/>
+<circle class="robust-fill" cx="590.8" cy="357.7" r="6"/>
+<circle class="robust-fill" cx="637.4" cy="326.3" r="6"/>
+<circle class="robust-fill" cx="684.4" cy="273.9" r="6"/>
+<circle class="robust-fill" cx="731.6" cy="264.3" r="6"/>
+<circle class="robust-fill" cx="773.5" cy="245.8" r="6"/>
+<line class="grid" x1="910" y1="742.0" x2="1420" y2="742.0" stroke-width="1"/>
+<text class="small muted" x="894" y="748.0" text-anchor="end">0%</text>
+<line class="grid" x1="910" y1="492.0" x2="1420" y2="492.0" stroke-width="1"/>
+<text class="small muted" x="894" y="498.0" text-anchor="end">45%</text>
+<line class="grid" x1="910" y1="242.0" x2="1420" y2="242.0" stroke-width="1"/>
+<text class="small muted" x="894" y="248.0" text-anchor="end">90%</text>
+<line class="axis" x1="910" y1="742" x2="1420" y2="742" stroke-width="2"/>
+<line class="axis" x1="910" y1="242" x2="910" y2="742" stroke-width="2"/>
+<rect class="ce-fill" x="912.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="robust-fill" x="928.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="ce-fill" x="946.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="robust-fill" x="962.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="ce-fill" x="980.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="robust-fill" x="996.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="ce-fill" x="1014.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="robust-fill" x="1030.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="ce-fill" x="1048.0" y="742.0" width="14.0" height="0.0" opacity=".82"/>
+<rect class="robust-fill" x="1064.0" y="741.3" width="14.0" height="0.7" opacity=".82"/>
+<rect class="ce-fill" x="1082.0" y="741.9" width="14.0" height="0.1" opacity=".82"/>
+<rect class="robust-fill" x="1098.0" y="737.7" width="14.0" height="4.3" opacity=".82"/>
+<rect class="ce-fill" x="1116.0" y="741.7" width="14.0" height="0.3" opacity=".82"/>
+<rect class="robust-fill" x="1132.0" y="728.5" width="14.0" height="13.5" opacity=".82"/>
+<rect class="ce-fill" x="1150.0" y="738.0" width="14.0" height="4.0" opacity=".82"/>
+<rect class="robust-fill" x="1166.0" y="704.2" width="14.0" height="37.8" opacity=".82"/>
+<rect class="ce-fill" x="1184.0" y="735.3" width="14.0" height="6.7" opacity=".82"/>
+<rect class="robust-fill" x="1200.0" y="692.1" width="14.0" height="49.9" opacity=".82"/>
+<rect class="ce-fill" x="1218.0" y="735.4" width="14.0" height="6.6" opacity=".82"/>
+<rect class="robust-fill" x="1234.0" y="694.3" width="14.0" height="47.7" opacity=".82"/>
+<rect class="ce-fill" x="1252.0" y="736.5" width="14.0" height="5.5" opacity=".82"/>
+<rect class="robust-fill" x="1268.0" y="685.5" width="14.0" height="56.5" opacity=".82"/>
+<rect class="ce-fill" x="1286.0" y="734.2" width="14.0" height="7.8" opacity=".82"/>
+<rect class="robust-fill" x="1302.0" y="680.1" width="14.0" height="61.9" opacity=".82"/>
+<rect class="ce-fill" x="1320.0" y="731.1" width="14.0" height="10.9" opacity=".82"/>
+<rect class="robust-fill" x="1336.0" y="669.3" width="14.0" height="72.7" opacity=".82"/>
+<rect class="ce-fill" x="1354.0" y="724.9" width="14.0" height="17.1" opacity=".82"/>
+<rect class="robust-fill" x="1370.0" y="642.6" width="14.0" height="99.4" opacity=".82"/>
+<rect class="ce-fill" x="1388.0" y="245.5" width="14.0" height="496.5" opacity=".82"/>
+<rect class="robust-fill" x="1404.0" y="630.8" width="14.0" height="111.2" opacity=".82"/>
+<text class="small muted" x="910.0" y="772" text-anchor="middle">0.0</text>
+<text class="small muted" x="1012.0" y="772" text-anchor="middle">0.2</text>
+<text class="small muted" x="1114.0" y="772" text-anchor="middle">0.4</text>
+<text class="small muted" x="1216.0" y="772" text-anchor="middle">0.6</text>
+<text class="small muted" x="1318.0" y="772" text-anchor="middle">0.8</text>
+<text class="small muted" x="1420.0" y="772" text-anchor="middle">1.0</text>
+<text class="small muted" x="1165.0" y="804" text-anchor="middle">prediction confidence</text>
+<text class="note muted" x="80" y="850">Equal compute is based on the experiment’s cumulative FLOPs estimate: one CE forward pass for 20 epochs versus two stochastic Focal + R-Drop passes for 10 epochs.</text>
+</svg>
