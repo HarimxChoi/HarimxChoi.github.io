@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1020" role="img" aria-labelledby="title desc">
+<title id="title">TravelPackage synthesis example</title>
+<desc id="desc">A synthetic, schema-grounded example compares Budget, Balanced, and Premium packages for a five-night Seoul-to-Paris request. Each package contains one flight, one hotel, and two activities; the Balanced tier is highlighted as recommended.</desc>
+<style>
+  .bg{fill:#f7f5ef}.panel{fill:#efeee9;stroke:#d0d5d1}.card{fill:#fff;stroke:#c8ceca}
+  .ink{fill:#202827}.muted{fill:#566361}.faint{fill:#75817f}.accent{fill:#587776}.accent-soft{fill:#dfe9e6;stroke:#8aa3a0}
+  .orange{fill:#c25a35}.orange-soft{fill:#f4e4dc;stroke:#d19a83}.blue{fill:#557a92}.blue-soft{fill:#e0e9ee;stroke:#8ca5b4}
+  .line{stroke:#a9b3b0}.dash{stroke:#8aa3a0;stroke-dasharray:9 8}.strong{stroke:#587776}
+  .title{font:600 38px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}
+  .lane{font:600 15px ui-monospace,SFMono-Regular,monospace;letter-spacing:1.6px}.head{font:600 23px ui-sans-serif,system-ui,sans-serif}
+  .body{font:18px ui-sans-serif,system-ui,sans-serif}.small{font:16px ui-sans-serif,system-ui,sans-serif}
+  .mono{font:600 16px ui-monospace,SFMono-Regular,monospace}.metric{font:600 31px ui-monospace,SFMono-Regular,monospace}.badge-text{fill:#fff;font:600 14px ui-monospace,SFMono-Regular,monospace}
+  @media(prefers-color-scheme:dark){
+    .bg{fill:#1d2524}.panel{fill:#222e2d;stroke:#394947}.card{fill:#293735;stroke:#465956}
+    .ink{fill:#eef2ef}.muted{fill:#b7c3c0}.faint{fill:#93a29f}.accent{fill:#8db0ab}.accent-soft{fill:#29423f;stroke:#638a87}
+    .orange{fill:#e07a56}.orange-soft{fill:#4b3028;stroke:#a85f45}.blue{fill:#72a3be}.blue-soft{fill:#293e49;stroke:#527d95}
+    .line{stroke:#5c706d}.dash{stroke:#638a87}.strong{stroke:#8db0ab}.badge-text{fill:#1d2524}
+  }
+</style>
+<rect class="bg" width="1600" height="1020" rx="20"/>
+<text class="title ink" x="60" y="58">From one request to three comparable packages</text>
+<text class="subtitle muted" x="60" y="91">Synthetic schema example · illustrative prices, not live quotes or client data</text>
+<rect class="panel" x="60" y="130" width="1480" height="112" rx="16"/>
+<text class="lane accent" x="88" y="164">STRUCTURED TRAVELPLAN</text>
+<text class="head ink" x="88" y="207">SEL → PAR</text>
+<text class="body muted" x="310" y="207">5 nights</text>
+<text class="body muted" x="475" y="207">2 adults</text>
+<text class="body muted" x="645" y="207">ECONOMY</text>
+<text class="body muted" x="850" y="207">Budget $3,600</text>
+<text class="small faint" x="1510" y="207" text-anchor="end">full_plan</text>
+<rect class="card" x="60" y="292" width="445" height="530" rx="18"/>
+<rect class="accent" x="84" y="316" width="122" height="30" rx="15"/>
+<text class="badge-text" x="98" y="337">Budget</text>
+<text class="head ink" x="84" y="386">Metro Saver</text>
+<text class="metric ink" x="84" y="438">$1,945</text>
+<text class="small accent" x="84" y="468">$1,655 under budget</text>
+<text class="lane faint" x="84" y="518">FlightOption</text>
+<text class="body ink" x="84" y="548">Example Air · $940</text>
+<line class="line" x1="84" y1="569" x2="481" y2="569"/>
+<text class="lane faint" x="84" y="596">HotelOption</text>
+<text class="body ink" x="84" y="626">$175 × 5 nights · $875</text>
+<line class="line" x1="84" y1="647" x2="481" y2="647"/>
+<text class="lane faint" x="84" y="674">ActivityOption</text>
+<text class="body ink" x="84" y="704">2 selected · $130</text>
+<line class="line" x1="84" y1="725" x2="481" y2="725"/>
+<rect class="blue" x="84.0" y="767" width="191.9" height="18"/>
+<rect class="accent" x="275.9" y="767" width="178.6" height="18"/>
+<rect class="orange" x="454.5" y="767" width="26.5" height="18"/>
+<text class="small faint" x="84" y="807">flight</text>
+<text class="small faint" x="242" y="807">hotel</text>
+<text class="small faint" x="378" y="807">activities</text>
+<rect class="orange-soft" x="577" y="292" width="445" height="530" rx="18"/>
+<rect class="orange" x="601" y="316" width="214" height="30" rx="15"/>
+<text class="badge-text" x="615" y="337">Balanced · recommended</text>
+<text class="head ink" x="601" y="386">Paris Weekender</text>
+<text class="metric ink" x="601" y="438">$2,736</text>
+<text class="small accent" x="601" y="468">$864 under budget</text>
+<text class="lane faint" x="601" y="518">FlightOption</text>
+<text class="body ink" x="601" y="548">Example Air · $1,180</text>
+<line class="line" x1="601" y1="569" x2="998" y2="569"/>
+<text class="lane faint" x="601" y="596">HotelOption</text>
+<text class="body ink" x="601" y="626">$265 × 5 nights · $1,325</text>
+<line class="line" x1="601" y1="647" x2="998" y2="647"/>
+<text class="lane faint" x="601" y="674">ActivityOption</text>
+<text class="body ink" x="601" y="704">2 selected · $231</text>
+<line class="line" x1="601" y1="725" x2="998" y2="725"/>
+<rect class="blue" x="601.0" y="767" width="171.2" height="18"/>
+<rect class="accent" x="772.2" y="767" width="192.3" height="18"/>
+<rect class="orange" x="964.5" y="767" width="33.5" height="18"/>
+<text class="small faint" x="601" y="807">flight</text>
+<text class="small faint" x="759" y="807">hotel</text>
+<text class="small faint" x="895" y="807">activities</text>
+<rect class="card" x="1095" y="292" width="445" height="530" rx="18"/>
+<rect class="accent" x="1119" y="316" width="122" height="30" rx="15"/>
+<text class="badge-text" x="1133" y="337">Premium</text>
+<text class="head ink" x="1119" y="386">Left Bank Comfort</text>
+<text class="metric ink" x="1119" y="438">$3,655</text>
+<text class="small orange" x="1119" y="468">$55 over budget</text>
+<text class="lane faint" x="1119" y="518">FlightOption</text>
+<text class="body ink" x="1119" y="548">Example Air · $1,550</text>
+<line class="line" x1="1119" y1="569" x2="1516" y2="569"/>
+<text class="lane faint" x="1119" y="596">HotelOption</text>
+<text class="body ink" x="1119" y="626">$365 × 5 nights · $1,825</text>
+<line class="line" x1="1119" y1="647" x2="1516" y2="647"/>
+<text class="lane faint" x="1119" y="674">ActivityOption</text>
+<text class="body ink" x="1119" y="704">2 selected · $280</text>
+<line class="line" x1="1119" y1="725" x2="1516" y2="725"/>
+<rect class="blue" x="1119.0" y="767" width="168.4" height="18"/>
+<rect class="accent" x="1287.4" y="767" width="198.2" height="18"/>
+<rect class="orange" x="1485.6" y="767" width="30.4" height="18"/>
+<text class="small faint" x="1119" y="807">flight</text>
+<text class="small faint" x="1277" y="807">hotel</text>
+<text class="small faint" x="1413" y="807">activities</text>
+<circle class="blue" cx="70" cy="881" r="7"/><text class="small muted" x="88" y="887">flight</text>
+<circle class="accent" cx="170" cy="881" r="7"/><text class="small muted" x="188" y="887">hotel × nights</text>
+<circle class="orange" cx="354" cy="881" r="7"/><text class="small muted" x="372" y="887">activities</text>
+<rect class="panel" x="60" y="920" width="1480" height="66" rx="14"/>
+<text class="mono accent" x="88" y="961">TravelPackage = 1 FlightOption + 1 HotelOption + 0–2 ActivityOption</text>
+<text class="small faint" x="1510" y="961" text-anchor="end">total_cost = flight + hotel × nights + activities</text>
+</svg>

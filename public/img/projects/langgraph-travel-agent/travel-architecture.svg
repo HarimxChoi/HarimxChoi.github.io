@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1060" role="img" aria-labelledby="title desc">
+<title id="title">LangGraph travel-agent architecture</title>
+<desc id="desc">The implemented default path accepts an asynchronous FastAPI request, pauses on the first turn for a customer-information form, resumes the same LangGraph thread, extracts a TravelPlan, searches flights, hotels, and activities concurrently, and synthesizes package recommendations.</desc>
+<style>
+  .bg{fill:#f7f5ef}.panel{fill:#efeee9;stroke:#d0d5d1}.card{fill:#fff;stroke:#c8ceca}
+  .ink{fill:#202827}.muted{fill:#566361}.faint{fill:#75817f}.accent{fill:#587776}.accent-soft{fill:#dfe9e6;stroke:#8aa3a0}
+  .orange{fill:#c25a35}.orange-soft{fill:#f4e4dc;stroke:#d19a83}.blue{fill:#557a92}.blue-soft{fill:#e0e9ee;stroke:#8ca5b4}
+  .line{stroke:#a9b3b0}.dash{stroke:#8aa3a0;stroke-dasharray:9 8}.strong{stroke:#587776}
+  .title{font:600 38px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}
+  .lane{font:600 15px ui-monospace,SFMono-Regular,monospace;letter-spacing:1.6px}.head{font:600 23px ui-sans-serif,system-ui,sans-serif}
+  .body{font:18px ui-sans-serif,system-ui,sans-serif}.small{font:16px ui-sans-serif,system-ui,sans-serif}
+  .mono{font:600 16px ui-monospace,SFMono-Regular,monospace}.metric{font:600 31px ui-monospace,SFMono-Regular,monospace}.badge-text{fill:#fff;font:600 14px ui-monospace,SFMono-Regular,monospace}
+  @media(prefers-color-scheme:dark){
+    .bg{fill:#1d2524}.panel{fill:#222e2d;stroke:#394947}.card{fill:#293735;stroke:#465956}
+    .ink{fill:#eef2ef}.muted{fill:#b7c3c0}.faint{fill:#93a29f}.accent{fill:#8db0ab}.accent-soft{fill:#29423f;stroke:#638a87}
+    .orange{fill:#e07a56}.orange-soft{fill:#4b3028;stroke:#a85f45}.blue{fill:#72a3be}.blue-soft{fill:#293e49;stroke:#527d95}
+    .line{stroke:#5c706d}.dash{stroke:#638a87}.strong{stroke:#8db0ab}.badge-text{fill:#1d2524}
+  }
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="faint"/></marker><marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="accent"/></marker></defs>
+<rect class="bg" width="1600" height="1060" rx="20"/>
+<text class="title ink" x="60" y="58">Travel planning as a resumable, tool-using workflow</text>
+<text class="subtitle muted" x="60" y="91">Default implemented path · conditional LangGraph state · parallel external search · asynchronous delivery</text>
+<text class="lane accent" x="60" y="143">CONVERSATION &amp; API</text>
+<text class="lane accent" x="520" y="143">LANGGRAPH WORKFLOW</text>
+<text class="lane accent" x="1170" y="143">STATE &amp; INTEGRATIONS</text>
+<line class="line" x1="60" y1="159" x2="440" y2="159"/><line class="line" x1="520" y1="159" x2="1110" y2="159"/><line class="line" x1="1170" y1="159" x2="1540" y2="159"/>
+<path class="strong" d="M440 248 L520 248" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M815 330 L815 378" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M440 525 L520 525" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M815 550 L815 598" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M1110 706 L1170 706" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M815 790 L815 838" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M520 918 L440 918" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M1110 918 L1170 918" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="dash" d="M1170 240 L1110 240" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<path class="strong" d="M520 270 L482 270 L482 448 L440 448" fill="none" stroke-width="2.5" marker-end="url(#arrow-accent)"/>
+<text class="small faint" x="494" y="361" transform="rotate(-90 494 361)">collecting_info</text>
+<text class="small faint" x="828" y="359">continuation</text>
+<text class="small faint" x="460" y="516">resume</text>
+<rect class="card" x="60" y="185" width="380" height="125" rx="16"/>
+<text class="lane accent" x="84" y="212">01  FASTAPI</text>
+<text class="head ink" x="84" y="245">Async chat request</text>
+<text class="small muted" x="84" y="279"><tspan x="84" dy="0" text-anchor="start">POST /chat returns a task_id</tspan><tspan x="84" dy="24" text-anchor="start">GET /chat/status polls the result</tspan></text>
+<rect class="card" x="520" y="185" width="590" height="145" rx="16"/>
+<text class="lane accent" x="544" y="212">02  ENTRY NODE</text>
+<text class="head ink" x="544" y="245">call_model_and_tools</text>
+<text class="small muted" x="544" y="279"><tspan x="544" dy="0" text-anchor="start">First turn with no customer_info → collecting_info → END</tspan><tspan x="544" dy="24" text-anchor="start">Continuation → analyze request, run tools, set synthesizing</tspan></text>
+<rect class="card" x="1170" y="185" width="370" height="130" rx="16"/>
+<text class="lane accent" x="1194" y="212">STATE</text>
+<text class="head ink" x="1194" y="245">Thread and task state</text>
+<text class="small muted" x="1194" y="279"><tspan x="1194" dy="0" text-anchor="start">InMemorySaver checkpoints each thread</tspan><tspan x="1194" dy="24" text-anchor="start">In-memory job store tracks task status</tspan></text>
+<rect class="accent-soft" x="60" y="378" width="380" height="147" rx="16"/>
+<text class="lane accent" x="84" y="405">03  HUMAN IN THE LOOP</text>
+<text class="head ink" x="84" y="438">Customer-information handoff</text>
+<text class="small muted" x="84" y="472"><tspan x="84" dy="0" text-anchor="start">form_to_display pauses the first turn</tspan><tspan x="84" dy="24" text-anchor="start">POST /chat/customer-info, then resume</tspan><tspan x="84" dy="24" text-anchor="start">Same thread_id + is_continuation=true</tspan></text>
+<rect class="card" x="520" y="378" width="590" height="172" rx="16"/>
+<text class="lane accent" x="544" y="405">04  ANALYZE</text>
+<text class="head ink" x="544" y="438">Structured TravelPlan</text>
+<text class="small muted" x="544" y="472"><tspan x="544" dy="0" text-anchor="start">LLM extracts intent, route, dates, duration and travelers</tspan><tspan x="544" dy="24" text-anchor="start">Validated Pydantic schema; form budget is injected</tspan><tspan x="544" dy="24" text-anchor="start">No applicable search → complete → END</tspan></text>
+<rect class="card" x="520" y="598" width="590" height="192" rx="16"/>
+<text class="lane accent" x="544" y="625">05  EXECUTE</text>
+<text class="head ink" x="544" y="658">Parallel search coordinator</text>
+<text class="small muted" x="544" y="692"><tspan x="544" dy="0" text-anchor="start">asyncio.gather runs applicable tools concurrently</tspan><tspan x="544" dy="24" text-anchor="start">Flights · hotels · activities</tspan><tspan x="544" dy="24" text-anchor="start">Tool failures are isolated and serialized as empty results</tspan></text>
+<rect class="blue-soft" x="1170" y="590" width="370" height="232" rx="16"/>
+<text class="lane accent" x="1194" y="617">SEARCH APIS</text>
+<text class="head ink" x="1194" y="650">Live inventory providers</text>
+<text class="small muted" x="1194" y="684"><tspan x="1194" dy="0" text-anchor="start">Amadeus: flights, hotels, activities</tspan><tspan x="1194" dy="24" text-anchor="start">Hotelbeds: optional hotel inventory</tspan><tspan x="1194" dy="24" text-anchor="start">Hotel providers also run concurrently</tspan><tspan x="1194" dy="24" text-anchor="start">Location conversion: airport ↔ city ↔ coordinates</tspan></text>
+<rect class="orange-soft" x="520" y="838" width="590" height="152" rx="16"/>
+<text class="lane accent" x="544" y="865">06  SYNTHESIZE</text>
+<text class="head ink" x="544" y="898">synthesize_results</text>
+<text class="small muted" x="544" y="932"><tspan x="544" dy="0" text-anchor="start">Representative options → Budget / Balanced / Premium</tspan><tspan x="544" dy="24" text-anchor="start">Final response highlights Balanced and completes the graph</tspan></text>
+<rect class="card" x="60" y="840" width="380" height="150" rx="16"/>
+<text class="lane accent" x="84" y="867">07  DELIVER</text>
+<text class="head ink" x="84" y="900">Result returned to chat</text>
+<text class="small muted" x="84" y="934"><tspan x="84" dy="0" text-anchor="start">Markdown recommendation arrives through</tspan><tspan x="84" dy="24" text-anchor="start">the same asynchronous status endpoint</tspan></text>
+<rect class="card" x="1170" y="840" width="370" height="150" rx="16"/>
+<text class="lane accent" x="1194" y="867">OPTIONAL</text>
+<text class="head ink" x="1194" y="900">Optional delivery integrations</text>
+<text class="small muted" x="1194" y="934"><tspan x="1194" dy="0" text-anchor="start">HubSpot: called after synthesis</tspan><tspan x="1194" dy="24" text-anchor="start">when customer data exists</tspan><tspan x="1194" dy="24" text-anchor="start">Twilio: registered tool; not in the default node path</tspan></text>
+<text class="small faint" x="60" y="1030">Source-grounded from backend/api/main.py, backend/graph/builder.py, backend/graph/nodes.py and backend/models/travel.py</text>
+</svg>
