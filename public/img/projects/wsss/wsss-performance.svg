@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
+<title id="title">Weakly supervised segmentation performance on COCO-Val</title>
+<desc id="desc">Validation mIoU rises from 51.92 at 60 thousand iterations to 53.31 on the full 40,137 image evaluation, 1.5 percentage points above WeCLIP+.</desc>
+<style>
+          .bg{fill:#f7f5ef}.ink{fill:#272b31}.muted{fill:#6d7480}.grid{stroke:#d8d4ca}.axis{stroke:#a8a49a}.accent{stroke:#c25a35}.accent-fill{fill:#c25a35}.area{fill:#c25a35;opacity:.10}.baseline{stroke:#6d7480;stroke-dasharray:9 8}.label{font:24px ui-sans-serif,system-ui,sans-serif}.small{font:19px ui-sans-serif,system-ui,sans-serif}.value{font:600 22px ui-monospace,SFMono-Regular,monospace}.title{font:600 34px ui-sans-serif,system-ui,sans-serif}
+          @media (prefers-color-scheme:dark){.bg{fill:#1d1f21}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.grid{stroke:#3b3d40}.axis{stroke:#66686b}.accent{stroke:#e07a56}.accent-fill{fill:#e07a56}.area{fill:#e07a56}.baseline{stroke:#a7a9ad}}
+        </style>
+<rect class="bg" width="1200" height="660" rx="18"/>
+<text class="title ink" x="112" y="54">Weakly supervised segmentation on COCO-Val</text>
+<text class="small muted" x="112" y="84">mIoU across training checkpoints and the full 40,137-image evaluation</text>
+<line class="grid" x1="112" y1="494.6" x2="1140" y2="494.6" stroke-width="1"/>
+<text class="small muted" x="92" y="501.6" text-anchor="end">51.5</text>
+<line class="grid" x1="112" y1="415.9" x2="1140" y2="415.9" stroke-width="1"/>
+<text class="small muted" x="92" y="422.9" text-anchor="end">52.0</text>
+<line class="grid" x1="112" y1="337.2" x2="1140" y2="337.2" stroke-width="1"/>
+<text class="small muted" x="92" y="344.2" text-anchor="end">52.5</text>
+<line class="grid" x1="112" y1="258.5" x2="1140" y2="258.5" stroke-width="1"/>
+<text class="small muted" x="92" y="265.5" text-anchor="end">53.0</text>
+<line class="grid" x1="112" y1="179.7" x2="1140" y2="179.7" stroke-width="1"/>
+<text class="small muted" x="92" y="186.7" text-anchor="end">53.5</text>
+<polygon class="area" points="112.0,447.4 112.0,428.5 454.7,269.5 797.3,247.4 1140.0,210.3 1140.0,447.4"/>
+<line class="baseline" x1="112" y1="447.4" x2="1140" y2="447.4" stroke-width="2"/>
+<text class="small muted" x="1140" y="435.4" text-anchor="end">WeCLIP+ 51.8</text>
+<polyline points="112.0,428.5 454.7,269.5 797.3,247.4 1140.0,210.3" fill="none" class="accent" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="accent-fill" cx="112.0" cy="428.5" r="8"/>
+<text class="value ink" x="112.0" y="406.5" text-anchor="middle">51.92</text>
+<text class="label ink" x="112.0" y="578" text-anchor="middle">60k</text>
+<circle class="accent-fill" cx="454.7" cy="269.5" r="8"/>
+<text class="value ink" x="454.7" y="247.5" text-anchor="middle">52.93</text>
+<text class="label ink" x="454.7" y="578" text-anchor="middle">70k</text>
+<circle class="accent-fill" cx="797.3" cy="247.4" r="8"/>
+<text class="value ink" x="797.3" y="225.4" text-anchor="middle">53.07</text>
+<text class="label ink" x="797.3" y="578" text-anchor="middle">80k</text>
+<circle class="accent-fill" cx="1140.0" cy="210.3" r="8"/>
+<text class="value ink" x="1140.0" y="188.3" text-anchor="middle">53.31</text>
+<text class="label ink" x="1140.0" y="578" text-anchor="middle">Full eval</text>
+<text class="value accent-fill" x="1140.0" y="254.3" text-anchor="middle">+1.5 pp</text>
+<line class="axis" x1="112" y1="534" x2="1140" y2="534" stroke-width="1.5"/>
+<text class="small muted" x="112" y="630">Multi-scale + flip evaluation on all COCO-Val 2014 images</text>
+</svg>

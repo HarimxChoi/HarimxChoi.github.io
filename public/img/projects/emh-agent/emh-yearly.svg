@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+<title id="title">Year-by-year TQC and IVV returns</title>
+<desc id="desc">Annual return and maximum drawdown are compared for 2019, 2020, and 2021.</desc>
+<style>
+          .bg{fill:#f7f5ef}.ink{fill:#272b31}.muted{fill:#6d7480}.grid{stroke:#d8d4ca}.candidate{fill:#c25a35}.benchmark{fill:#557a92}.label{font:20px ui-sans-serif,system-ui,sans-serif}.small{font:17px ui-sans-serif,system-ui,sans-serif}.value{font:600 20px ui-monospace,SFMono-Regular,monospace}.title{font:600 32px ui-sans-serif,system-ui,sans-serif}
+          @media (prefers-color-scheme:dark){.bg{fill:#1d1f21}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.grid{stroke:#3b3d40}.candidate{fill:#e07a56}.benchmark{fill:#72a3be}}
+        </style>
+<rect class="bg" width="1200" height="680" rx="18"/>
+<text class="title ink" x="112" y="52">Where the return and risk came from</text>
+<text class="small muted" x="112" y="82">Annual return above · maximum drawdown below each year</text>
+<line class="grid" x1="112" y1="508.0" x2="1128" y2="508.0"/>
+<text class="small muted" x="94" y="514.0" text-anchor="end">0%</text>
+<line class="grid" x1="112" y1="389.2" x2="1128" y2="389.2"/>
+<text class="small muted" x="94" y="395.2" text-anchor="end">20%</text>
+<line class="grid" x1="112" y1="270.5" x2="1128" y2="270.5"/>
+<text class="small muted" x="94" y="276.5" text-anchor="end">40%</text>
+<line class="grid" x1="112" y1="151.7" x2="1128" y2="151.7"/>
+<text class="small muted" x="94" y="157.7" text-anchor="end">60%</text>
+<rect class="candidate" x="179.3" y="317.1" width="94" height="190.9" rx="6"/>
+<text class="value ink" x="226.3" y="305.1" text-anchor="middle">32.1%</text>
+<rect class="benchmark" x="289.3" y="323.5" width="94" height="184.5" rx="6"/>
+<text class="value ink" x="336.3" y="311.5" text-anchor="middle">31.1%</text>
+<text class="label ink" x="281.3" y="550" text-anchor="middle">2019</text>
+<text class="small muted" x="281.3" y="584" text-anchor="middle">MDD -5.3% / -6.6%</text>
+<rect class="candidate" x="518.0" y="172.3" width="94" height="335.7" rx="6"/>
+<text class="value ink" x="565.0" y="160.3" text-anchor="middle">56.5%</text>
+<rect class="benchmark" x="628.0" y="398.9" width="94" height="109.1" rx="6"/>
+<text class="value ink" x="675.0" y="386.9" text-anchor="middle">18.4%</text>
+<text class="label ink" x="620.0" y="550" text-anchor="middle">2020</text>
+<text class="small muted" x="620.0" y="584" text-anchor="middle">MDD -14.2% / -33.8%</text>
+<rect class="candidate" x="856.7" y="286.9" width="94" height="221.1" rx="6"/>
+<text class="value ink" x="903.7" y="274.9" text-anchor="middle">37.2%</text>
+<rect class="benchmark" x="966.7" y="337.8" width="94" height="170.2" rx="6"/>
+<text class="value ink" x="1013.7" y="325.8" text-anchor="middle">28.7%</text>
+<text class="label ink" x="958.7" y="550" text-anchor="middle">2021</text>
+<text class="small muted" x="958.7" y="584" text-anchor="middle">MDD -5.9% / -5.1%</text>
+<rect class="candidate" x="112" y="646" width="18" height="18" rx="3"/><text class="label ink" x="142" y="662">TQC 3-seed ensemble</text>
+<rect class="benchmark" x="442" y="646" width="18" height="18" rx="3"/><text class="label ink" x="472" y="662">IVV</text>
+</svg>
