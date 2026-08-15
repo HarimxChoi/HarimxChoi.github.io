@@ -1,0 +1,84 @@
+---
+import BlogHeader from "./BlogHeader.astro";
+
+interface Props {
+  project: any;
+  lang: "en" | "ko";
+}
+
+const { project, lang } = Astro.props;
+const homeHref = lang === "ko" ? "/ko/" : "/";
+const labels = lang === "ko"
+  ? {
+      back: "모든 글",
+      work: "구현과 실험",
+      scope: "기술 범위",
+      source: "프로젝트",
+      repository: "GitHub 저장소",
+      private: "비공개 프로젝트",
+    }
+  : {
+      back: "All posts",
+      work: "Work and experiments",
+      scope: "Technical scope",
+      source: "Project",
+      repository: "GitHub repository",
+      private: "Private project",
+    };
+---
+
+<BlogHeader homeHref={homeHref} lang={lang} />
+
+<main class="article-shell shell">
+  <a class="article-back" href={homeHref}>← {labels.back}</a>
+
+  <article class="project-article">
+    <header class="article-header">
+      <div class="article-meta">
+        <span>{project.publishedAt} · {project.readingTime}</span>
+        <span>{project.topic}</span>
+      </div>
+      <h1>{project.title}</h1>
+      <p class="article-summary">{project.summary}</p>
+      <div class="article-status">
+        <span>{project.status}</span>
+        <strong>{project.metric}</strong>
+      </div>
+    </header>
+
+    {project.image && (
+      <figure class="article-figure">
+        <img src={project.image} alt={project.imageAlt} />
+        {project.imageCaption && <figcaption>{project.imageCaption}</figcaption>}
+      </figure>
+    )}
+
+    <section class="article-section" aria-labelledby="work-heading">
+      <h2 id="work-heading">{labels.work}</h2>
+      <div class="article-prose">
+        {project.bullets.map((bullet: string) => <p>{bullet}</p>)}
+      </div>
+    </section>
+
+    <section class="article-section" aria-labelledby="scope-heading">
+      <h2 id="scope-heading">{labels.scope}</h2>
+      <div class="tag-row article-tags" aria-label="Categories">
+        {project.categories.map((tag: string) => <span>{tag}</span>)}
+      </div>
+      <div class="tool-line article-tools">
+        {project.tools.map((tool: string) => <span>{tool}</span>)}
+      </div>
+    </section>
+
+    <section class="article-section article-source" aria-labelledby="source-heading">
+      <h2 id="source-heading">{labels.source}</h2>
+      {project.href ? (
+        <a class="article-source-link" href={project.href} target="_blank" rel="noopener">
+          {labels.repository} <span aria-hidden="true">↗</span>
+        </a>
+      ) : (
+        <p>{labels.private}</p>
+      )}
+    </section>
+  </article>
+</main>

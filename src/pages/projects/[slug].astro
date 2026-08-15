@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectPost from "../../components/ProjectPost.astro";
+import { portfolio } from "../../data/portfolio";
+import { getProjects } from "../../lib/projects";
+
+export function getStaticPaths() {
+  return getProjects(portfolio.en)
+    .filter((project: any) => project.slug !== "warpquant")
+    .map((project: any) => ({
+      params: { slug: project.slug },
+      props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout
+  title={`${project.title} | Harim Choi`}
+  description={project.summary}
+  lang="en"
+  path={`/projects/${project.slug}/`}
+  type="article"
+>
+  <ProjectPost project={project} lang="en" />
+</Layout>

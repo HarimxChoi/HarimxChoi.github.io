@@ -12,6 +12,7 @@ Portfolio deck: https://harimxchoi.github.io/files/harim-choi-ml-portfolio.pptx
 
 ```bash
 npm install
+npm run hooks:install
 npm run dev
 npm run build
 ```

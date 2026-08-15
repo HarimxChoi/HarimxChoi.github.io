@@ -12,6 +12,7 @@ Live: https://harimxchoi.github.io
 
 ```bash
 npm install
+npm run hooks:install
 npm run dev
 npm run build
 ```

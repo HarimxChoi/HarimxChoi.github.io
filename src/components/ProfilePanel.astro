@@ -1,0 +1,34 @@
+---
+interface Props {
+  lang: "en" | "ko";
+}
+
+const { lang } = Astro.props;
+const links = [
+  { label: "CV", href: lang === "ko" ? "/files/harim-choi-cv-ko.docx" : "/files/harim-choi-cv-en.docx" },
+  { label: "LINKEDIN", href: "https://www.linkedin.com/in/harimxchoi" },
+  { label: "PORTFOLIO", href: "/files/harim-choi-ml-portfolio.pptx" },
+  { label: "GITHUB", href: "https://github.com/HarimxChoi" },
+  { label: "EMAIL", href: "mailto:2.harim.choi@gmail.com" },
+];
+---
+
+<aside class="profile-panel" aria-label={lang === "ko" ? "최하림 프로필" : "Harim Choi profile"}>
+  <div class="profile-identity">
+    <img class="profile-photo" src="/img/harim-choi-profile.jpg" alt={lang === "ko" ? "최하림 프로필 사진" : "Portrait of Harim Choi"} />
+    <div>
+      <p class="profile-name">Harim Choi</p>
+      <p class="profile-role">Machine Learning Engineer</p>
+    </div>
+  </div>
+
+  <nav class="profile-links" aria-label={lang === "ko" ? "프로필 링크" : "Profile links"}>
+    {links.map((link) => (
+      <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noopener" : undefined}>
+        <span>{link.label}</span><span aria-hidden="true">↗</span>
+      </a>
+    ))}
+  </nav>
+
+  <p class="profile-location">Seoul, South Korea</p>
+</aside>
