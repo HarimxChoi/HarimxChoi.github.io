@@ -1,8 +1,8 @@
 ---
-import CareerCard from "./CareerCard.astro";
 import ProjectCard from "./ProjectCard.astro";
-import SectionHeader from "./SectionHeader.astro";
-import ThemeSwitcher from "./ThemeSwitcher.astro";
+import BlogHeader from "./BlogHeader.astro";
+import ProfilePanel from "./ProfilePanel.astro";
+import { getProjects } from "../lib/projects";
 
 interface Props {
   content: any;
@@ -10,128 +10,41 @@ interface Props {
 }
 
 const { content, lang } = Astro.props;
-const otherLangHref = lang === "en" ? "/ko/" : "/";
-const otherLangLabel = lang === "en" ? "한국어" : "English";
+const homeHref = lang === "ko" ? "/ko/" : "/";
+const projects = getProjects(content);
+const welcome = "WELCOME TO HARIM'S PAGE.";
+const introduction =
+  lang === "ko"
+    ? "현실을 벡터화하고, 예측하고, 불확실성을 추정하는 것에 관심이 있습니다."
+    : "I am interested in vectorizing reality, making predictions, and estimating uncertainty.";
 ---
 
-<ThemeSwitcher lang={lang} />
-
-<header class="site-header">
-  <a class="wordmark" href="#top">{content.nav.brand}</a>
-  <nav aria-label="Primary navigation">
-    {content.nav.links.map(([label, href]: [string, string]) => (
-      <a href={href}>{label}</a>
-    ))}
-  </nav>
-  <a class="language-link" href={otherLangHref}>{otherLangLabel}</a>
-</header>
+<BlogHeader homeHref={homeHref} lang={lang} />
 
 <main id="top">
-  <section class="hero shell" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow">{content.hero.eyebrow}</p>
-      <h1 id="hero-title">{content.hero.title}</h1>
-      <p class="hero-body">{content.hero.body}</p>
-      <p class="hero-note">{content.hero.note}</p>
-      <div class="hero-links">
-        {content.hero.links.map((link: any) => (
-          <a
-            href={link.href}
-            target={link.href.startsWith("http") ? "_blank" : undefined}
-            rel="noopener"
-            download={link.href.endsWith(".pptx") ? "harim-choi-ml-portfolio.pptx" : undefined}
-          >
-            {link.label} <span aria-hidden="true">↗</span>
-          </a>
-        ))}
-      </div>
-    </div>
+  <div class="home-layout shell">
+    <ProfilePanel lang={lang} />
 
-    <aside class="signal-panel" aria-label="Selected outcomes">
-      {content.hero.signals.map(([metric, label]: [string, string]) => (
-        <div class="signal">
-          <strong>{metric}</strong>
-          <span>{label}</span>
+    <div class="home-content">
+      <section class="blog-intro" aria-labelledby="blog-intro-title">
+        <div class="intro-copy">
+          <h1 id="blog-intro-title">{welcome}</h1>
+          <p>{introduction}</p>
         </div>
-      ))}
-    </aside>
-  </section>
+      </section>
 
-  <section id="career" class="section shell">
-    <SectionHeader {...content.careerIntro} />
-    <div class="career-list">
-      {content.career.map((item: any, index: number) => (
-        <CareerCard item={item} index={index} />
-      ))}
+      <section id="projects" class="section projects-section">
+        <div class="project-list">
+          {projects.map((project: any) => (
+            <ProjectCard
+              project={project}
+              topic={project.topic}
+              lang={lang}
+              slug={project.slug}
+            />
+          ))}
+        </div>
+      </section>
     </div>
-  </section>
-
-  <section id="projects" class="section shell projects-section">
-    <SectionHeader {...content.projectIntro} />
-    <div class="project-groups">
-      {content.projectGroups.map((group: any) => (
-        <section class="project-group" aria-labelledby={`project-group-${group.index}`}>
-          <header class="project-group-head">
-            <span>{group.index}</span>
-            <div>
-              <h3 id={`project-group-${group.index}`}>{group.title}</h3>
-              <p>{group.description}</p>
-            </div>
-          </header>
-          <div class="project-grid">
-            {group.projects.map((project: any, index: number) => (
-              <ProjectCard project={project} index={`${group.index}.${index + 1}`} lang={lang} />
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
-  </section>
-
-  <section id="skills" class="section shell">
-    <SectionHeader {...content.skillsIntro} />
-    <div class="skills-grid">
-      {content.skills.map(([title, items]: [string, readonly string[]], index: number) => (
-        <article class="skill-card">
-          <div class="skill-number">{String(index + 1).padStart(2, "0")}</div>
-          <h3>{title}</h3>
-          <div class="skill-items">
-            {items.map((item: string) => <span>{item}</span>)}
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section id="approach" class="section shell approach-section">
-    <SectionHeader {...content.approachIntro} />
-    <div class="approach-grid">
-      {content.approach.map((item: any) => (
-        <article class="approach-card">
-          <span>{item.number}</span>
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
-        </article>
-      ))}
-    </div>
-  </section>
+  </div>
 </main>
-
-<footer class="site-footer shell">
-  <div>
-    <strong>{content.footer.line}</strong>
-    <span>{content.footer.location}</span>
-  </div>
-  <div class="footer-links">
-    {content.footer.links.map((link: any) => (
-      <a
-        href={link.href}
-        target={link.href.startsWith("http") ? "_blank" : undefined}
-        rel="noopener"
-        download={link.href.endsWith(".pptx") ? "harim-choi-ml-portfolio.pptx" : undefined}
-      >
-        {link.label}
-      </a>
-    ))}
-  </div>
-</footer>

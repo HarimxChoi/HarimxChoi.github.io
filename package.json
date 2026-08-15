@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "guard": "node tools/check-no-premature-closure.mjs",
+    "guard": "node tools/check-no-premature-closure.mjs && node tools/check-public-copy.mjs",
+    "hooks:install": "git config core.hooksPath .githooks",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

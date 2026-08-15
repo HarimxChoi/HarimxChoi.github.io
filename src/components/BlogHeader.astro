@@ -1,0 +1,43 @@
+---
+interface Props {
+  homeHref: string;
+  lang: "en" | "ko";
+}
+
+const { homeHref, lang } = Astro.props;
+const currentPath = Astro.url.pathname;
+const alternateHref = lang === "en"
+  ? `/ko${currentPath}`
+  : currentPath.replace(/^\/ko/, "") || "/";
+
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+---
+
+<header class="site-header">
+  <div class="site-header-inner shell">
+    <div class="site-brand">
+      <div class="site-brand-name">
+        <a href={homeHref}>Harim Choi</a>
+        <span>blog</span>
+      </div>
+      <ThemeSwitcher lang={lang} />
+    </div>
+    <nav class="header-actions" aria-label={lang === "ko" ? "페이지 메뉴" : "Page navigation"}>
+      <div class="language-switcher" aria-label={lang === "ko" ? "언어" : "Language"}>
+        {lang === "ko" ? (
+          <>
+            <span aria-current="page">한글</span>
+            <span aria-hidden="true">/</span>
+            <a href={alternateHref}>EN</a>
+          </>
+        ) : (
+          <>
+            <a href={alternateHref}>한글</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">EN</span>
+          </>
+        )}
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,57 +1,37 @@
 ---
 interface Props {
   project: any;
-  index: string;
+  topic: string;
   lang: "en" | "ko";
+  slug: string;
 }
 
-const { project, index, lang } = Astro.props;
-const repositoryLabel = lang === "ko" ? "저장소" : "Repository";
-const privateLabel = lang === "ko" ? "비공개" : "Private";
+const { project, topic, lang, slug } = Astro.props;
+const articleHref = lang === "ko" ? `/ko/projects/${slug}/` : `/projects/${slug}/`;
+const articleLabel = lang === "ko" ? "읽기" : "Read";
 ---
 
-<article class:list={["project-card", project.image && "project-card--visual"]}>
-  {project.image && (
-    <figure class="project-media">
-      <img src={project.image} alt={project.imageAlt} loading="lazy" />
-      {project.imageCaption && <figcaption>{project.imageCaption}</figcaption>}
-    </figure>
-  )}
+<a class:list={["project-card", project.image && "project-card--visual"]} href={articleHref}>
+  <span class="project-preview">
+    {project.image ? (
+      <span class="project-thumbnail">
+        <img src={project.image} alt={project.imageAlt} loading="lazy" />
+      </span>
+    ) : (
+      <span class="project-thumbnail project-thumbnail--empty" aria-hidden="true"></span>
+    )}
 
-  <div class="project-body">
-    <div class="project-topline">
-      <span class="project-number">{index}</span>
-      <span class="period">{project.period}</span>
-    </div>
+    <span class="project-preview-copy">
+      <span class="project-title">{project.title}</span>
+      <span class="project-status">{project.status}</span>
+      <span class="project-topic">{topic}</span>
+      <span class="project-description">{project.summary}</span>
+    </span>
 
-    <div class="project-title-row">
-      <div>
-        <h4>{project.title}</h4>
-        <p class="project-status">{project.status}</p>
-      </div>
-      {project.href ? (
-        <a class="project-link" href={project.href} target="_blank" rel="noopener">
-          {repositoryLabel} <span aria-hidden="true">↗</span>
-        </a>
-      ) : (
-        <span class="private-label">{privateLabel}</span>
-      )}
-    </div>
-
-    <p class="project-summary">{project.summary}</p>
-
-    <div class="project-metric">{project.metric}</div>
-
-    <div class="tag-row category-row" aria-label="Categories">
-      {project.categories.map((tag: string) => <span>{tag}</span>)}
-    </div>
-
-    <ul class="evidence-list compact">
-      {project.bullets.map((bullet: string) => <li>{bullet}</li>)}
-    </ul>
-
-    <div class="tool-line">
-      {project.tools.map((tool: string) => <span>{tool}</span>)}
-    </div>
-  </div>
-</article>
+    <span class="project-metric">{project.metric}</span>
+    <span class="project-action">
+      <span class="project-read">{articleLabel} <span aria-hidden="true">→</span></span>
+      <span class="project-published">{project.publishedAt} · {project.readingTime}</span>
+    </span>
+  </span>
+</a>

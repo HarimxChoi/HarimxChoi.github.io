@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">WarpQuant dual-domain quantization</title>
+  <desc id="desc">Weights rotate into a low-bit domain and selected columns return through Output-Fisher recovery.</desc>
+  <rect width="640" height="360" fill="#e8ece8"/>
+  <g fill="none" stroke="#1d3a36" stroke-width="2">
+    <rect x="44" y="102" width="148" height="156" rx="8" fill="#f7f8f5"/>
+    <rect x="246" y="102" width="148" height="156" rx="8" fill="#d9e5df"/>
+    <rect x="448" y="102" width="148" height="156" rx="8" fill="#f7f8f5"/>
+    <path d="M192 180h54m-12-12 12 12-12 12M394 180h54m-12-12 12 12-12 12"/>
+  </g>
+  <g fill="#1d3a36" font-family="Inter, Arial, sans-serif" text-anchor="middle">
+    <text x="118" y="142" font-size="13" letter-spacing="1.4">ORIGINAL</text>
+    <text x="118" y="188" font-size="26" font-weight="600">W, X</text>
+    <text x="118" y="222" font-size="12">activation signal</text>
+    <text x="320" y="142" font-size="13" letter-spacing="1.4">ROTATED</text>
+    <text x="320" y="188" font-size="26" font-weight="600">Q3</text>
+    <text x="320" y="222" font-size="12">Hadamard + GPTQ</text>
+    <text x="522" y="142" font-size="13" letter-spacing="1.4">RECOVERY</text>
+    <text x="522" y="188" font-size="23" font-weight="600">Fisher</text>
+    <text x="522" y="222" font-size="12">weak columns</text>
+    <text x="320" y="54" font-size="24" font-weight="600" letter-spacing="1">WARPQUANT</text>
+    <text x="320" y="314" font-size="12" letter-spacing="1.2">WEIGHTS · KV CACHE · ACTIVATIONS</text>
+  </g>
+</svg>

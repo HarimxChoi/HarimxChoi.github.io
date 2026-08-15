@@ -1,0 +1,529 @@
+---
+import BlogHeader from "./BlogHeader.astro";
+
+interface Props {
+  lang: "en" | "ko";
+}
+
+const { lang } = Astro.props;
+const ko = lang === "ko";
+const homeHref = ko ? "/ko/" : "/";
+const postUrl = "https://harimxchoi.github.io/projects/warpquant";
+const references = [
+  { citation: "Elias Frantar, Saleh Ashkboos, Torsten Hoefler, and Dan Alistarh. “GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers.” ICLR, 2023.", href: "https://arxiv.org/abs/2210.17323" },
+  { citation: "Ji Lin et al. “AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration.” MLSys, 2024.", href: "https://arxiv.org/abs/2306.00978" },
+  { citation: "Sehoon Kim et al. “SqueezeLLM: Dense-and-Sparse Quantization.” ICML, 2024.", href: "https://arxiv.org/abs/2306.07629" },
+  { citation: "Albert Tseng, Jerry Chee, Qingyao Sun, Volodymyr Kuleshov, and Christopher De Sa. “QuIP#: Even Better LLM Quantization with Hadamard Incoherence and Lattice Codebooks.” ICML, 2024.", href: "https://arxiv.org/abs/2402.04396" },
+  { citation: "Vladimir Malinovskii, Andrei Panferov, Ivan Ilin, Han Guo, Peter Richtárik, and Dan Alistarh. “Pushing the Limits of Large Language Model Quantization via the Linearity Theorem.” NAACL, 2025.", href: "https://arxiv.org/abs/2411.17525" },
+  { citation: "Saleh Ashkboos et al. “QuaRot: Outlier-Free 4-Bit Inference in Rotated LLMs.” arXiv preprint arXiv:2404.00456 (2024).", href: "https://arxiv.org/abs/2404.00456" },
+  { citation: "Zhenyu Liu et al. “SpinQuant: LLM Quantization with Learned Rotations.” arXiv preprint arXiv:2405.16406 (2024).", href: "https://arxiv.org/abs/2405.16406" },
+  { citation: "Jinuk Kim, Marwa El Halabi, Wonpyo Park, Clemens J. S. Schaefer, Deokjae Lee, Yeonhong Park, Jae W. Lee, and Hyun Oh Song. “GuidedQuant: Large Language Model Quantization via Exploiting End Loss Guidance.” ICML, 2025.", href: "https://arxiv.org/abs/2505.07004" },
+  { citation: "Amir Zandieh, Majid Daliri, Majid Hadian, and Vahab Mirrokni. “TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate.” arXiv preprint arXiv:2504.19874 (2025).", href: "https://arxiv.org/abs/2504.19874" },
+  { citation: "Amir Zandieh, Majid Daliri, and Insu Han. “QJL: 1-Bit Quantized JL Transform for KV Cache Quantization with Zero Overhead.” arXiv preprint arXiv:2406.03482 (2024).", href: "https://arxiv.org/abs/2406.03482" },
+  { citation: "Zirui Liu et al. “KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache.” ICML, 2024.", href: "https://arxiv.org/abs/2402.02750" },
+  { citation: "Coleman Hooper et al. “KVQuant: Towards 10 Million Context Length LLM Inference with KV Cache Quantization.” NeurIPS, 2024.", href: "https://arxiv.org/abs/2401.18079" },
+  { citation: "Guangxuan Xiao, Ji Lin, Mickael Seznec, Hao Wu, Julien Demouth, and Song Han. “SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models.” ICML, 2023.", href: "https://arxiv.org/abs/2211.10438" },
+  { citation: "Fuwen Tan et al. “MobileQuant: Mobile-friendly Quantization for On-device Language Models.” arXiv preprint arXiv:2408.13933 (2024).", href: "https://arxiv.org/abs/2408.13933" },
+  { citation: "Hung-Yueh Chiang et al. “Quamba2: A Robust and Scalable Post-training Quantization Framework for Selective State Space Models.” arXiv preprint arXiv:2503.22879 (2025).", href: "https://arxiv.org/abs/2503.22879" },
+  { citation: "Georgi Gerganov et al. llama.cpp: LLM inference in C/C++. GitHub repository. Available at: https://github.com/ggml-org/llama.cpp.", href: "https://github.com/ggml-org/llama.cpp" },
+];
+
+const qwen27 = [
+  { format: "BF16", bpw: "16.00", payload: "50.11", ppl: "6.9548", arc: "52.17", mmlu: "43.07", commonsense: "79.23", gsm: "—" },
+  { format: "Q4_K_M", bpw: "4.92", payload: "15.41", ppl: "6.9656", arc: "50.84", mmlu: "42.90", commonsense: "79.23", gsm: "—" },
+  { format: "IQ3_S", bpw: "3.6940", payload: "11.57", ppl: "7.1820", arc: "52.17", mmlu: "42.97", commonsense: "78.83", gsm: "—" },
+  { format: "WarpQuant R16E4H4", bpw: "3.6165", payload: "11.32", ppl: "7.4737", arc: "56.86", mmlu: "42.72", commonsense: "78.83", gsm: "—", ours: true },
+];
+
+const qwen4 = [
+  { format: "BF16", bpw: "16.00", payload: "7.846", ppl: "8.3885", arc: "45.82", mmlu: "39.58" },
+  { format: "Q4_K_M", bpw: "5.13", payload: "2.523", ppl: "8.5472", arc: "48.83", mmlu: "39.48" },
+  { format: "IQ3_M", bpw: "4.09", payload: "2.015", ppl: "10.6976", arc: "42.81", mmlu: "37.41" },
+  { format: "WarpQuant Fisher R16E4", bpw: "3.6514", payload: "1.788", ppl: "9.2494", arc: "46.15", mmlu: "38.13", ours: true },
+];
+
+const llama8 = [
+  { format: "BF16", bpw: "16.00", payload: "14.965", ppl: "6.2559", arc: "50.50", mmlu: "41.04" },
+  { format: "Q4_K_M", bpw: "4.89", payload: "4.583", ppl: "6.4359", arc: "50.84", mmlu: "40.67" },
+  { format: "IQ3_S + imatrix", bpw: "3.66", payload: "3.429", ppl: "6.9929", arc: "44.15", mmlu: "39.87" },
+  { format: "WarpQuant Fisher R16E4H4", bpw: "3.6256", payload: "3.389", ppl: "7.3446", arc: "45.49", mmlu: "38.99", ours: true },
+];
+
+const bibtex = `@misc{choi2026warpquant,
+  author       = {Harim Choi},
+  title        = {WarpQuant: Dual-Domain LLM Quantization via Hadamard Rotation and Output-Fisher Sensitivity},
+  year         = {2026},
+  url          = {https://harimxchoi.github.io/projects/warpquant}
+}`;
+
+const scoreCode = `import torch
+
+def output_fisher_score(W, W_base, X, H_G, index_bits=32):
+    assert W.ndim == W_base.ndim == 2
+    assert X.shape[-1] == W.shape[1]
+    assert H_G.shape == (W.shape[0],)
+
+    E = W.float() - W_base.float()
+    H_X = X.float().square().mean(dim=0)
+    loss_weighted_error = (
+        H_G.float()[:, None] * E.square()
+    ).sum(dim=0)
+    cost_bits = 16 * W.shape[0] + index_bits
+    return H_X * loss_weighted_error / cost_bits`;
+---
+
+<BlogHeader homeHref={homeHref} lang={lang} />
+
+<main class="wq-shell shell">
+  <a class="article-back" href={homeHref}>← {ko ? "모든 글" : "All posts"}</a>
+
+  <article class="wq-article">
+    <header class="wq-header">
+      <div class="wq-meta">
+        <span>2026.08.16</span>
+        <span>{ko ? "14분" : "14 min"}</span>
+        <span class="report-label">Technical Report</span>
+      </div>
+      <h1>{ko ? "WarpQuant: 하다마르 회전과 Output-Fisher 기반의 듀얼 도메인 LLM 양자화" : "WarpQuant: Dual-Domain LLM Quantization via Hadamard Rotation and Output-Fisher Sensitivity"}</h1>
+      <p>
+        {ko
+          ? "이 글에서는 LLM 추론의 세 가지 메모리 경로인 가중치, KV Cache, Activation을 어떻게 함께 줄였는지 설명합니다. 가중치는 Hadamard 회전과 block-GPTQ로 압축하고, Output-Fisher가 민감하다고 판단한 column만 고정밀도로 복원했습니다. KV Cache에는 TurboQuant 기반의 저비트 저장 방식을, Activation에는 token별 INT8 양자화를 적용했습니다."
+          : "WarpQuant creates INT3 weights in a rotated coordinate system and uses Output-Fisher sensitivity in the original coordinates to choose which columns to recover. A TurboQuant-style KV cache and per-token INT8 activations extend the same design to the three memory paths of M=1 decoding."}
+      </p>
+    </header>
+
+    <div class="metric-grid" aria-label={ko ? "핵심 결과" : "Key results"}>
+      <div><strong>3.6165</strong><span>Qwen3.8-27B text bpw</span></div>
+      <div><strong>11.32 GiB</strong><span>{ko ? "27B 가중치 용량" : "27B weight payload"}</span></div>
+      <div><strong>56.86%</strong><span>ARC-Challenge · 299</span></div>
+      <div><strong>3.46×</strong><span>{ko ? "장문 맥락에서의 KV 압축률" : "long-context KV compression"}</span></div>
+    </div>
+
+    <nav class="report-index" aria-label={ko ? "목차" : "Contents"}>
+      <a href="#definition"><span>01</span>{ko ? "문제" : "Definition"}</a>
+      <a href="#design"><span>02</span>{ko ? "가중치 양자화" : "Design"}</a>
+      <a href="#selector"><span>03</span>Output-Fisher</a>
+      <a href="#results"><span>04</span>{ko ? "결과" : "Results"}</a>
+      <a href="#kv-activation"><span>05</span>KV + Activation</a>
+      <a href="#reproduction"><span>06</span>{ko ? "평가 방법" : "Reproduction"}</a>
+    </nav>
+
+    <section class="wq-section" id="definition">
+      <div class="section-label">01</div>
+      <div class="section-body">
+        <h2>{ko ? "들어가며: 왜 세 가지 메모리를 따로 줄여야 하는가" : "Definition: quantize three memory paths separately"}</h2>
+        <p>
+          {ko
+            ? "LLM이 token 하나를 생성할 때마다 전체 가중치를 다시 읽습니다. KV Cache는 대화가 길어질수록 계속 쌓이고, Activation은 각 linear 연산을 통과할 때마다 새로 만들어집니다. 세 데이터는 크기가 커지는 방식도, 값의 분포도, 메모리에 머무는 시간도 다릅니다. WarpQuant는 이 차이를 무시하고 하나의 비트폭을 적용하는 대신, 각 경로에 맞는 양자화 방식을 사용합니다."
+            : "Autoregressive decoding streams weights for every token, accumulates a KV cache with context length, and moves activations through each linear operation. WarpQuant does not force one bit-width onto tensors with different distributions and lifetimes."}
+        </p>
+
+        <figure class="report-figure memory-map">
+          <div class="memory-source">M=1 LLM decoding</div>
+          <div class="memory-arrow">↓</div>
+          <div class="memory-paths">
+            <div><span>Persistent</span><strong>Weights · 3.5 bpw base</strong><small>Hadamard + block-GPTQ</small></div>
+            <div><span>Context state</span><strong>KV · K4/V4/R128</strong><small>online append + recent BF16</small></div>
+            <div><span>Transient</span><strong>Activation · A8</strong><small>dynamic per-token scale</small></div>
+          </div>
+          <figcaption>{ko ? "그림 1. 가중치, KV Cache, Activation의 수명에 맞춰 양자화 방식을 나눈 전체 구조" : "Figure 1. The full design separates inference memory by tensor lifetime."}</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="wq-section" id="design">
+      <div class="section-label">02</div>
+      <div class="section-body">
+        <h2>{ko ? "회전 영역에서 압축하고, 원본 영역에서 복원합니다" : "Design: compress in the rotated domain, recover in the original domain"}</h2>
+        <p>
+          {ko
+            ? "먼저 가중치 행렬 W에 결정론적으로 만든 부호 벡터 D와 Hadamard 행렬 H를 곱해 R=HD를 구성합니다. 이 회전은 일부 channel에 몰린 큰 값을 전체 차원으로 고르게 펼칩니다. 회전된 가중치는 128개 column 단위로 묶어 Gaussian Lloyd-Max 3-bit codebook과 FP16 scale로 양자화하고, block-GPTQ가 앞쪽 group에서 생긴 오차를 뒤쪽 group에 전달해 보정합니다."
+            : "A deterministic signed Hadamard transform R=HD rotates each weight matrix W. The rotated weights use 128-column groups, a Gaussian Lloyd-Max 3-bit codebook, FP16 scales, and block-GPTQ error feedback into later groups."}
+          <a class="cite" href="#ref-1">[1]</a><a class="cite" href="#ref-4">[4]</a><a class="cite" href="#ref-5">[5]</a>
+        </p>
+
+        <div class="equation equation-primary">R = HD,&nbsp;&nbsp; W<sub>r</sub> = WR<sup>T</sup>,&nbsp;&nbsp; y = Q<sub>3</sub>(W<sub>r</sub>)Rx</div>
+
+        <figure class="algorithm-box">
+          <div class="algorithm-heading"><strong>Algorithm 1</strong><span>WarpQuant PTQ</span></div>
+          <div class="algorithm-require"><strong>Require:</strong> W, calibration X, output Fisher H<sub>G</sub>, recovery budget B</div>
+          <ol>
+            <li><span>1:</span><p>Construct the signed Hadamard rotation R ← HD</p></li>
+            <li><span>2:</span><p>W<sub>r</sub> ← WR<sup>T</sup>, X<sub>r</sub> ← XR<sup>T</sup></p></li>
+            <li><span>3:</span><p>(Ŵ<sub>r</sub>, codes, scales) ← BlockGPTQ<sub>Q3,G128</sub>(W<sub>r</sub>, X<sub>r</sub>)</p></li>
+            <li><span>4:</span><p>W̃ ← Ŵ<sub>r</sub>R, E ← W − W̃</p></li>
+            <li><span>5:</span><p>s<sub>c</sub> ← H<sub>X,cc</sub>E<sub>:,c</sub><sup>T</sup>diag(H<sub>G</sub>)E<sub>:,c</sub> / (16d<sub>out</sub> + 32)</p></li>
+            <li><span>6:</span><p>Select columns C by descending s<sub>c</sub> under the global budget B</p></li>
+            <li><span>7:</span><p><strong>return</strong> codes, scales, C, E<sub>:,C</sub></p></li>
+          </ol>
+          <figcaption>{ko ? "알고리즘 1. 하나의 linear layer를 회전 영역에서 양자화한 뒤, 중요한 column을 원본 영역에서 복원하는 과정" : "Algorithm 1. Rotated quantization and global weak-column recovery for one linear layer."}</figcaption>
+        </figure>
+
+        <figure class="report-figure domain-diagram">
+          <div class="domain-stage original"><span>Original domain</span><strong>W, X</strong><small>{ko ? "입력 분포와 loss 민감도 측정" : "activation and loss sensitivity"}</small></div>
+          <div class="domain-arrow">→</div>
+          <div class="domain-stage rotated"><span>Rotated domain</span><strong>R · W · block-GPTQ</strong><small>3-bit codes + FP16 scales</small></div>
+          <div class="domain-arrow">→</div>
+          <div class="domain-stage recovered"><span>Original recovery</span><strong>Output-Fisher columns</strong><small>+0.05 selected-weight bpw</small></div>
+          <figcaption>{ko ? "그림 2. 압축은 회전 영역에서 수행하고, 복원할 column은 원본 영역의 민감도로 선택합니다." : "Figure 2. Quantization and sensitivity selection use different coordinate systems."}</figcaption>
+        </figure>
+
+        <p>
+          {ko
+            ? "R16E4H4라는 이름은 실제 저장 형식을 뜻합니다. R16은 선택된 weak column을 BF16으로 복원하고, E4와 H4는 token embedding과 lm_head를 group size 128의 INT4로 저장합니다. Projection layer만 3.55 bpw로 줄이는 데서 끝나지 않고, embedding과 head까지 포함한 전체 텍스트 모델의 용량을 3.6 bpw대로 맞추기 위한 구성입니다."
+            : "In R16E4H4, R16 restores selected weak columns in BF16, while E4 and H4 store the token embedding and lm_head in group-128 INT4. This connects the 3.55-bpw projection design to the payload of the complete text model."}
+        </p>
+      </div>
+    </section>
+
+    <section class="wq-section" id="selector">
+      <div class="section-label">03</div>
+      <div class="section-body">
+        <h2>{ko ? "어떤 Column을 복원할 것인가" : "Selecting recovery columns with Output-Fisher"}</h2>
+        <p>
+          {ko
+            ? "양자화 오차가 크다고 해서 반드시 모델 성능에 중요한 column은 아닙니다. 실제 입력에서 거의 사용되지 않는 column이라면 오차가 커도 최종 출력에는 영향이 작을 수 있습니다. 그래서 입력 Activation의 에너지 H_X, 양자화 잔차 E, 출력 NLL gradient의 제곱 평균 H_G를 함께 사용해 각 column의 오차가 next-token loss에 얼마나 크게 전달되는지 계산합니다."
+            : "Recovery priority is not determined by weight error alone. Input activation energy H_X, quantization residual E, and the squared output NLL gradient H_G estimate how strongly each column's error reaches next-token loss."}
+          <a class="cite" href="#ref-8">[8]</a>
+        </p>
+
+        <div class="equation">S<sub>t,c</sub> = H<sub>X,cc</sub> · E<sub>:,c</sub><sup>T</sup> diag(H<sub>G</sub>) E<sub>:,c</sub> / C<sub>t</sub></div>
+        <div class="equation-caption">C<sub>t</sub> = 16 · output_rows<sub>t</sub> + 32 index bits</div>
+
+        <p class="code-intro">
+          {ko
+            ? "여기서 W_base는 회전 영역에서 block-GPTQ를 적용한 뒤 원본 좌표계로 되돌린 가중치입니다. 실제 구현에서는 아래 PyTorch 함수로 column별 점수를 계산합니다."
+            : "Here W_base is the block-GPTQ reconstruction mapped back to the original coordinates. The column score used by the selector is defined by the following PyTorch function."}
+        </p>
+        <pre class="code-block"><code>{scoreCode}</code></pre>
+
+        <figure class="report-figure selector-figure">
+          <div class="selector-row">
+            <span>{ko ? "Activation × residual" : "Activation × residual"}</span>
+            <i style="--w:47.3%"></i>
+            <strong>9,221</strong>
+          </div>
+          <div class="selector-row ours">
+            <span>Output-Fisher</span>
+            <i style="--w:100%"></i>
+            <strong>19,499</strong>
+          </div>
+          <figcaption>{ko ? "그림 3. Llama 3 8B에서 같은 +0.05 bpw 예산으로 복원한 column 수. 저장 비용까지 반영하면 더 많은 유효 column을 선택할 수 있습니다." : "Figure 3. Llama 3 8B columns selected under the same +0.05-bpw budget. Cost normalization restores more useful columns."}</figcaption>
+        </figure>
+
+        <p>
+          {ko
+            ? "이 방식은 모든 출력 방향을 같은 중요도로 보지 않습니다. 실제 loss에 더 민감한 v_proj와 down_proj에 복원 예산이 자연스럽게 더 배분됩니다. Llama 3 8B에서는 같은 용량에서 기존 선택 방식의 WikiText-2 PPL 7.3953을 7.3446으로 낮췄습니다."
+            : "Because output directions are not treated uniformly, the budget shifts toward loss-sensitive regions such as v_proj and down_proj. At the same Llama 3 8B payload, WikiText-2 perplexity moves from 7.3953 to 7.3446."}
+        </p>
+      </div>
+    </section>
+
+    <section class="wq-section" id="results">
+      <div class="section-label">04</div>
+      <div class="section-body">
+        <h2>{ko ? "Qwen3.8-27B에서의 결과" : "Results: Qwen3.8-27B text backbone"}</h2>
+        <p>
+          {ko
+            ? "모든 비트율과 용량은 vision tower와 MTP를 제외한 26,895,998,464개의 텍스트 생성 파라미터를 기준으로 계산했습니다. Commonsense 점수는 HellaSwag, WinoGrande, PIQA에서 각각 같은 1,000문항을 평가한 뒤 평균을 낸 값입니다."
+            : "The denominator is 26,895,998,464 text-generation parameters, excluding the vision tower and MTP. Commonsense is the macro average of fixed 1,000-item samples from HellaSwag, WinoGrande, and PIQA."}
+        </p>
+
+        <figure class="report-figure payload-figure">
+          <div class="payload-chart" aria-label={ko ? "Qwen3.8-27B 가중치 용량 비교" : "Qwen3.8-27B payload comparison"}>
+            {qwen27.map((row) => (
+              <div class:list={["payload-row", row.ours && "ours"]}>
+                <span>{row.format.replace(" R16E4H4", "")}</span>
+                <i style={`--w:${(Number(row.payload) / 50.11) * 100}%`}></i>
+                <strong>{row.payload} GiB</strong>
+              </div>
+            ))}
+          </div>
+          <figcaption>{ko ? "그림 4. Qwen3.8-27B 텍스트 백본 전체의 가중치 용량 비교" : "Figure 4. Full text-backbone payload. WarpQuant uses a packed-equivalent analytical value."}</figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Format</th><th>Text bpw</th><th>Payload</th><th>WT2 PPL ↓</th><th>ARC-299 ↑</th><th>MMLU-13,943 ↑</th><th>Commonsense ↑</th><th>GSM8K-500 ↑</th></tr></thead>
+            <tbody>
+              {qwen27.map((row) => (
+                <tr class:list={[row.ours && "ours"]}><td>{row.format}</td><td>{row.bpw}</td><td>{row.payload} GiB</td><td>{row.ppl}</td><td>{row.arc}</td><td>{row.mmlu}</td><td>{row.commonsense}</td><td>{row.gsm}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">
+          {ko
+            ? "PPL, ARC, MMLU는 모두 같은 llama.cpp 평가 경로에서 측정했습니다. GSM8K는 네 모델에 동일한 첫 500문항과 5-shot 설정을 적용한 결과가 끝나는 대로 반영합니다."
+            : "PPL, ARC, and MMLU use the same llama.cpp evaluation path. GSM8K will use the verified final results from the same first 500 examples under a 5-shot setting."}
+        </p>
+
+        <div class="result-callouts">
+          <div><strong>−0.0775 bpw</strong><span>{ko ? "IQ3_S보다 낮은 비트율" : "lower text rate than IQ3_S"}</span></div>
+          <div><strong>+4.68 pp</strong><span>{ko ? "IQ3_S보다 높은 ARC" : "ARC over IQ3_S"}</span></div>
+          <div><strong>−0.25 pp</strong><span>{ko ? "IQ3_S보다 낮은 MMLU" : "MMLU against IQ3_S"}</span></div>
+          <div><strong>{ko ? "동일 78.83" : "same 78.83"}</strong><span>{ko ? "Commonsense 평균" : "commonsense average"}</span></div>
+        </div>
+
+        <h3>{ko ? "다른 모델에서도 같은 방식을 적용했습니다" : "The same format comparison on other models"}</h3>
+        <p>
+          {ko
+            ? "Qwen3.5-4B에서 WarpQuant는 IQ3_M보다 243.6 MB 작으면서 PPL, ARC, MMLU가 모두 높았습니다. Llama 3 8B에서는 IQ3_S보다 43.0 MB 작은 모델에서 ARC는 높았고, PPL과 MMLU는 IQ3_S가 높았습니다."
+            : "On Qwen3.5-4B, WarpQuant is 243.6 MB smaller than IQ3_M while improving PPL, ARC, and MMLU. On Llama 3 8B, it is 43.0 MB smaller than IQ3_S and scores higher on ARC, while IQ3_S retains better PPL and MMLU."}
+        </p>
+
+        <div class="subtable-title">Qwen3.5-4B</div>
+        <div class="table-wrap compact">
+          <table>
+            <thead><tr><th>Format</th><th>Text bpw</th><th>Payload</th><th>WT2 PPL ↓</th><th>ARC-299 ↑</th><th>MMLU ↑</th></tr></thead>
+            <tbody>{qwen4.map((row) => <tr class:list={[row.ours && "ours"]}><td>{row.format}</td><td>{row.bpw}</td><td>{row.payload} GiB</td><td>{row.ppl}</td><td>{row.arc}</td><td>{row.mmlu}</td></tr>)}</tbody>
+          </table>
+        </div>
+
+        <div class="subtable-title">Llama 3 8B</div>
+        <div class="table-wrap compact">
+          <table>
+            <thead><tr><th>Format</th><th>Text bpw</th><th>Payload</th><th>WT2 PPL ↓</th><th>ARC-299 ↑</th><th>MMLU ↑</th></tr></thead>
+            <tbody>{llama8.map((row) => <tr class:list={[row.ours && "ours"]}><td>{row.format}</td><td>{row.bpw}</td><td>{row.payload} GiB</td><td>{row.ppl}</td><td>{row.arc}</td><td>{row.mmlu}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="wq-section" id="kv-activation">
+      <div class="section-label">05</div>
+      <div class="section-body">
+        <h2>{ko ? "KV Cache와 Activation까지 줄이기" : "KV cache and activations"}</h2>
+        <p>
+          {ko
+            ? "Qwen3.8-27B에는 16개의 full-attention layer가 있습니다. 이 layer에서는 가장 최근의 128개 token을 BF16으로 유지하고, 그보다 오래된 key는 random rotation 뒤 3-bit MSE code와 1-bit QJL residual로 저장합니다. Value는 token별 group-32 INT4로 저장합니다. 새 token은 높은 정밀도로 처리하면서, 길어진 context의 대부분은 저비트로 보관하는 구조입니다."
+            : "Across Qwen3.8-27B's 16 full-attention layers, the newest 128 tokens stay in BF16. Older keys use a 3-bit MSE code plus a 1-bit QJL residual after random rotation; values use per-token group-32 INT4. This applies TurboQuant's online inner-product quantization to the KV cache."}
+          <a class="cite" href="#ref-9">[9]</a><a class="cite" href="#ref-10">[10]</a><a class="cite" href="#ref-11">[11]</a><a class="cite" href="#ref-12">[12]</a>
+        </p>
+
+        <figure class="report-figure kv-figure">
+          <div class="kv-strip" aria-label={ko ? "KV cache recent-window 구조" : "KV cache recent-window layout"}>
+            <div class="old">K4 / V4 · {ko ? "오래된 토큰" : "older tokens"}</div>
+            <div class="recent">BF16 · R128</div>
+            <div class="next">+1</div>
+          </div>
+          <div class="context-grid">
+            <div><span>4K</span><strong>0.25 → 0.08 GiB</strong><small>3.21×</small></div>
+            <div><span>32K</span><strong>2.00 → 0.58 GiB</strong><small>3.43×</small></div>
+            <div><span>128K</span><strong>8.00 → 2.32 GiB</strong><small>3.45×</small></div>
+            <div><span>256K</span><strong>16.00 → 4.63 GiB</strong><small>3.46×</small></div>
+          </div>
+          <figcaption>{ko ? "그림 5. Context가 길어질수록 최근 128개 token의 고정 비용이 작아지고, KV Cache 압축률은 3.46배에 가까워집니다." : "Figure 5. As context grows, the fixed recent-window cost shrinks and compression approaches 3.46×."}</figcaption>
+        </figure>
+
+        <p>
+          {ko
+            ? "Activation은 496개 decoder linear module의 입력마다 token별 절댓값 최댓값을 구해 INT8로 변환합니다. 아래 표는 같은 Qwen3.8-27B R16E4H4 checkpoint와 4,088개의 WikiText-2 validation token에서 가중치만 양자화한 경우, KV Cache를 추가한 경우, A8을 추가한 경우, 두 방식을 함께 적용한 경우를 비교합니다."
+            : "Activations use a per-token absolute-maximum scale for inputs to 496 decoder linear modules. The table compares weight-only, KV, A8, and combined paths on the same Qwen3.8-27B R16E4H4 checkpoint and 4,088 WikiText-2 validation tokens."}
+          <a class="cite" href="#ref-13">[13]</a><a class="cite" href="#ref-14">[14]</a>
+        </p>
+
+        <div class="table-wrap compact">
+          <table>
+            <thead><tr><th>{ko ? "구성" : "Configuration"}</th><th>PPL ↓</th><th>Δ PPL</th><th>Top-1</th><th>KV @ 512</th></tr></thead>
+            <tbody>
+              <tr><td>WarpQuant weight-only</td><td>6.6468</td><td>—</td><td>reference</td><td>1.00×</td></tr>
+              <tr><td>+ K4/V4/R128</td><td>6.6495</td><td>+0.0027</td><td>97.65%</td><td>2.14×</td></tr>
+              <tr><td>+ Dynamic A8</td><td>6.7139</td><td>+0.0671</td><td>92.10%</td><td>1.00×</td></tr>
+              <tr class="ours"><td>+ K4/V4/R128 + A8</td><td>6.6945</td><td>+0.0477</td><td>92.47%</td><td>2.14×</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="wq-section" id="reproduction">
+      <div class="section-label">06</div>
+      <div class="section-body">
+        <h2>{ko ? "평가 방법" : "Measurement and reproduction"}</h2>
+        <div class="spec-grid">
+          <div><span>Model</span><strong>Qwen/Qwen3.8-27B</strong><small>revision 1d4bf0f2…</small></div>
+          <div><span>Text denominator</span><strong>26,895,998,464</strong><small>vision + MTP excluded</small></div>
+          <div><span>Evaluator</span><strong>llama.cpp</strong><small>WT2 · ARC · MMLU</small></div>
+          <div><span>Hardware</span><strong>NVIDIA H100 80GB</strong><small>single-GPU evaluation</small></div>
+          <div><span>Calibration</span><strong>Output-Fisher</strong><small>next-token NLL gradients</small></div>
+          <div><span>Commonsense</span><strong>3 × 1,000</strong><small>fixed deterministic samples</small></div>
+        </div>
+        <p>
+          {ko
+            ? "GGUF 대조군은 실제 파일에서 텍스트 모델이 차지하는 비트율과 용량을 사용했습니다. WarpQuant의 용량은 3-bit code, FP16 scale, weak-column index와 residual, embedding과 head의 group scale을 모두 합산해 계산했습니다. 평가는 같은 양자화 값을 사용하는 checkpoint로 진행했습니다."
+            : "GGUF baselines use their physical text-model rate and payload. WarpQuant sums packed codes, FP16 scales, weak-column indices and residuals, plus embedding/head group scales. Its evaluation checkpoint is a BF16 carrier containing the same quantized values."}
+        </p>
+
+        <div class="measurement-flow">
+          <div><span>01</span><strong>Calibrate</strong><small>X energy + output Fisher</small></div>
+          <div><span>02</span><strong>Quantize</strong><small>rotation + block-GPTQ</small></div>
+          <div><span>03</span><strong>Account</strong><small>text-only packed payload</small></div>
+          <div><span>04</span><strong>Evaluate</strong><small>PPL + reasoning + M=1</small></div>
+        </div>
+
+        <h3>{ko ? "어떤 연구를 바탕으로 만들었는가" : "Relationship to prior work"}</h3>
+        <div class="prior-grid">
+          <a href="https://arxiv.org/abs/2404.00456" target="_blank" rel="noopener"><strong>QuaRot [6]</strong><span>{ko ? "직교 회전으로 outlier를 고르게 펼치는 방법" : "orthogonal rotation for outlier smoothing"}</span></a>
+          <a href="https://arxiv.org/abs/2210.17323" target="_blank" rel="noopener"><strong>GPTQ [1]</strong><span>{ko ? "block 안에서 양자화 오차를 전달하고 보정하는 방법" : "block-wise error feedback"}</span></a>
+          <a href="https://arxiv.org/abs/2504.19874" target="_blank" rel="noopener"><strong>TurboQuant [9]</strong><span>{ko ? "내적 오차를 줄이는 online KV 양자화" : "online inner-product KV quantization"}</span></a>
+          <a href="https://arxiv.org/abs/2211.10438" target="_blank" rel="noopener"><strong>SmoothQuant [13]</strong><span>{ko ? "Activation의 큰 값을 weight 쪽으로 옮기는 방법" : "reference for activation scale migration"}</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wq-section references">
+      <div class="section-label">07</div>
+      <div class="section-body">
+        <h2>References</h2>
+        <div class="reference-list">
+          {references.map((reference, index) => (
+            <p id={`ref-${index + 1}`}><span>[{index + 1}]</span><a href={reference.href} target="_blank" rel="noopener">{reference.citation}</a></p>
+          ))}
+        </div>
+
+        <h3>Citation</h3>
+        <pre class="bibtex"><code>{bibtex}</code></pre>
+      </div>
+    </section>
+  </article>
+</main>
+
+<style>
+  .wq-shell { max-width: 980px; padding-top: clamp(34px, 5vw, 64px); padding-bottom: 120px; }
+  .wq-article { margin-top: clamp(42px, 6vw, 72px); }
+  .wq-header { max-width: 850px; }
+  .wq-meta { display: flex; gap: 10px; align-items: center; color: var(--faint); font-family: var(--font-sans); font-size: .7rem; }
+  .wq-meta .report-label { padding: 3px 8px; color: var(--accent-ink); border: 1px solid var(--accent); border-radius: 99px; font-weight: 500; }
+  h1 { margin: 20px 0 0; max-width: 900px; font-size: clamp(2.5rem, 6.2vw, 5rem); font-weight: 600; letter-spacing: -.058em; line-height: 1.03; }
+  .wq-header > p { max-width: 760px; margin: 28px 0 0; color: var(--muted); font-size: clamp(1.02rem, 2vw, 1.22rem); line-height: 1.75; }
+  .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 54px; border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .metric-grid div { min-height: 118px; padding: 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .metric-grid strong { display: block; font-family: var(--font-mono); font-size: 1.45rem; font-weight: 500; }
+  .metric-grid span { display: block; margin-top: 20px; color: var(--muted); font-size: .75rem; line-height: 1.4; }
+  .report-index { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 34px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .report-index a { display: flex; gap: 10px; padding: 13px 15px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: .72rem; }
+  .report-index a:hover { background: var(--accent-soft); }
+  .report-index span { color: var(--faint); font-family: var(--font-mono); font-size: .62rem; }
+  .wq-section { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 34px; margin-top: 88px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .section-body { min-width: 0; }
+  .section-label { color: var(--accent-ink); font-family: var(--font-mono); font-size: .68rem; }
+  .section-body h2 { margin: 0 0 28px; font-size: clamp(1.45rem, 3vw, 2.25rem); font-weight: 600; letter-spacing: -.04em; line-height: 1.25; }
+  .section-body > p { margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.85; }
+  .section-body > p + p { margin-top: 24px; }
+  .memory-map { margin-top: 38px; padding: 28px; border: 1px solid var(--line); background: var(--surface-muted); }
+  .memory-source { width: fit-content; margin: auto; padding: 10px 16px; border: 1px solid var(--line-strong); background: var(--surface); font-family: var(--font-mono); font-size: .7rem; }
+  .memory-arrow { padding: 10px 0; text-align: center; color: var(--accent-ink); }
+  .memory-paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .memory-paths div { min-height: 126px; padding: 16px; border-top: 2px solid var(--accent); background: var(--surface); }
+  .memory-paths span, .memory-paths strong, .memory-paths small { display: block; }
+  .memory-paths span { color: var(--faint); font-family: var(--font-mono); font-size: .62rem; }
+  .memory-paths strong { margin-top: 18px; font-size: .92rem; }
+  .memory-paths small { margin-top: 8px; color: var(--muted); font-size: .7rem; }
+  .report-figure { margin-inline: 0; }
+  .report-figure figcaption { margin-top: 14px; color: var(--faint); font-size: .7rem; line-height: 1.6; }
+  .domain-diagram { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: stretch; margin-top: 34px; }
+  .domain-stage { min-height: 142px; padding: 18px; border: 1px solid var(--line); background: var(--surface-muted); }
+  .domain-stage.rotated { border-top: 3px solid var(--accent); background: var(--accent-soft); }
+  .domain-stage span, .domain-stage strong, .domain-stage small { display: block; }
+  .domain-stage span { color: var(--faint); font-size: .66rem; }
+  .domain-stage strong { margin-top: 26px; font-size: .88rem; line-height: 1.4; }
+  .domain-stage small { margin-top: 8px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+  .domain-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent-ink); }
+  .formula-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 34px 0; padding: 22px; overflow-x: auto; border: 1px solid var(--line); }
+  .formula-card code { min-width: max-content; font-family: var(--font-mono); font-size: .78rem; }
+  .formula-card span { color: var(--accent-ink); }
+  .equation { margin-top: 28px; padding: 20px; border-left: 2px solid var(--accent); background: var(--accent-soft); color: var(--accent-ink); font-family: var(--font-mono); font-size: .86rem; text-align: center; }
+  .equation-primary { margin-bottom: 0; }
+  .equation-caption { margin-top: 8px; color: var(--faint); font-family: var(--font-mono); font-size: .66rem; text-align: center; }
+  .algorithm-box { margin: 34px 0 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .algorithm-heading { display: flex; gap: 14px; padding: 12px 4px; border-bottom: 1px solid var(--ink); font-family: var(--font-sans); font-size: .82rem; }
+  .algorithm-heading strong { font-weight: 700; }
+  .algorithm-require { padding: 13px 4px 7px; font-size: .76rem; }
+  .algorithm-require strong { margin-right: 8px; }
+  .algorithm-box ol { margin: 0; padding: 7px 4px 14px; list-style: none; }
+  .algorithm-box li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 4px 0; font-family: Georgia, "Times New Roman", serif; font-size: .78rem; line-height: 1.55; }
+  .algorithm-box li > span { color: var(--faint); font-family: var(--font-mono); font-size: .65rem; }
+  .algorithm-box li p { margin: 0; }
+  .algorithm-box figcaption { margin: 11px 0 0; color: var(--faint); font-size: .7rem; line-height: 1.6; }
+  .code-intro { margin-top: 28px !important; }
+  .code-block { margin: 16px 0 0; padding: 22px; overflow-x: auto; border: 1px solid var(--line); background: var(--surface-muted); color: var(--ink); font-family: var(--font-mono); font-size: .72rem; line-height: 1.65; tab-size: 4; }
+  .selector-figure { display: grid; gap: 15px; margin-top: 32px; }
+  .selector-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 72px; gap: 14px; align-items: center; font-size: .72rem; }
+  .selector-row i { display: block; width: var(--w); height: 18px; background: var(--line-strong); }
+  .selector-row.ours i { background: var(--accent); }
+  .selector-row strong { font-family: var(--font-mono); font-size: .72rem; font-weight: 500; text-align: right; }
+  .payload-chart { display: grid; gap: 13px; margin-top: 36px; }
+  .payload-row { display: grid; grid-template-columns: 110px minmax(0, 1fr) 84px; gap: 12px; align-items: center; font-family: var(--font-sans); font-size: .7rem; }
+  .payload-row i { display: block; width: var(--w); height: 16px; background: var(--line-strong); }
+  .payload-row.ours i { background: var(--accent); }
+  .payload-row strong { font-weight: 500; text-align: right; }
+  .table-wrap { margin-top: 38px; overflow-x: auto; border-top: 1px solid var(--ink); }
+  table { width: 100%; border-collapse: collapse; min-width: 650px; font-family: var(--font-sans); font-size: .7rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--faint); font-weight: 500; }
+  tr.ours td { color: var(--accent-ink); font-weight: 600; background: var(--accent-soft); }
+  .result-callouts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 24px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .result-callouts div { min-height: 96px; padding: 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .result-callouts strong, .result-callouts span { display: block; }
+  .result-callouts strong { font-family: var(--font-mono); font-size: .8rem; font-weight: 500; }
+  .result-callouts span { margin-top: 18px; color: var(--muted); font-size: .7rem; line-height: 1.5; }
+  .section-body h3 { margin: 58px 0 18px; font-size: 1.15rem; font-weight: 600; letter-spacing: -.025em; }
+  .subtable-title { margin-top: 34px; font-size: .78rem; font-weight: 600; }
+  .subtable-title + .table-wrap { margin-top: 12px; }
+  .kv-strip { display: grid; grid-template-columns: minmax(0, 1fr) 150px 42px; margin-top: 36px; color: var(--ink); font-family: var(--font-mono); font-size: .68rem; }
+  .kv-strip div { display: flex; min-height: 54px; align-items: center; justify-content: center; border: 1px solid var(--line); }
+  .kv-strip .old { color: var(--accent-ink); background: var(--accent-soft); }
+  .kv-strip .recent { background: var(--surface-muted); }
+  .context-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; border-left: 1px solid var(--line); }
+  .context-grid div { padding: 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .context-grid span, .context-grid strong, .context-grid small { display: block; }
+  .context-grid span { color: var(--faint); font-family: var(--font-mono); font-size: .62rem; }
+  .context-grid strong { margin-top: 18px; font-family: var(--font-mono); font-size: .75rem; font-weight: 500; }
+  .context-grid small { margin-top: 8px; color: var(--accent-ink); font-family: var(--font-mono); font-size: .62rem; }
+  .measure-note { margin-top: 24px !important; padding: 16px 18px; border-left: 2px solid var(--line-strong); background: var(--surface-muted); font-size: .83rem !important; }
+  .table-note { margin-top: 14px !important; color: var(--faint) !important; font-family: var(--font-mono); font-size: .64rem !important; line-height: 1.65 !important; }
+  .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 30px; border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .spec-grid div { min-height: 112px; padding: 17px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .spec-grid span, .spec-grid strong, .spec-grid small { display: block; }
+  .spec-grid span { color: var(--faint); font-size: .66rem; }
+  .spec-grid strong { margin-top: 20px; font-size: .82rem; font-weight: 600; }
+  .spec-grid small { margin-top: 8px; color: var(--muted); font-size: .66rem; }
+  .measurement-flow { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 34px; }
+  .measurement-flow div { position: relative; min-height: 116px; padding: 15px; border: 1px solid var(--line); border-right: 0; }
+  .measurement-flow div:last-child { border-right: 1px solid var(--line); }
+  .measurement-flow span, .measurement-flow strong, .measurement-flow small { display: block; }
+  .measurement-flow span { color: var(--accent-ink); font-family: var(--font-mono); font-size: .62rem; }
+  .measurement-flow strong { margin-top: 18px; font-size: .8rem; }
+  .measurement-flow small { margin-top: 8px; color: var(--muted); font-size: .65rem; line-height: 1.45; }
+  .prior-grid { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .prior-grid a { min-height: 104px; padding: 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .prior-grid a:hover { background: var(--accent-soft); }
+  .prior-grid strong, .prior-grid span { display: block; }
+  .prior-grid strong { font-size: .82rem; }
+  .prior-grid span { margin-top: 14px; color: var(--muted); font-size: .7rem; line-height: 1.5; }
+  .reference-list { margin: 0; padding-top: 20px; border-top: 1px solid var(--ink); }
+  .reference-list p { margin: 0 0 15px; color: var(--faint); font-size: .82rem; line-height: 1.75; }
+  .reference-list p > span { display: inline-block; min-width: 34px; color: var(--faint); font-family: var(--font-mono); }
+  .reference-list a { color: var(--muted); }
+  .reference-list a:hover { color: var(--ink); }
+  .cite { margin-left: 4px; color: var(--accent-ink); font-family: var(--font-mono); font-size: .72em; vertical-align: .12em; }
+  .bibtex { max-height: 420px; margin: 18px 0 0; padding: 20px; overflow: auto; border: 1px solid var(--line); background: var(--surface-muted); color: var(--muted); font-family: var(--font-mono); font-size: .68rem; line-height: 1.65; white-space: pre; }
+  @media (max-width: 720px) {
+    .wq-shell { width: min(100% - 32px, 980px); padding-top: 30px; }
+    h1 { font-size: clamp(2.35rem, 13vw, 3.7rem); }
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    .wq-section { grid-template-columns: 1fr; gap: 18px; margin-top: 68px; }
+    .report-index { grid-template-columns: 1fr 1fr; }
+    .memory-paths, .context-grid, .spec-grid, .result-callouts, .measurement-flow, .prior-grid { grid-template-columns: 1fr; }
+    .domain-diagram { grid-template-columns: 1fr; }
+    .domain-arrow { min-height: 34px; transform: rotate(90deg); }
+    .selector-row { grid-template-columns: 110px minmax(0, 1fr) 58px; }
+    .payload-row { grid-template-columns: 72px minmax(0, 1fr) 72px; }
+    .kv-strip { grid-template-columns: minmax(0, 1fr) 96px 34px; }
+    .measurement-flow div { border-right: 1px solid var(--line); border-bottom: 0; }
+    .measurement-flow div:last-child { border-bottom: 1px solid var(--line); }
+  }
+</style>

@@ -3,17 +3,6 @@ export type Locale = "en" | "ko";
 const sharedLinks = [
   { label: "GitHub", href: "https://github.com/HarimxChoi" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/harimxchoi" },
-  { label: "Email", href: "mailto:2.harim.choi@gmail.com" },
-];
-
-const englishLinks = [
-  ...sharedLinks,
-  { label: "Portfolio deck", href: "/files/harim-choi-ml-portfolio.pptx" },
-];
-
-const koreanLinks = [
-  ...sharedLinks,
-  { label: "포트폴리오 파일", href: "/files/harim-choi-ml-portfolio.pptx" },
 ];
 
 export const portfolio = {
@@ -26,26 +15,15 @@ export const portfolio = {
     nav: {
       brand: "Harim Choi",
       links: [
-        ["Career", "#career"],
-        ["Projects", "#projects"],
-        ["Skills", "#skills"],
-        ["Approach", "#approach"],
+        ["Index", "#projects"],
       ],
     },
     hero: {
-      eyebrow: "Applied Machine Learning Engineer · Seoul",
-      title: "Reliable decision systems for incomplete data and uncertain models.",
+      eyebrow: "Harim Choi · Seoul",
+      title: "Applied Machine Learning Engineer",
       body:
-        "Machine learning engineer with 7+ years of experience across probabilistic forecasting, calibration, uncertainty quantification, and simulation. I work across tabular ML, NLP, computer vision, and LLM agents, connecting data collection and modeling to evaluation, APIs, batch operations, and operational controls.",
-      note:
-        "I look for the failure modes hidden behind headline metrics, including leakage, flawed evaluation, domain gaps, and identifiability limits, then redesign the evaluation and the system around them.",
-      links: englishLinks,
-      signals: [
-        ["7+ years", "Applied ML across production and research"],
-        ["35%", "Internal relative bid-win KPI improvement"],
-        ["5.4×", "Inference path speedup, 136 s to 25 s"],
-        ["Top 1%", "google-surf-mcp on MCP TOPLIST"],
-      ],
+        "Production ML systems, reliable model evaluation, and agent infrastructure.",
+      links: sharedLinks,
     },
     careerIntro: {
       number: "01",
@@ -153,11 +131,11 @@ export const portfolio = {
       },
     ],
     projectIntro: {
-      number: "02",
-      eyebrow: "Projects & Research",
-      title: "Nine systems across agents, decisions, and reliable vision.",
+      number: "01",
+      eyebrow: "Index",
+      title: "Project Notes",
       body:
-        "The domains change, but the operating pattern stays consistent: identify the decision boundary, expose the failure condition, and connect the model to a verifiable execution path.",
+        "Systems and research ordered by recency.",
     },
     projectGroups: [
       {
@@ -171,7 +149,7 @@ export const portfolio = {
             status: "Public OSS / MCP search infrastructure",
             period: "Apr 2026–Present",
             summary:
-              "A unified MCP for Google Search, web content, and academic PDFs. Ranked in the top 1% of all MCPs on MCP TOPLIST (900 / 95,000) with 270+ GitHub stars.",
+              "Search, web extraction, and academic PDF parsing in one MCP. It ranks in the top 1% of MCP TOPLIST (900 / 95,000) with 270+ GitHub stars.",
             categories: ["Agentic AI", "Information Retrieval", "Document Processing / Security"],
             tools: [
               "TypeScript / Node.js",
@@ -192,14 +170,14 @@ export const portfolio = {
             image: "/img/google-surf-demo.gif",
             imageAlt: "google-surf-mcp search and extraction demo",
             imageCaption: "Public OSS demo",
-            metric: "Top 1% · 270+ stars",
+            metric: "MCP TOPLIST · Top 1% of 95K servers",
           },
           {
             title: "Monogram",
             status: "Public OSS / RAG-ready knowledge pipeline",
             period: "Apr 2026–Present",
             summary:
-              "A local-first system that validates Telegram, Obsidian, and MCP inputs, stores structured Markdown in a Git-backed knowledge base, and retrieves it through semantic search.",
+              "Turns Telegram, Obsidian, and MCP inputs into validated, searchable Markdown that remains inspectable and recoverable through Git.",
             categories: ["RAG / Retrieval", "Agentic AI", "Knowledge Automation"],
             tools: [
               "Python",
@@ -220,14 +198,14 @@ export const portfolio = {
             image: "/img/monogram-dashboard.png",
             imageAlt: "Monogram project dashboard using synthetic example data",
             imageCaption: "Dashboard · synthetic example data",
-            metric: "5-stage pipeline",
+            metric: "Search-integrated graph knowledge system",
           },
           {
             title: "Bau Browser",
             status: "Private local MVP / agent-native browser",
             period: "2026",
             summary:
-              "A desktop browser that runs everyday browsing and user-approved agent tasks in the same Electron 43 runtime.",
+              "A desktop browser that keeps agent actions inspectable and inside an origin- and action-scoped approval flow.",
             categories: ["Agentic AI", "Browser Automation", "Agent Safety"],
             tools: [
               "TypeScript",
@@ -247,14 +225,14 @@ export const portfolio = {
             image: "/img/bau-browser-synthetic.png",
             imageAlt: "Bau Browser native desktop capture using a synthetic comparison fixture",
             imageCaption: "Native desktop capture · synthetic fixture",
-            metric: "Scoped execution",
+            metric: "Approval-gated agent browser",
           },
           {
             title: "LangGraph Travel Agent",
             status: "Delivered to a U.S. travel agency / Public OSS",
             period: "May 2025–Jul 2025",
             summary:
-              "A multi-tool travel advisory agent delivered to a U.S. travel agency, with source-code IP transferred back under the contract and released as open source.",
+              "A delivered travel advisor that coordinates 4 external APIs, resumable checkpoints, and approval-gated outbound messages.",
             categories: ["Agentic AI", "Workflow Orchestration", "API Integration"],
             tools: [
               "Python",
@@ -272,7 +250,7 @@ export const portfolio = {
               "Connects FastAPI, Redis checkpoints, CRM, and SMS in a resumable path, with external messages held until explicit approval.",
             ],
             href: "https://github.com/HarimxChoi/langgraph-travel-agent",
-            metric: "4 APIs · resumable",
+            metric: "Agent delivered to a U.S. travel agency",
           },
         ],
       },
@@ -287,34 +265,34 @@ export const portfolio = {
             status: "Private research / reliable agent evaluation",
             period: "2026–Present",
             summary:
-              "Research separating performance differences among LLM-agent configurations from their identifiability before execution. Submitted to TMLR and under review.",
+              "Research showing that no single LLM-agent setup is best for every task, and that the best setup is often difficult to identify before execution.",
             categories: ["Agentic AI", "LLM Evaluation", "Research Infrastructure"],
             tools: [
               "Python",
               "Agent evaluation",
               "Scaffold / memory / retry ablation",
               "Verifier cascade",
-              "Oracle gap",
+              "Configuration selection gap",
               "Domain-shift analysis",
               "Contamination control",
               "Reproducibility harness",
             ],
             bullets: [
-              "Post-hoc selection of the best agent configuration per task, including Tree of Thoughts, improved success by up to 29 percentage points over one fixed configuration.",
-              "Experiments also produced the negative result: task descriptions and difficulty available before execution could not identify the optimal configuration in advance.",
+              "Compared reasoning, memory, retry, and verification designs on the same tasks; choosing the best setup for each task raised success by up to 29 percentage points over one fixed setup.",
+              "Built an evaluation harness that separates the performance available after trying every setup from what a real system can choose before execution.",
             ],
-            metric: "+29 pp oracle gap",
+            metric: "Research on the limits of agent configuration",
           },
           {
             title: "EMH Agent",
-            status: "Public OSS / contract MVP",
+            status: "Public OSS / point-in-time RL portfolio agent",
             period: "2026–Present",
             summary:
-              "A reinforcement-learning investment agent using only point-in-time information. The public Trading agent includes reproducible data, training code, and model checkpoints.",
+              "A reinforcement-learning investment agent that builds and evaluates portfolios using only the information available at each point in time.",
             categories: ["Agentic AI", "Reinforcement Learning", "Decision Systems"],
             tools: [
               "Python",
-              "TQC",
+              "Reinforcement learning (TQC)",
               "Point-in-time data",
               "Typed schemas",
               "Multi-agent architecture",
@@ -324,26 +302,59 @@ export const portfolio = {
               "Provenance / reconciliation",
             ],
             bullets: [
-              "Recorded +84.26 percentage points cumulative return over the S&P 500 across 3 years and a +0.838 Sharpe ratio.",
+              "In a cost-aware 2019–2021 backtest across 756 sessions, a three-run ensemble returned 183.89% versus 99.63% for the S&P 500 ETF IVV.",
               "Separates Intelligence, Trading, Arbitrage, and Household packages, while restricting external actions to a separate execution harness.",
             ],
             href: "https://github.com/HarimxChoi/emh-agent",
-            metric: "+84.26 pp · Sharpe +0.838",
+            metric: "RL investment agent · 3-year return 183.9% (IVV 99.6%)",
           },
         ],
       },
       {
         index: "C",
+        title: "LLM Quantization · Efficient Inference",
+        description:
+          "Low-bit methods for reducing the memory cost of model weights and inference state.",
+        projects: [
+          {
+            title: "WarpQuant",
+            status: "Technical report / low-bit LLM inference",
+            period: "Aug 2026",
+            summary:
+              "A dual-domain post-training quantization method that compresses transformer weights after Hadamard rotation and spends a small recovery budget on columns ranked by Output-Fisher sensitivity. The same report evaluates a TurboQuant-style KV cache and per-token INT8 activations.",
+            categories: ["LLM Quantization", "Efficient Inference", "Post-Training Quantization"],
+            tools: [
+              "PyTorch",
+              "Hadamard rotation",
+              "Block-GPTQ",
+              "Output-Fisher",
+              "KV cache quantization",
+              "INT8 activation",
+            ],
+            bullets: [
+              "Compresses the Qwen3.8-27B text backbone to 3.6165 bpw and 11.32 GiB with a rotation-domain 3-bit base and Output-Fisher column recovery.",
+              "Extends the report to recent-window KV cache quantization and per-token dynamic INT8 activations.",
+            ],
+            href: "https://github.com/HarimxChoi/WarpQuant",
+            image: "/img/warpquant-card.svg",
+            imageAlt: "WarpQuant dual-domain quantization diagram",
+            imageCaption: "Dual-domain PTQ",
+            metric: "Qwen3.8-27B · 3.6165 text bpw",
+          },
+        ],
+      },
+      {
+        index: "D",
         title: "Computer Vision · Calibration · Reliability",
         description:
           "Vision research for scarce labels, ambiguous boundaries, deployment constraints, and signals that must be calibrated before they are trusted.",
         projects: [
           {
             title: "WSSS",
-            status: "Pseudo-label refinement research",
+            status: "State-of-the-art weakly supervised segmentation research",
             period: "Aug 2025–Oct 2025",
             summary:
-              "Contract research in weakly supervised semantic segmentation. Reliability mapping selectively replaces pixels where the model and pseudo-label disagree.",
+              "Improves segmentation learned from image-level labels by finding unreliable pixels in automatically generated masks and repairing only those regions before retraining.",
             categories: ["Computer Vision", "Weak Supervision", "Evaluation / Reliability"],
             tools: [
               "PyTorch",
@@ -355,28 +366,28 @@ export const portfolio = {
               "COCO-Val / mIoU",
             ],
             bullets: [
-              "Combines prediction history, confidence, and spatial consistency into a reliability map.",
-              "Recorded 53.31% mIoU across all 40,137 COCO-Val 2014 samples, 1.5 percentage points above WeCLIP+ (TPAMI '25, 51.8%).",
+              "Scores each pixel using prediction history, confidence, and agreement with neighboring pixels, then focuses training on ambiguous regions.",
+              "The resulting pseudo-label refinement system reached state-of-the-art COCO-Val performance at the time of the experiment.",
             ],
             href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
             image: "/img/wsss-architecture.png",
             imageAlt: "Architecture diagram for weakly supervised semantic segmentation and pseudo-label refinement",
             imageCaption: "Model and pseudo-label refinement architecture",
-            metric: "53.31% mIoU · 40,137 samples",
+            metric: "WSSS SOTA research · +1.5 pp mIoU over prior SOTA",
           },
           {
             title: "MyShot",
             status: "Private research / monocular 3D golf pose",
             period: "2026–Present",
             summary:
-              "A smartphone-based system that reconstructs complete golf swings in 3D and compares pose estimates with instrumented measurements.",
+              "Reconstructs a golf swing in 3D and measures body rotation from a single smartphone camera.",
             categories: ["Computer Vision", "3D Pose Estimation", "Edge AI / Evaluation"],
             tools: [
               "PyTorch",
               "YOLO-Pose",
               "MotionAGFormer-B",
               "Monocular 3D pose",
-              "MPJPE",
+              "Mean 3D joint error (MPJPE)",
               "X-Factor",
               "Leakage audit",
               "Disjoint split",
@@ -384,17 +395,17 @@ export const portfolio = {
               "INT8 mobile inference",
             ],
             bullets: [
-              "Achieved approximately 3.5 cm joint-position error and estimated X-Factor with 3.1° error.",
+              "With clean 2D joints synchronized to Vicon motion capture, the average 3D joint error was 35.6 mm and the torso-to-hip rotation error was 3.1°.",
               "Built a 2-stage mobile path: YOLO-Pose (6 MB) for 2D joints and MotionAGFormer-B (11.7M parameters, INT8 ~12 MB) for 3D lifting without a separate server.",
             ],
-            metric: "3.5 cm · 3.1°",
+            metric: "3D golf pose measurement model",
           },
           {
             title: "EAT",
-            status: "Private research / calibrated uncertainty",
+            status: "Private research / trustworthy confidence estimation",
             period: "Nov 2025–Present",
             summary:
-              "Entropy-based adversarial training and calibration experiments across medical images and general image classification.",
+              "A training method that makes the confidence reported by CNN and Transformer image classifiers better match how often their predictions are actually correct.",
             categories: ["Computer Vision", "Calibration / UQ", "Robust ML"],
             tools: [
               "PyTorch",
@@ -402,21 +413,21 @@ export const portfolio = {
               "ISIC 2017",
               "Adversarial training",
               "Entropy regularization",
-              "Calibration",
-              "ECE",
+              "Confidence calibration",
+              "Expected Calibration Error (ECE)",
               "Transformer / CNN",
             ],
             bullets: [
-              "Achieved F1 0.860 and best ECE 1.1% on ISIC 2017, above the CR-SAM (AAAI 2024) baseline of F1 0.85 and ECE 1.7%.",
-              "Reproduced 81.23% accuracy and 3.37% ECE after temperature scaling on CIFAR-100, while validating metric computation and checkpoint selection.",
+              "Trains two perturbed views of the same image together and penalizes overconfident disagreement, helping the model express uncertainty when its predictions are unstable.",
+              "On CIFAR-100 with WRN-28-10, it reached 81.23% accuracy and 3.37% calibration error after temperature scaling.",
             ],
-            metric: "F1 0.860 · ECE 1.1%",
+            metric: "CNN/Transformer confidence calibration",
           },
         ],
       },
     ],
     skillsIntro: {
-      number: "03",
+      number: "02",
       eyebrow: "Skills",
       title: "A stack organized by the decision path.",
       body:
@@ -493,7 +504,7 @@ export const portfolio = {
       ],
     ],
     approachIntro: {
-      number: "04",
+      number: "03",
       eyebrow: "Approach",
       title: "What stays constant when the domain changes.",
     },
@@ -520,7 +531,7 @@ export const portfolio = {
     footer: {
       line: "Applied ML · Production systems · Open source · Research",
       location: "Seoul, South Korea",
-      links: englishLinks,
+      links: sharedLinks,
     },
   },
   ko: {
@@ -532,26 +543,15 @@ export const portfolio = {
     nav: {
       brand: "최하림",
       links: [
-        ["경력", "#career"],
-        ["프로젝트", "#projects"],
-        ["기술", "#skills"],
-        ["접근 방식", "#approach"],
+        ["목록", "#projects"],
       ],
     },
     hero: {
-      eyebrow: "Applied Machine Learning Engineer · 서울",
-      title: "불완전한 데이터와 불확실한 모델을 신뢰할 수 있는 의사결정 시스템으로 바꿉니다.",
+      eyebrow: "최하림 · 서울",
+      title: "Applied Machine Learning Engineer",
       body:
-        "7년 이상 확률예측·캘리브레이션·불확실성 정량화·시뮬레이션을 중심으로 tabular ML, NLP, Computer Vision과 LLM agent를 다루며 데이터 수집부터 모델링·평가·API와 배치 운영까지 직접 연결해 왔습니다.",
-      note:
-        "데이터 누수, 잘못된 평가 기준, domain gap과 식별 한계처럼 성능표에 드러나지 않는 실패 조건을 찾아 평가 방식과 시스템 구조를 다시 설계합니다.",
-      links: koreanLinks,
-      signals: [
-        ["7년+", "프로덕션과 연구를 잇는 Applied ML 경력"],
-        ["35%", "내부 상대 낙찰 KPI 향상"],
-        ["5.4배", "추론 경로 136초에서 25초로 단축"],
-        ["상위 1%", "MCP TOPLIST의 google-surf-mcp"],
-      ],
+        "프로덕션 ML 시스템, 신뢰할 수 있는 모델 평가와 Agent 인프라를 만듭니다.",
+      links: sharedLinks,
     },
     careerIntro: {
       number: "01",
@@ -657,11 +657,11 @@ export const portfolio = {
       },
     ],
     projectIntro: {
-      number: "02",
-      eyebrow: "프로젝트 및 연구",
-      title: "Agent, 의사결정, 신뢰할 수 있는 Vision을 잇는 9개 시스템입니다.",
+      number: "01",
+      eyebrow: "목록",
+      title: "프로젝트 노트",
       body:
-        "도메인은 달라도 같은 방식으로 접근합니다. 의사결정 경계를 먼저 정의하고, 실패 조건을 드러낸 뒤, 모델을 검증 가능한 실행 경로에 연결합니다.",
+        "시스템과 연구를 최근 순으로 정리했습니다.",
     },
     projectGroups: [
       {
@@ -675,7 +675,7 @@ export const portfolio = {
             status: "Public OSS / MCP 검색 인프라",
             period: "2026.04–현재",
             summary:
-              "Google 검색, 웹 본문과 학술 PDF를 하나의 MCP로 통합했습니다. MCP TOPLIST 전체 95,000개 중 900위로 상위 1%를 기록했고 GitHub 270+ stars를 받았습니다.",
+              "검색, 웹 본문 추출과 학술 PDF 해석을 하나의 MCP로 통합했습니다. MCP TOPLIST 95,000개 중 900위, 상위 1%와 GitHub 270+ stars를 기록했습니다.",
             categories: ["Agentic AI", "Information Retrieval", "Document Processing / Security"],
             tools: [
               "TypeScript / Node.js",
@@ -696,14 +696,14 @@ export const portfolio = {
             image: "/img/google-surf-demo.gif",
             imageAlt: "google-surf-mcp 검색 및 문서 추출 데모",
             imageCaption: "Public OSS 데모",
-            metric: "상위 1% · 270+ stars",
+            metric: "MCP TOPLIST · 9.5만 서버 중 상위 1%",
           },
           {
             title: "Monogram",
             status: "Public OSS / RAG-ready 지식 파이프라인",
             period: "2026.04–현재",
             summary:
-              "Telegram·Obsidian·MCP 입력을 검증해 Git 기반 지식베이스에 구조화된 Markdown으로 축적하고 semantic retrieval로 다시 찾는 local-first 시스템입니다.",
+              "Telegram·Obsidian·MCP 입력을 검증된 Markdown 지식으로 바꾸고, Git으로 추적·복구하면서 semantic retrieval로 다시 찾습니다.",
             categories: ["RAG / Retrieval", "Agentic AI", "Knowledge Automation"],
             tools: [
               "Python",
@@ -724,14 +724,14 @@ export const portfolio = {
             image: "/img/monogram-dashboard.png",
             imageAlt: "합성 예시 데이터로 구성한 Monogram 프로젝트 대시보드",
             imageCaption: "대시보드 · 합성 예시 데이터",
-            metric: "5단계 파이프라인",
+            metric: "검색 통합 가능한 그래프 지식 시스템",
           },
           {
             title: "Bau Browser",
             status: "Private local MVP / agent-native browser",
             period: "2026",
             summary:
-              "일상적인 browsing과 사용자가 승인한 범위의 Agent 작업을 같은 Electron 43 desktop runtime에서 실행하는 browser Agent입니다.",
+              "Agent 행동을 origin과 action별 승인 범위 안에서만 실행하고 모든 단계를 사용자가 확인할 수 있게 만든 desktop browser입니다.",
             categories: ["Agentic AI", "Browser Automation", "Agent Safety"],
             tools: [
               "TypeScript",
@@ -751,14 +751,14 @@ export const portfolio = {
             image: "/img/bau-browser-synthetic.png",
             imageAlt: "합성 비교 fixture를 사용한 Bau Browser 네이티브 데스크톱 화면",
             imageCaption: "네이티브 데스크톱 캡처 · 합성 fixture",
-            metric: "범위가 제한된 실행",
+            metric: "승인 기반 Agent 브라우저",
           },
           {
             title: "LangGraph Travel Agent",
             status: "미국 여행사 납품 / Public OSS",
             period: "2025.05–2025.07",
             summary:
-              "미국 여행사에 납품한 뒤 계약에 따라 소스코드 IP를 이전받아 오픈소스로 공개한 multi-tool 여행 상담 Agent입니다.",
+              "4개 외부 API, 재개 가능한 checkpoint와 승인 후 외부 전송을 결합해 미국 여행사에 납품한 여행 상담 Agent입니다.",
             categories: ["Agentic AI", "Workflow Orchestration", "API Integration"],
             tools: [
               "Python",
@@ -776,7 +776,7 @@ export const portfolio = {
               "FastAPI, Redis checkpoint, CRM과 SMS를 중단 후 재개 가능한 경로로 연결하고 외부 전송은 명시적 승인 이후에만 실행했습니다.",
             ],
             href: "https://github.com/HarimxChoi/langgraph-travel-agent",
-            metric: "4 APIs · 중단 후 재개",
+            metric: "미국 여행사 납품 Agent",
           },
         ],
       },
@@ -791,34 +791,34 @@ export const portfolio = {
             status: "Private research / 신뢰 가능한 Agent 평가",
             period: "2026–현재",
             summary:
-              "LLM agent 구성의 성능 차이와 실행 전 식별 가능성을 분리해 검증한 연구로 TMLR에 제출해 리뷰를 받고 있습니다.",
+              "모든 과제에 가장 좋은 LLM Agent 구성은 없으며, 실행 전에 어떤 구성이 최선인지 판단하기 어렵다는 한계를 밝힌 연구입니다.",
             categories: ["Agentic AI", "LLM Evaluation", "Research Infrastructure"],
             tools: [
               "Python",
               "Agent evaluation",
               "Scaffold / memory / retry ablation",
               "Verifier cascade",
-              "Oracle gap",
+              "Agent 구성 선택의 간극",
               "Domain-shift analysis",
               "Contamination control",
               "Reproducibility harness",
             ],
             bullets: [
-              "task마다 사후 최적 구성을 고르면 단일 고정 구성보다 성공률이 최대 29%p 높았습니다.",
-              "동시에 task 설명과 난이도처럼 실행 전에 알 수 있는 정보로는 최적 구성을 미리 식별하지 못한다는 부정 결과를 실험으로 확인했습니다.",
+              "추론 방식, memory, retry와 검증 구조를 동일한 과제에서 비교했으며, 과제마다 가장 좋은 구성을 선택하면 하나의 고정 구성보다 성공률이 최대 29%p 높았습니다.",
+              "모든 구성을 실행한 뒤 알 수 있는 최고 성능과 실제 시스템이 실행 전에 선택할 수 있는 성능을 분리해 평가하는 harness를 구축했습니다.",
             ],
-            metric: "+29%p oracle gap",
+            metric: "Agent 구성 선택의 한계 연구",
           },
           {
             title: "EMH Agent",
-            status: "Public OSS / Contract MVP",
+            status: "Public OSS / point-in-time RL 포트폴리오 Agent",
             period: "2026–현재",
             summary:
-              "시점에 이용 가능했던 정보만으로 금융 의사결정을 하는 강화학습 Agent입니다. 현재 공개된 Trading agent에는 재현 가능한 데이터, 학습 코드와 모델 checkpoint가 포함됩니다.",
+              "각 시점에 실제로 알 수 있었던 정보만 사용해 포트폴리오를 구성하고 평가하는 강화학습 투자 Agent입니다.",
             categories: ["Agentic AI", "Reinforcement Learning", "Decision Systems"],
             tools: [
               "Python",
-              "TQC",
+              "강화학습(TQC)",
               "Point-in-time data",
               "Typed schemas",
               "Multi-agent architecture",
@@ -828,26 +828,59 @@ export const portfolio = {
               "Provenance / reconciliation",
             ],
             bullets: [
-              "3년 누적수익률에서 S&P 500 대비 +84.26%p, 샤프지수 +0.838를 기록했습니다.",
+              "거래비용·슬리피지·조달비용을 반영한 2019–2021년 756개 session의 backtest에서 3회 실행 ensemble은 183.89%, S&P 500 ETF IVV는 99.63% 누적수익률을 기록했습니다.",
               "Intelligence, Trading, Arbitrage와 Household를 독립 package로 분리하고 외부 행동은 별도의 execution harness로 제한했습니다.",
             ],
             href: "https://github.com/HarimxChoi/emh-agent",
-            metric: "+84.26%p · Sharpe +0.838",
+            metric: "RL 투자 에이전트 · 3년 수익률 183.9% (IVV 99.6%)",
           },
         ],
       },
       {
         index: "C",
+        title: "LLM Quantization · Efficient Inference",
+        description:
+          "모델 가중치와 추론 상태의 메모리 비용을 줄이는 저비트 양자화 연구입니다.",
+        projects: [
+          {
+            title: "WarpQuant",
+            status: "Technical report / 저비트 LLM 추론",
+            period: "2026.08",
+            summary:
+              "Hadamard 회전 뒤 Transformer 가중치를 압축하고, Output-Fisher 민감도가 높은 column에 작은 복원 예산을 배분하는 dual-domain PTQ 방법입니다. 같은 리포트에서 TurboQuant식 KV cache와 token별 INT8 activation도 함께 평가합니다.",
+            categories: ["LLM Quantization", "Efficient Inference", "Post-Training Quantization"],
+            tools: [
+              "PyTorch",
+              "Hadamard rotation",
+              "Block-GPTQ",
+              "Output-Fisher",
+              "KV cache quantization",
+              "INT8 activation",
+            ],
+            bullets: [
+              "회전 영역 3-bit base와 Output-Fisher column 복원으로 Qwen3.8-27B text backbone을 3.6165 bpw, 11.32 GiB로 압축했습니다.",
+              "Recent-window KV cache quantization과 token별 dynamic INT8 activation을 같은 리포트에서 평가했습니다.",
+            ],
+            href: "https://github.com/HarimxChoi/WarpQuant",
+            image: "/img/warpquant-card.svg",
+            imageAlt: "WarpQuant dual-domain 양자화 구조",
+            imageCaption: "Dual-domain PTQ",
+            metric: "Qwen3.8-27B · 3.6165 text bpw",
+          },
+        ],
+      },
+      {
+        index: "D",
         title: "Computer Vision · Calibration · Reliability",
         description:
           "데이터가 부족하고 경계가 모호하며 배포 제약이 있는 환경에서 어떤 신호를 어디까지 믿을 수 있는지 다루는 Vision 연구입니다.",
         projects: [
           {
             title: "WSSS",
-            status: "Pseudo-label refinement research",
+            status: "WSSS SOTA 연구",
             period: "2025.08–2025.10",
             summary:
-              "prediction history, confidence와 spatial consistency를 reliability map으로 결합해 모델과 pseudo-label이 다른 pixel만 선택적으로 교체한 연구입니다.",
+              "이미지 단위 정답만으로 segmentation을 학습할 때, 자동 생성된 mask에서 신뢰하기 어려운 pixel만 찾아 복원한 뒤 다시 학습하는 방법입니다.",
             categories: ["Computer Vision", "Weak Supervision", "Evaluation / Reliability"],
             tools: [
               "PyTorch",
@@ -859,28 +892,28 @@ export const portfolio = {
               "COCO-Val / mIoU",
             ],
             bullets: [
-              "COCO-Val 2014 전체 40,137개 샘플에서 mIoU 53.31%를 기록했습니다.",
-              "이는 WeCLIP+ (TPAMI '25, 51.8%)보다 1.5%p 높은 수치입니다.",
+              "이전 예측, confidence와 주변 pixel의 일관성을 결합해 pixel별 신뢰도를 계산하고 모호한 영역에 학습을 집중했습니다.",
+              "실험 당시 COCO-Val에서 SOTA 성능을 달성한 pseudo-label refinement 시스템입니다.",
             ],
             href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
             image: "/img/wsss-architecture.png",
             imageAlt: "약지도학습 semantic segmentation과 pseudo-label refinement 구조",
             imageCaption: "모델 및 pseudo-label refinement 구조",
-            metric: "53.31% mIoU · 40,137 samples",
+            metric: "WSSS SOTA 연구 · 기존 SOTA 대비 mIoU +1.5%p",
           },
           {
             title: "MyShot",
             status: "Private research / monocular 3D golf pose",
             period: "2026–현재",
             summary:
-              "스마트폰 영상으로 골프 스윙 전체를 3D로 복원하고 실제 장비 측정값과 비교하는 자세 분석 시스템입니다.",
+              "스마트폰 카메라 한 대로 골프 스윙을 3D로 복원하고 몸통 회전각을 측정하는 모델입니다.",
             categories: ["Computer Vision", "3D Pose Estimation", "Edge AI / Evaluation"],
             tools: [
               "PyTorch",
               "YOLO-Pose",
               "MotionAGFormer-B",
               "Monocular 3D pose",
-              "MPJPE",
+              "평균 3D 관절 오차(MPJPE)",
               "X-Factor",
               "Leakage audit",
               "Disjoint split",
@@ -888,17 +921,17 @@ export const portfolio = {
               "INT8 mobile inference",
             ],
             bullets: [
-              "관절 위치 오차 약 3.5cm, 상·하체 회전차인 X-Factor 오차 3.1°를 확인했습니다.",
+              "Vicon 모션캡처와 동기화된 clean-2D 관절 입력에서 평균 3D 관절 오차 35.6mm와 몸통·골반 회전각 오차 3.1°를 기록했습니다.",
               "YOLO-Pose 6MB와 MotionAGFormer-B 11.7M parameters, INT8 약 12MB의 2단계 경로를 별도 서버 없이 스마트폰에서 동작하도록 구현했습니다.",
             ],
-            metric: "3.5cm · 3.1°",
+            metric: "3D 골프 자세 측정 모델",
           },
           {
             title: "EAT",
-            status: "Private research / calibrated uncertainty",
+            status: "Private research / 예측 신뢰도 보정",
             period: "2025.11–현재",
             summary:
-              "의료 이미지와 일반 이미지 분류에서 entropy 기반 adversarial training과 calibration을 실험합니다.",
+              "CNN과 Transformer 이미지 분류 모델이 출력하는 confidence가 실제 정답률과 맞아떨어지도록 학습하는 방법입니다.",
             categories: ["Computer Vision", "Calibration / UQ", "Robust ML"],
             tools: [
               "PyTorch",
@@ -906,21 +939,21 @@ export const portfolio = {
               "ISIC 2017",
               "Adversarial training",
               "Entropy regularization",
-              "Calibration",
-              "ECE",
+              "예측 신뢰도 보정",
+              "Expected Calibration Error (ECE)",
               "Transformer / CNN",
             ],
             bullets: [
-              "ISIC 2017에서 F1 0.860, 최적 ECE 1.1%를 달성해 CR-SAM (AAAI 2024)의 F1 0.85, ECE 1.7%를 상회했습니다.",
-              "CIFAR-100에서 accuracy 81.23%와 temperature scaling 후 ECE 3.37%를 재현하고 metric 계산과 checkpoint 선택 절차를 검증했습니다.",
+              "같은 이미지의 두 변형에 대한 예측이 일치하도록 학습하고, 예측이 불안정할 때 지나치게 높은 confidence를 내지 않도록 제어했습니다.",
+              "CIFAR-100의 WRN-28-10 평가에서 정확도 81.23%, temperature scaling 후 calibration error 3.37%를 기록했습니다.",
             ],
-            metric: "F1 0.860 · ECE 1.1%",
+            metric: "CNN·Transformer 예측 신뢰도 보정",
           },
         ],
       },
     ],
     skillsIntro: {
-      number: "03",
+      number: "02",
       eyebrow: "핵심 기술",
       title: "의사결정 경로를 기준으로 구성한 기술 스택입니다.",
       body:
@@ -997,7 +1030,7 @@ export const portfolio = {
       ],
     ],
     approachIntro: {
-      number: "04",
+      number: "03",
       eyebrow: "접근 방식",
       title: "도메인이 바뀌어도 반복되는 문제 해결 방식입니다.",
     },
@@ -1024,7 +1057,7 @@ export const portfolio = {
     footer: {
       line: "Applied ML · Production systems · Open source · Research",
       location: "서울, 대한민국",
-      links: koreanLinks,
+      links: sharedLinks,
     },
   },
 } as const;

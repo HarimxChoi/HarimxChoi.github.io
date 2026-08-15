@@ -5,9 +5,14 @@ interface Props {
   title: string;
   description: string;
   lang: "en" | "ko";
+  path?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
 }
 
-const { title, description, lang } = Astro.props;
+const { title, description, lang, path, type = "website", noindex = false } = Astro.props;
+const canonicalPath = path ?? (lang === "ko" ? "/ko/" : "/");
+const canonicalUrl = `https://harimxchoi.github.io${canonicalPath}`;
 ---
 
 <!doctype html>
@@ -19,16 +24,18 @@ const { title, description, lang } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={lang === "ko" ? "https://harimxchoi.github.io/ko/" : "https://harimxchoi.github.io/"} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content="https://harimxchoi.github.io/img/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <script is:inline>
