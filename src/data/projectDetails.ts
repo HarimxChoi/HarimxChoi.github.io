@@ -197,6 +197,18 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           ],
           caption: "Returns are computed from the reproduced daily paths of the same validation window.",
         },
+        {
+          title: "Five-window stress test",
+          columns: ["Window", "Sessions", "TQC annualized", "IVV annualized"],
+          rows: [
+            ["Development", "1,995", "34.7%", "11.9%"],
+            ["Validation", "756", "41.6%", "25.9%"],
+            ["Continuity", "840", "1.9%", "6.5%"],
+            ["Archival A", "147", "13.4%", "28.9%"],
+            ["Archival B", "105", "24.3%", "28.3%"],
+          ],
+          caption: "The cost-aware TQC candidate was evaluated across all predefined windows; performance was not uniform across regimes.",
+        },
       ],
       contribution: [
         "Built the point-in-time data contract, cost-aware portfolio environment, TQC training loop, and deterministic multi-seed evaluator.",
@@ -211,6 +223,155 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       category: "Reinforcement Learning",
       builtWith: ["Python", "TQC", "Point-in-time data", "Gymnasium", "Stable-Baselines3"],
+    },
+    vargo: {
+      claim: "Agent routing hits an identification wall · verified execution reaches the deployable ceiling",
+      lead: [
+        "Twenty-nine agent configurations produce different winners across the same 134 ALFWorld tasks, with as much as 29 percentage points of per-task headroom over one fixed configuration. The central problem is not whether better configurations exist, but whether a router can identify the winner before running it.",
+        "Task text, frozen embeddings, hidden states, fine-tuned encoders, contextual routers, and deployment-time bandits all failed to recover that ordering reliably. Vargo therefore changes the decision: execute a bounded sequence of candidates, verify each outcome, and stop as soon as success is certified.",
+      ],
+      metricCards: [
+        {
+          label: "Evaluation matrix",
+          value: "134 × 29",
+          note: "ALFWorld tasks × agent configurations",
+        },
+        {
+          label: "Oracle headroom",
+          value: "up to +29 pp",
+          note: "Best per-task configuration vs. one fixed setup",
+        },
+        {
+          label: "Verified execution",
+          value: "K = 11",
+          note: "Reached the deployable capture ceiling",
+        },
+      ],
+      flow: {
+        title: "Replace winner prediction with bounded execution and verification",
+        intro: "The system stops asking which configuration looks best and instead asks whether a candidate has produced a verifiable success.",
+        steps: [
+          {
+            label: "Task and candidates",
+            description: "Hold the task fixed and enumerate the reasoning, memory, retry, and verification configurations that can execute it.",
+          },
+          {
+            label: "Fixed execution order",
+            description: "Run candidates under a bounded budget rather than training another selector on an unstable ranking signal.",
+          },
+          {
+            label: "Outcome verifier",
+            description: "Check the environment result after each attempt and distinguish certified success from plausible-looking traces.",
+          },
+          {
+            label: "Early stop",
+            description: "Return the first verified success together with its execution record; otherwise expose the exhausted budget.",
+          },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/vargo/vargo-identification-wall.png",
+          alt: "Bar chart showing that task-side features, 2026 routing methods, deployment bandits, and activation probes fail to identify the per-task winning agent configuration before execution",
+          caption: "Every tested pre-execution signal falls short of reliably identifying the per-task winner",
+        },
+        {
+          src: "/img/projects/vargo/vargo-verified-execution.png",
+          alt: "Capture curve showing the percentage of oracle gap recovered as the verified execution budget increases from 3 to 13 agent configurations",
+          caption: "Corrected ALFWorld matrix · anchor-failure subset n=42 · 90% task-bootstrap intervals",
+        },
+      ],
+      resultTables: [
+        {
+          title: "Two different decision problems",
+          columns: ["Approach", "Signal available", "Observed outcome"],
+          rows: [
+            ["Pre-execution routing", "Task text, embeddings, hidden states, bandit feedback", "Could not identify the per-task winner"],
+            ["Verified execution", "Actual candidate outcomes under bounded budget", "Reached the deployable ceiling at K=11"],
+          ],
+        },
+      ],
+      contribution: [
+        "Built the 134-task × 29-configuration evaluation matrix and separated oracle headroom from what a deployable selector can actually identify.",
+        "Implemented routing baselines, activation probes, contamination controls, and the verified-execution capture evaluation.",
+      ],
+      category: "Agent Evaluation",
+      builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
+    },
+    eat: {
+      claim: "Calibration-aware medical-image training · best ECE 0.94% · macro-F1 86.37%",
+      lead: [
+        "A classifier can be correct often and still be wrong about how confident it should be. EAT studies that gap on four-class ISIC skin-lesion classification, tracking calibration and classification quality separately throughout training.",
+        "The method uses sample difficulty to coordinate focal weighting, a bounded parameter perturbation, and consistency between two stochastic forward passes. This gives difficult examples more attention while discouraging confidence that changes under a small perturbation.",
+      ],
+      metricCards: [
+        {
+          label: "ISIC validation",
+          value: "n = 5,268",
+          note: "Fold 3 · seed 42 · four classes",
+        },
+        {
+          label: "Equal compute",
+          value: "12.79% → 5.87%",
+          note: "ECE: CE epoch 20 vs. Focal+R-Drop epoch 10",
+        },
+        {
+          label: "Best observed",
+          value: "0.94% ECE",
+          note: "Macro-F1 reached 86.37% within 30 epochs",
+        },
+      ],
+      flow: {
+        title: "Train for both class accuracy and trustworthy confidence",
+        intro: "The same sample-level difficulty signal controls how strongly the objective focuses, perturbs, and regularizes each example.",
+        steps: [
+          {
+            label: "Clean stochastic pass",
+            description: "Estimate the target-class probability and derive a difficulty score from the model's current confidence.",
+          },
+          {
+            label: "Difficulty-aware objective",
+            description: "Use focal weighting so hard or under-confident examples contribute more strongly to the classification loss.",
+          },
+          {
+            label: "Elastic perturbation",
+            description: "Scale a bounded parameter perturbation with sample difficulty and run a second stochastic forward pass.",
+          },
+          {
+            label: "Consistency update",
+            description: "Combine classification and bidirectional R-Drop consistency in one backward update.",
+          },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/eat/eat-equal-compute-reliability.svg",
+          alt: "Reliability curves and confidence distributions comparing cross-entropy at epoch 20 with Focal plus R-Drop at epoch 10 under the same estimated compute budget on 5,268 ISIC validation images",
+          caption: "Matched cumulative compute · CE e20 vs. Focal+R-Drop e10 · ISIC fold 3, n=5,268",
+        },
+        {
+          src: "/img/projects/eat/eat-training-curves.svg",
+          alt: "Thirty-epoch expected calibration error and macro-F1 curves for cross-entropy, Focal plus R-Drop, and adaptive robust training on ISIC validation data",
+          caption: "Calibration and classification were tracked separately after every epoch",
+        },
+      ],
+      resultTables: [
+        {
+          title: "Equal-compute comparison",
+          columns: ["Method", "Checkpoint", "Estimated cumulative FLOPs", "ECE", "Macro-F1"],
+          rows: [
+            ["Cross-entropy", "epoch 20", "5.52 × 10¹⁵", "12.79%", "84.32%"],
+            ["Focal + R-Drop", "epoch 10", "5.52 × 10¹⁵", "5.87%", "83.19%"],
+          ],
+          caption: "Focal+R-Drop uses two stochastic forward passes per update, so ten epochs match the estimated compute of twenty CE epochs.",
+        },
+      ],
+      contribution: [
+        "Designed the difficulty-coupled focal, perturbation, and consistency objective and implemented the training and evaluation pipeline.",
+        "Separated calibration from classification during analysis and regenerated reliability diagrams directly from saved class probabilities.",
+      ],
+      category: "Calibration & Uncertainty",
+      builtWith: ["PyTorch", "ConvNeXt V2", "Focal loss", "R-Drop", "ISIC"],
     },
   },
   ko: {
@@ -360,6 +521,18 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           ],
           caption: "같은 검증 구간에서 재생성한 일별 수익률 경로를 기준으로 계산했습니다.",
         },
+        {
+          title: "5개 window stress test",
+          columns: ["Window", "Sessions", "TQC 연환산", "IVV 연환산"],
+          rows: [
+            ["Development", "1,995", "34.7%", "11.9%"],
+            ["Validation", "756", "41.6%", "25.9%"],
+            ["Continuity", "840", "1.9%", "6.5%"],
+            ["Archival A", "147", "13.4%", "28.9%"],
+            ["Archival B", "105", "24.3%", "28.3%"],
+          ],
+          caption: "사전에 정한 모든 window에서 비용을 반영한 같은 TQC 후보를 비교했으며, 시장 구간에 따라 결과가 달랐습니다.",
+        },
       ],
       contribution: [
         "Point-in-time data contract, 비용을 반영한 portfolio environment, TQC 학습과 multi-seed 평가 경로를 구현했습니다.",
@@ -374,6 +547,155 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       category: "Reinforcement Learning",
       builtWith: ["Python", "TQC", "Point-in-time data", "Gymnasium", "Stable-Baselines3"],
+    },
+    vargo: {
+      claim: "Agent routing의 identification wall · 실행·검증으로 deployable ceiling 도달",
+      lead: [
+        "같은 ALFWorld 과제 134개에서도 29개 Agent 구성의 승자는 과제마다 달랐고, 과제별 최적 구성을 쓸 때 하나의 고정 구성보다 최대 29%p의 성능 여지가 있었습니다. 문제는 더 좋은 구성이 있는지가 아니라, 실행 전에 그 승자를 알아낼 수 있는가였습니다.",
+        "Task text, frozen embedding, hidden state, fine-tuned encoder, contextual router와 deployment-time bandit까지 비교했지만 승자 순서를 안정적으로 복원하지 못했습니다. 그래서 Vargo는 후보를 제한된 순서로 실행하고, 매번 결과를 검증해 성공이 확인되면 멈추는 방식으로 문제를 바꿨습니다.",
+      ],
+      metricCards: [
+        {
+          label: "Evaluation matrix",
+          value: "134 × 29",
+          note: "ALFWorld 과제 × Agent 구성",
+        },
+        {
+          label: "Oracle headroom",
+          value: "최대 +29%p",
+          note: "과제별 최적 구성 vs. 하나의 고정 구성",
+        },
+        {
+          label: "Verified execution",
+          value: "K = 11",
+          note: "Deployable capture ceiling 도달",
+        },
+      ],
+      flow: {
+        title: "승자 예측을 제한된 실행과 검증으로 바꾸기",
+        intro: "어떤 구성이 좋아 보이는지 예측하는 대신, 실제 후보가 검증 가능한 성공을 만들었는지 묻습니다.",
+        steps: [
+          {
+            label: "Task와 후보 구성",
+            description: "과제를 고정하고 reasoning, memory, retry와 verification 방식이 다른 실행 가능한 구성을 나열합니다.",
+          },
+          {
+            label: "고정된 실행 순서",
+            description: "불안정한 ranking signal에 selector를 다시 학습하지 않고 제한된 예산 안에서 후보를 실행합니다.",
+          },
+          {
+            label: "Outcome verifier",
+            description: "각 시도 뒤 환경 결과를 검사해 그럴듯한 trace와 실제 성공을 구분합니다.",
+          },
+          {
+            label: "Early stop",
+            description: "첫 verified success와 실행 기록을 반환하고, 없으면 소진된 예산을 그대로 남깁니다.",
+          },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/vargo/vargo-identification-wall.png",
+          alt: "Task-side feature, 2026 routing method, deployment bandit와 activation probe가 실행 전에 과제별 최적 Agent 구성을 식별하지 못한 결과를 보여주는 그래프",
+          caption: "비교한 모든 pre-execution signal이 과제별 승자를 안정적으로 식별하지 못했습니다",
+        },
+        {
+          src: "/img/projects/vargo/vargo-verified-execution.png",
+          alt: "검증하며 실행하는 Agent 구성 수를 3개에서 13개까지 늘릴 때 회수한 oracle gap 비율을 보여주는 곡선",
+          caption: "Corrected ALFWorld matrix · anchor 실패 subset n=42 · 90% task-bootstrap interval",
+        },
+      ],
+      resultTables: [
+        {
+          title: "서로 다른 두 의사결정 문제",
+          columns: ["접근", "사용 가능한 신호", "관찰된 결과"],
+          rows: [
+            ["Pre-execution routing", "Task text, embedding, hidden state, bandit feedback", "과제별 승자를 식별하지 못함"],
+            ["Verified execution", "제한된 예산 안의 실제 후보 실행 결과", "K=11에서 deployable ceiling 도달"],
+          ],
+        },
+      ],
+      contribution: [
+        "134개 과제 × 29개 구성의 평가 matrix를 만들고, 사후에 알 수 있는 oracle headroom과 실제 selector가 식별할 수 있는 성능을 분리했습니다.",
+        "Routing baseline, activation probe, contamination control과 verified-execution capture 평가를 구현했습니다.",
+      ],
+      category: "Agent Evaluation",
+      builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
+    },
+    eat: {
+      claim: "의료 이미지 calibration 연구 · best ECE 0.94% · macro-F1 86.37%",
+      lead: [
+        "분류 정확도가 높아도 모델이 자신의 정답 확률을 잘못 판단할 수 있습니다. EAT는 4개 피부 병변을 분류하는 ISIC 데이터에서 정확도와 confidence의 일치 정도를 학습 전 과정에서 따로 측정한 연구입니다.",
+        "Sample difficulty를 기준으로 focal weighting, 제한된 parameter perturbation과 두 stochastic forward의 일관성을 함께 조절했습니다. 어려운 샘플에 더 집중하면서 작은 perturbation에 따라 confidence가 크게 흔들리지 않도록 학습했습니다.",
+      ],
+      metricCards: [
+        {
+          label: "ISIC validation",
+          value: "n = 5,268",
+          note: "Fold 3 · seed 42 · 4 classes",
+        },
+        {
+          label: "동일 연산량",
+          value: "12.79% → 5.87%",
+          note: "ECE: CE epoch 20 vs. Focal+R-Drop epoch 10",
+        },
+        {
+          label: "Best observed",
+          value: "0.94% ECE",
+          note: "30 epoch 안에서 macro-F1 86.37%",
+        },
+      ],
+      flow: {
+        title: "분류 성능과 믿을 수 있는 confidence를 함께 학습하기",
+        intro: "같은 sample-level difficulty 신호로 각 샘플의 loss, perturbation과 consistency 강도를 함께 조절했습니다.",
+        steps: [
+          {
+            label: "Clean stochastic pass",
+            description: "Target class 확률을 구하고 현재 confidence에서 sample difficulty를 계산합니다.",
+          },
+          {
+            label: "Difficulty-aware objective",
+            description: "어렵거나 confidence가 낮은 샘플이 분류 loss에 더 크게 반영되도록 focal weighting을 적용합니다.",
+          },
+          {
+            label: "Elastic perturbation",
+            description: "Sample difficulty에 따라 제한된 parameter perturbation을 만들고 두 번째 stochastic forward를 실행합니다.",
+          },
+          {
+            label: "Consistency update",
+            description: "분류 loss와 bidirectional R-Drop consistency를 한 번의 backward update로 결합합니다.",
+          },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/eat/eat-equal-compute-reliability.svg",
+          alt: "ISIC validation 이미지 5,268개에서 같은 추정 연산량을 사용한 cross-entropy epoch 20과 Focal plus R-Drop epoch 10의 reliability curve 및 confidence 분포 비교",
+          caption: "동일한 누적 연산량 · CE e20 vs. Focal+R-Drop e10 · ISIC fold 3, n=5,268",
+        },
+        {
+          src: "/img/projects/eat/eat-training-curves.svg",
+          alt: "ISIC validation에서 cross-entropy, Focal plus R-Drop과 adaptive robust training의 30 epoch ECE 및 macro-F1 곡선",
+          caption: "매 epoch마다 calibration과 classification 성능을 분리해 추적했습니다",
+        },
+      ],
+      resultTables: [
+        {
+          title: "동일 연산량 비교",
+          columns: ["Method", "Checkpoint", "추정 누적 FLOPs", "ECE", "Macro-F1"],
+          rows: [
+            ["Cross-entropy", "epoch 20", "5.52 × 10¹⁵", "12.79%", "84.32%"],
+            ["Focal + R-Drop", "epoch 10", "5.52 × 10¹⁵", "5.87%", "83.19%"],
+          ],
+          caption: "Focal+R-Drop은 update마다 두 번 stochastic forward를 사용하므로 10 epoch가 CE 20 epoch와 같은 추정 연산량입니다.",
+        },
+      ],
+      contribution: [
+        "Difficulty와 focal, perturbation, consistency를 연결한 objective와 전체 학습·평가 pipeline을 구현했습니다.",
+        "Calibration과 classification을 분리해 분석하고 저장된 class probability에서 reliability diagram을 다시 생성했습니다.",
+      ],
+      category: "Calibration & Uncertainty",
+      builtWith: ["PyTorch", "ConvNeXt V2", "Focal loss", "R-Drop", "ISIC"],
     },
   },
 };
