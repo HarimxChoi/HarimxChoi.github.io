@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+<title id="title">Qwen3.5-4B bound-draft synthetic preflight</title>
+<desc id="desc">Across 36 origin-disjoint synthetic cases, exact responses increased from 17 to 36 while forbidden executions decreased from 6 to 0. This is a synthetic preflight, not an official Online-Mind2Web or live browser benchmark.</desc>
+<style>
+      .bg{fill:#f7f5ef}.panel{fill:#efede7}.panel-blue{fill:#e5edf1}.panel-orange{fill:#f4e8df}.panel-green{fill:#e5eee8}.ink{fill:#272b31}.muted{fill:#6d7480}.line{stroke:#8d9298}.blue{fill:#547a95}.orange{fill:#c25a35}.green{fill:#4f8068}.red{fill:#a94b42}.white{fill:#f7f5ef}.title{font:600 34px ui-sans-serif,system-ui,sans-serif}.subtitle{font:19px ui-sans-serif,system-ui,sans-serif}.lane{font:600 16px ui-monospace,SFMono-Regular,monospace;letter-spacing:1.5px}.heading{font:600 23px ui-sans-serif,system-ui,sans-serif}.label{font:19px ui-sans-serif,system-ui,sans-serif}.small{font:16px ui-sans-serif,system-ui,sans-serif}.metric{font:600 28px ui-monospace,SFMono-Regular,monospace}.big{font:600 52px ui-monospace,SFMono-Regular,monospace}.mono{font:17px ui-monospace,SFMono-Regular,monospace}
+      @media(prefers-color-scheme:dark){.bg{fill:#1d1f21}.panel{fill:#292b2e}.panel-blue{fill:#26343d}.panel-orange{fill:#3b302a}.panel-green{fill:#293832}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.line{stroke:#72777d}.blue{fill:#79a5c1}.orange{fill:#e07a56}.green{fill:#79a889}.red{fill:#d0776d}.white{fill:#1d1f21}}
+    </style>
+<rect class="bg" width="1500" height="900" rx="18"/>
+<text class="title ink" x="74" y="58">A 4B model learned the bounded browser-draft contract</text>
+<text class="subtitle muted" x="74" y="90">Qwen3.5-4B base vs bound-draft adapter · 36 held-out origin-disjoint synthetic cases</text>
+<text class="heading ink" x="84" y="158">Exact response</text>
+<text class="small muted" x="84" y="187">Frozen decision, targets, bindings and postconditions · higher is better</text>
+<rect class="panel" x="84" y="216" width="650" height="330" rx="14"/>
+<text class="label ink" x="104" y="273">Base</text>
+<rect class="line" x="104" y="296" width="590" height="38" rx="6" opacity=".18"/>
+<rect class="blue" x="104" y="296" width="278.6" height="38" rx="6"/>
+<text class="metric ink" x="396.6" y="326">17/36</text>
+<text class="label ink" x="104" y="399">Bound-draft adapter</text>
+<rect class="line" x="104" y="422" width="590" height="38" rx="6" opacity=".18"/>
+<rect class="green" x="104" y="422" width="590.0" height="38" rx="6"/>
+<text class="metric ink" x="682" y="452" text-anchor="end">36/36</text>
+<text class="big green" x="104" y="517">100%</text>
+<text class="label ink" x="226" y="515">exact on the frozen contract</text>
+<text class="heading ink" x="798" y="158">Forbidden execution</text>
+<text class="small muted" x="798" y="187">Unsafe execute decisions · lower is better</text>
+<rect class="panel-orange" x="778" y="216" width="638" height="330" rx="14"/>
+<text class="label ink" x="810" y="273">Base</text>
+<rect class="line" x="810" y="296" width="440" height="38" rx="6" opacity=".18"/>
+<rect class="red" x="810" y="296" width="440.0" height="38" rx="6"/>
+<text class="metric ink" x="1270" y="326">6</text>
+<text class="label ink" x="810" y="399">Bound-draft adapter</text>
+<rect class="line" x="810" y="422" width="440" height="38" rx="6" opacity=".18"/>
+<circle class="green" cx="810" cy="441" r="10"/>
+<text class="metric ink" x="1270" y="452">0</text>
+<text class="big green" x="810" y="517">6 → 0</text>
+<text class="label ink" x="1018" y="515">forbidden executions</text>
+<text class="lane muted" x="84" y="610">WHAT THE ADAPTER RECOVERED</text>
+<rect class="panel" x="84" y="638" width="420" height="138" rx="14"/>
+<text class="label ink" x="110" y="680">Compiled actions</text>
+<text class="metric muted" x="110" y="731">0/6</text>
+<text class="metric ink" x="239" y="731">→</text>
+<text class="metric green" x="299" y="731">6/6</text>
+<rect class="panel" x="540" y="638" width="420" height="138" rx="14"/>
+<text class="label ink" x="566" y="680">Trusted binding</text>
+<text class="metric muted" x="566" y="731">1/6</text>
+<text class="metric ink" x="695" y="731">→</text>
+<text class="metric green" x="755" y="731">6/6</text>
+<rect class="panel" x="996" y="638" width="420" height="138" rx="14"/>
+<text class="label ink" x="1022" y="680">Safety decision</text>
+<text class="metric muted" x="1022" y="731">1/12</text>
+<text class="metric ink" x="1151" y="731">→</text>
+<text class="metric green" x="1211" y="731">12/12</text>
+<rect class="panel-orange" x="84" y="810" width="1332" height="52" rx="10"/>
+<text class="small ink" x="750" y="843" text-anchor="middle">Origin-disjoint synthetic precision preflight · not Online-Mind2Web · not live browser performance · no Q3 or TurboQuant claim</text>
+</svg>

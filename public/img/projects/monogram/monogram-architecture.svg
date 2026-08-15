@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+<title id="title">Monogram capture and retrieval architecture</title>
+<desc id="desc">Telegram, MCP, and document inputs pass through a verified five-stage pipeline into an atomic Git-backed vault, then serve local hybrid retrieval, scheduled briefs, and a client-decrypted dashboard.</desc>
+<style>
+  .bg{fill:#f7f5ef}.panel{fill:#efede7}.panel2{fill:#e8e4dc}.ink{fill:#272b31}.muted{fill:#6d7480}
+  .line{stroke:#aaa59b}.grid{stroke:#d8d4ca}.accent{fill:#c25a35}.accent-line{stroke:#c25a35}
+  .blue{fill:#557a92}.blue-line{stroke:#557a92}.green{fill:#63836b}.green-line{stroke:#63836b}
+  .purple{fill:#7867a4}.purple-line{stroke:#7867a4}.arrow-fill{fill:#aaa59b}
+  .title{font:600 36px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}
+  .heading{font:600 24px ui-sans-serif,system-ui,sans-serif}.label{font:20px ui-sans-serif,system-ui,sans-serif}
+  .small{font:17px ui-sans-serif,system-ui,sans-serif}.tiny{font:15px ui-sans-serif,system-ui,sans-serif}
+  .metric{font:600 25px ui-monospace,SFMono-Regular,monospace}.mono{font:17px ui-monospace,SFMono-Regular,monospace}
+  @media(prefers-color-scheme:dark){
+    .bg{fill:#1d1f21}.panel{fill:#282a2d}.panel2{fill:#313338}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}
+    .line{stroke:#6b6d71}.grid{stroke:#3b3d40}.accent{fill:#e07a56}.accent-line{stroke:#e07a56}
+    .blue{fill:#72a3be}.blue-line{stroke:#72a3be}.green{fill:#83aa8b}.green-line{stroke:#83aa8b}
+    .purple{fill:#a99add}.purple-line{stroke:#a99add}.arrow-fill{fill:#6b6d71}
+  }
+</style>
+<defs><marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path class="arrow-fill" d="M0,0 L10,5.5 L0,11 Z"/></marker></defs>
+<rect class="bg" width="1500" height="900" rx="18"/>
+<text class="title ink" x="72" y="58" text-anchor="start">From a saved message to durable, searchable memory</text>
+<text class="subtitle muted" x="72" y="91" text-anchor="start">One capture path · verified routing · one Git commit across every affected file</text>
+<text class="small muted" x="72" y="142" text-anchor="start">CAPTURE</text>
+<rect class="panel" x="72" y="160" width="196" height="84" rx="14"/>
+<circle class="accent" cx="96" cy="188" r="7"/>
+<text class="heading ink" x="114" y="194" text-anchor="start">Telegram</text>
+<text class="tiny muted" x="92" y="225" text-anchor="start">saved messages + files</text>
+<rect class="panel" x="292" y="160" width="196" height="84" rx="14"/>
+<circle class="blue" cx="316" cy="188" r="7"/>
+<text class="heading ink" x="334" y="194" text-anchor="start">MCP clients</text>
+<text class="tiny muted" x="312" y="225" text-anchor="start">read tools + approved writes</text>
+<rect class="panel" x="512" y="160" width="196" height="84" rx="14"/>
+<circle class="green" cx="536" cy="188" r="7"/>
+<text class="heading ink" x="554" y="194" text-anchor="start">URL / document</text>
+<text class="tiny muted" x="532" y="225" text-anchor="start">web · PDF · office · HWP</text>
+<line class="line" x1="738" y1="202" x2="802" y2="202" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel2" x="808" y="148" width="620" height="108" rx="14"/>
+<text class="heading ink" x="836" y="180" text-anchor="start">Safety before inference</text>
+<rect class="accent" x="836" y="194" width="176" height="34" rx="17" opacity=".13"/>
+<circle class="accent" cx="853" cy="211" r="5"/>
+<text class="tiny ink" x="867" y="217" text-anchor="start">credential gate</text>
+<rect class="blue" x="1024" y="194" width="172" height="34" rx="17" opacity=".13"/>
+<circle class="blue" cx="1041" cy="211" r="5"/>
+<text class="tiny ink" x="1055" y="217" text-anchor="start">secret redaction</text>
+<rect class="green" x="1208" y="194" width="192" height="34" rx="17" opacity=".13"/>
+<circle class="green" cx="1225" cy="211" r="5"/>
+<text class="tiny ink" x="1239" y="217" text-anchor="start">approval on writes</text>
+<text class="small muted" x="72" y="300" text-anchor="start">FIVE-STAGE PIPELINE</text>
+<rect class="panel" x="72" y="320" width="228" height="116" rx="14"/>
+<circle class="blue" cx="100" cy="350" r="14" opacity=".18"/>
+<text class="metric ink" x="100" y="357" text-anchor="middle">1</text>
+<text class="heading ink" x="124" y="357" text-anchor="start">Orchestrator</text>
+<text class="small muted" x="100" y="397" text-anchor="start">choose operation</text>
+<text class="tiny muted" x="100" y="420" text-anchor="start">model stage</text>
+<line class="line" x1="300" y1="378" x2="330" y2="378" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="336" y="320" width="228" height="116" rx="14"/>
+<circle class="blue" cx="364" cy="350" r="14" opacity=".18"/>
+<text class="metric ink" x="364" y="357" text-anchor="middle">2</text>
+<text class="heading ink" x="388" y="357" text-anchor="start">Classifier</text>
+<text class="small muted" x="364" y="397" text-anchor="start">route + tags</text>
+<text class="tiny muted" x="364" y="420" text-anchor="start">model stage</text>
+<line class="line" x1="564" y1="378" x2="594" y2="378" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="600" y="320" width="228" height="116" rx="14"/>
+<circle class="blue" cx="628" cy="350" r="14" opacity=".18"/>
+<text class="metric ink" x="628" y="357" text-anchor="middle">3</text>
+<text class="heading ink" x="652" y="357" text-anchor="start">Extractor</text>
+<text class="small muted" x="628" y="397" text-anchor="start">structured fields</text>
+<text class="tiny muted" x="628" y="420" text-anchor="start">model stage</text>
+<line class="line" x1="828" y1="378" x2="858" y2="378" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="864" y="320" width="228" height="116" rx="14"/>
+<circle class="accent" cx="892" cy="350" r="14" opacity=".18"/>
+<text class="metric ink" x="892" y="357" text-anchor="middle">4</text>
+<text class="heading ink" x="916" y="357" text-anchor="start">Verifier</text>
+<text class="small muted" x="892" y="397" text-anchor="start">contradiction gate</text>
+<text class="tiny muted" x="892" y="420" text-anchor="start">model stage</text>
+<line class="line" x1="1092" y1="378" x2="1122" y2="378" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel" x="1128" y="320" width="228" height="116" rx="14"/>
+<circle class="green" cx="1156" cy="350" r="14" opacity=".18"/>
+<text class="metric ink" x="1156" y="357" text-anchor="middle">5</text>
+<text class="heading ink" x="1180" y="357" text-anchor="start">Writer</text>
+<text class="small muted" x="1156" y="397" text-anchor="start">deterministic files</text>
+<text class="tiny muted" x="1156" y="420" text-anchor="start">pure Python</text>
+<line class="line" x1="1242" y1="436" x2="1242" y2="483" stroke-width="3" marker-end="url(#arrow)"/>
+<rect class="panel2" x="830" y="490" width="598" height="150" rx="14"/>
+<text class="heading ink" x="858" y="526" text-anchor="start">Git-backed vault</text>
+<text class="small muted" x="858" y="556" text-anchor="start">Markdown + YAML · history in commits · recoverable state</text>
+<rect class="blue" x="858" y="578" width="178" height="34" rx="17" opacity=".13"/>
+<circle class="blue" cx="875" cy="595" r="5"/>
+<text class="tiny ink" x="889" y="601" text-anchor="start">project + wiki</text>
+<rect class="green" x="1048" y="578" width="164" height="34" rx="17" opacity=".13"/>
+<circle class="green" cx="1065" cy="595" r="5"/>
+<text class="tiny ink" x="1079" y="601" text-anchor="start">daily + life</text>
+<rect class="purple" x="1224" y="578" width="176" height="34" rx="17" opacity=".13"/>
+<circle class="purple" cx="1241" cy="595" r="5"/>
+<text class="tiny ink" x="1255" y="601" text-anchor="start">index shards</text>
+<text class="small muted" x="72" y="490" text-anchor="start">ATOMIC WRITE</text>
+<rect class="panel" x="72" y="508" width="690" height="132" rx="14"/>
+<text class="heading ink" x="102" y="544" text-anchor="start">One Git Tree commit</text>
+<text class="small muted" x="102" y="576" text-anchor="start">All affected files land together, or the previous SHA remains current.</text>
+<text class="small muted" x="102" y="608" text-anchor="start">Concurrent ref updates retry from a fresh parent commit.</text>
+<line class="line" x1="762" y1="574" x2="818" y2="574" stroke-width="3" marker-end="url(#arrow)"/>
+<text class="small muted" x="72" y="696" text-anchor="start">USE</text>
+<rect class="panel" x="72" y="716" width="266" height="108" rx="14"/>
+<rect class="accent" x="72" y="716" width="7" height="108" rx="4"/>
+<text class="heading ink" x="98" y="755" text-anchor="start">Hybrid retrieval</text>
+<text class="small muted" x="98" y="790" text-anchor="start">EmbeddingGemma + BM25/RRF</text>
+<rect class="panel" x="362" y="716" width="266" height="108" rx="14"/>
+<rect class="blue" x="362" y="716" width="7" height="108" rx="4"/>
+<text class="heading ink" x="388" y="755" text-anchor="start">Encrypted dashboard</text>
+<text class="small muted" x="388" y="790" text-anchor="start">AES-GCM · decrypt in browser</text>
+<rect class="panel" x="652" y="716" width="266" height="108" rx="14"/>
+<rect class="green" x="652" y="716" width="7" height="108" rx="4"/>
+<text class="heading ink" x="678" y="755" text-anchor="start">Morning / weekly</text>
+<text class="small muted" x="678" y="790" text-anchor="start">briefs, board, lifecycle jobs</text>
+<rect class="panel" x="942" y="716" width="486" height="108" rx="14"/>
+<rect class="purple" x="942" y="716" width="7" height="108" rx="4"/>
+<text class="heading ink" x="968" y="755" text-anchor="start">MCP access</text>
+<text class="small muted" x="968" y="790" text-anchor="start">semantic + graph + vault tools</text>
+<line class="line" x1="1128" y1="640" x2="1128" y2="704" stroke-width="3" marker-end="url(#arrow)"/>
+<text class="small muted" x="72" y="866" text-anchor="start">Git-backed state, local retrieval, and client-side decryption keep private knowledge inspectable and portable.</text>
+</svg>

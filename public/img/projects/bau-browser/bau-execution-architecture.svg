@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+<title id="title">Bau Browser execution safety architecture</title>
+<desc id="desc">A three-lane architecture showing trusted browser observation and scope, a bounded model draft compiled by the host, two-phase human approval and scoped execution through browser and MCP tools, followed by action receipts, postcondition verification, and a local decision log.</desc>
+<style>
+      .bg{fill:#f7f5ef}.panel{fill:#efede7}.panel-blue{fill:#e5edf1}.panel-orange{fill:#f4e8df}.panel-green{fill:#e5eee8}.ink{fill:#272b31}.muted{fill:#6d7480}.line{stroke:#8d9298}.blue{fill:#547a95}.orange{fill:#c25a35}.green{fill:#4f8068}.red{fill:#a94b42}.white{fill:#f7f5ef}.title{font:600 34px ui-sans-serif,system-ui,sans-serif}.subtitle{font:19px ui-sans-serif,system-ui,sans-serif}.lane{font:600 16px ui-monospace,SFMono-Regular,monospace;letter-spacing:1.5px}.heading{font:600 23px ui-sans-serif,system-ui,sans-serif}.label{font:19px ui-sans-serif,system-ui,sans-serif}.small{font:16px ui-sans-serif,system-ui,sans-serif}.metric{font:600 28px ui-monospace,SFMono-Regular,monospace}.big{font:600 52px ui-monospace,SFMono-Regular,monospace}.mono{font:17px ui-monospace,SFMono-Regular,monospace}
+      @media(prefers-color-scheme:dark){.bg{fill:#1d1f21}.panel{fill:#292b2e}.panel-blue{fill:#26343d}.panel-orange{fill:#3b302a}.panel-green{fill:#293832}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.line{stroke:#72777d}.blue{fill:#79a5c1}.orange{fill:#e07a56}.green{fill:#79a889}.red{fill:#d0776d}.white{fill:#1d1f21}}
+    </style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="line" d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>
+<rect class="bg" width="1600" height="980" rx="18"/>
+<text class="title ink" x="74" y="58">Execution stays outside the model</text>
+<text class="subtitle muted" x="74" y="90">Bau Browser turns a model suggestion into a scoped, approved, and receipt-backed action.</text>
+<text class="lane muted" x="74" y="137">OBSERVE + COMPILE</text>
+<text class="lane muted" x="74" y="440">PROPOSE + APPROVE + EXECUTE</text>
+<text class="lane muted" x="74" y="710">VERIFY + RECORD</text>
+<rect class="panel" x="74" y="165" width="322" height="214" rx="14"/>
+<rect class="panel-blue" x="430" y="165" width="322" height="214" rx="14"/>
+<rect class="panel-orange" x="786" y="165" width="322" height="214" rx="14"/>
+<rect class="panel-green" x="1142" y="165" width="384" height="214" rx="14"/>
+<text class="heading ink" x="102" y="205">01  Desktop browser</text>
+<text class="label ink" x="102" y="250">DOM + accessibility tree</text>
+<text class="label ink" x="102" y="279">Current page generation</text>
+<text class="label ink" x="102" y="308">Protected browser chrome</text>
+<text class="heading ink" x="458" y="205">02  Trusted scope</text>
+<text class="label ink" x="458" y="250">TaskSpec + PageGraph</text>
+<text class="label ink" x="458" y="279">Allowed origins + verbs</text>
+<text class="label ink" x="458" y="308">Budget + session access</text>
+<text class="heading ink" x="814" y="205">03  Bounded draft</text>
+<text class="label ink" x="814" y="250">Target handle + verb</text>
+<text class="label ink" x="814" y="279">Effect + binding ID</text>
+<text class="label ink" x="814" y="308">Postcondition only</text>
+<text class="heading ink" x="1170" y="205">04  Host compiler</text>
+<text class="label ink" x="1170" y="250">Reconstructs arguments</text>
+<text class="label ink" x="1170" y="279">Checks origin · frame · role</text>
+<text class="label ink" x="1170" y="308">Rejects stale / unknown targets</text>
+<line class="line" x1="401" y1="272" x2="420" y2="272" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line class="line" x1="757" y1="272" x2="776" y2="272" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line class="line" x1="1113" y1="272" x2="1132" y2="272" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect class="panel" x="430" y="468" width="322" height="178" rx="14"/>
+<rect class="panel-orange" x="786" y="468" width="322" height="178" rx="14"/>
+<rect class="panel-blue" x="1142" y="468" width="384" height="178" rx="14"/>
+<text class="heading ink" x="458" y="512">05  Propose</text>
+<text class="label ink" x="458" y="554">Plan and draft are visible</text>
+<text class="label ink" x="458" y="583">No write capability yet</text>
+<text class="heading ink" x="814" y="512">06  Human approval</text>
+<text class="label ink" x="814" y="554">Approve the task scope</text>
+<text class="label ink" x="814" y="583">Kill switch remains available</text>
+<text class="heading ink" x="1170" y="512">07  Scoped execution</text>
+<text class="label ink" x="1170" y="554">Browser tools · MCP interfaces</text>
+<text class="label ink" x="1170" y="583">Grant and ActionScope enforced</text>
+<line class="line" x1="1334" y1="384" x2="1334" y2="456" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line class="line" x1="752" y1="557" x2="774" y2="557" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line class="line" x1="1108" y1="557" x2="1130" y2="557" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text class="small orange" x="80" y="526">TWO-PHASE HITL</text>
+<text class="small muted" x="80" y="558">propose</text>
+<text class="small muted" x="80" y="588">approve</text>
+<text class="small muted" x="80" y="618">execute</text>
+<line class="line" x1="174" y1="552" x2="404" y2="552" stroke-width="2.5" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect class="panel-blue" x="430" y="736" width="322" height="146" rx="14"/>
+<rect class="panel-green" x="786" y="736" width="322" height="146" rx="14"/>
+<rect class="panel" x="1142" y="736" width="384" height="146" rx="14"/>
+<text class="heading ink" x="458" y="780">08  Action receipt</text>
+<text class="label ink" x="458" y="821">Before / after page state</text>
+<text class="label ink" x="458" y="850">Origin · effect · evidence</text>
+<text class="heading ink" x="814" y="780">09  Task verification</text>
+<text class="label ink" x="814" y="821">Postconditions + evidence</text>
+<text class="label ink" x="814" y="850">Success only after verification</text>
+<text class="heading ink" x="1170" y="780">10  Local DecisionLog</text>
+<text class="label ink" x="1170" y="821">SQLite / JSONL event record</text>
+<text class="label ink" x="1170" y="850">Raw URLs can be redacted</text>
+<path class="line" d="M 1334 654 C 1334 696, 591 684, 591 724" fill="none" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line class="line" x1="752" y1="808" x2="774" y2="808" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line class="line" x1="1108" y1="808" x2="1130" y2="808" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text class="small muted" x="800" y="944" text-anchor="middle">Implemented components: two-phase AgentRunner · compiler, grants and receipts · browser-as-MCP · local DecisionLog.</text>
+</svg>
