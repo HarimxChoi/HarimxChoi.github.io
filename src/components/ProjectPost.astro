@@ -7,10 +7,17 @@ interface Props {
 }
 
 const { project, lang } = Astro.props;
+const detail = project.detail;
 const homeHref = lang === "ko" ? "/ko/" : "/";
 const labels = lang === "ko"
   ? {
       back: "모든 글",
+      overview: "프로젝트 개요",
+      method: "접근 방법",
+      results: "결과",
+      contribution: "기여",
+      evidence: "관련 자료",
+      builtWith: "Built with",
       work: "구현과 실험",
       scope: "기술 범위",
       source: "프로젝트",
@@ -19,12 +26,21 @@ const labels = lang === "ko"
     }
   : {
       back: "All posts",
+      overview: "Overview",
+      method: "Method",
+      results: "Results",
+      contribution: "Contribution",
+      evidence: "Evidence",
+      builtWith: "Built with",
       work: "Work and experiments",
       scope: "Technical scope",
       source: "Project",
       repository: "GitHub repository",
       private: "Private project",
     };
+
+const primaryFigure = detail?.figures?.[0];
+const secondaryFigures = detail?.figures?.slice(1) ?? [];
 ---
 
 <BlogHeader homeHref={homeHref} lang={lang} />
@@ -32,53 +48,183 @@ const labels = lang === "ko"
 <main class="article-shell shell">
   <a class="article-back" href={homeHref}>← {labels.back}</a>
 
-  <article class="project-article">
+  <article class:list={["project-article", { "project-article--detailed": detail }]}>
     <header class="article-header">
       <div class="article-meta">
         <span>{project.publishedAt} · {project.readingTime}</span>
-        <span>{project.topic}</span>
+        {!detail && <span>{project.topic}</span>}
       </div>
       <h1>{project.title}</h1>
-      <p class="article-summary">{project.summary}</p>
-      <div class="article-status">
-        <span>{project.status}</span>
-        <strong>{project.metric}</strong>
-      </div>
+      {detail ? (
+        <>
+          <p class="article-claim">{detail.claim}</p>
+          <div class="article-classification">
+            <span class="article-category">{detail.category}</span>
+            <p class="article-built-with">
+              <strong>{labels.builtWith}</strong>
+              <span>{detail.builtWith.join(" · ")}</span>
+            </p>
+          </div>
+        </>
+      ) : (
+        <p class="article-summary">{project.summary}</p>
+      )}
+      {!detail && (
+        <div class="article-status">
+          <span>{project.status}</span>
+          <strong>{project.metric}</strong>
+        </div>
+      )}
     </header>
 
-    {project.image && (
-      <figure class="article-figure">
-        <img src={project.image} alt={project.imageAlt} />
-        {project.imageCaption && <figcaption>{project.imageCaption}</figcaption>}
-      </figure>
+    {detail ? (
+      <>
+        {primaryFigure && (
+          <figure class="article-figure article-figure--primary">
+            <img src={primaryFigure.src} alt={primaryFigure.alt} loading="eager" decoding="async" />
+            {primaryFigure.caption && <figcaption>{primaryFigure.caption}</figcaption>}
+          </figure>
+        )}
+
+        <section class="article-section" aria-labelledby="overview-heading">
+          <h2 id="overview-heading">{labels.overview}</h2>
+          <div class="article-section-body">
+            <div class="article-prose article-lead">
+              {detail.lead.map((paragraph: string) => <p>{paragraph}</p>)}
+            </div>
+            {detail.metricCards?.length > 0 && (
+              <div class="article-metric-grid" aria-label={lang === "ko" ? "핵심 성과" : "Key results"}>
+                {detail.metricCards.map((metric: any) => (
+                  <div class="article-metric-card">
+                    <span>{metric.label}</span>
+                    <strong>{metric.value}</strong>
+                    {metric.note && <p>{metric.note}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {detail.flow && (
+          <section class="article-section" aria-labelledby="method-heading">
+            <h2 id="method-heading">{labels.method}</h2>
+            <div class="article-section-body">
+              <div class="article-section-intro">
+                <h3>{detail.flow.title}</h3>
+                {detail.flow.intro && <p>{detail.flow.intro}</p>}
+              </div>
+              <ol class="article-flow">
+                {detail.flow.steps.map((step: any, index: number) => (
+                  <li>
+                    <span class="article-flow-index">{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{step.label}</strong>
+                    <p>{step.description}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
+
+        {(detail.resultTables?.length > 0 || secondaryFigures.length > 0) && (
+          <section class="article-section" aria-labelledby="results-heading">
+            <h2 id="results-heading">{labels.results}</h2>
+            <div class="article-section-body article-results">
+              {detail.resultTables?.map((result: any) => (
+                <div class="article-table-block">
+                  <h3>{result.title}</h3>
+                  <div class="article-table-scroll">
+                    <table>
+                      <thead>
+                        <tr>{result.columns.map((column: string) => <th scope="col">{column}</th>)}</tr>
+                      </thead>
+                      <tbody>
+                        {result.rows.map((row: string[]) => (
+                          <tr>{row.map((cell: string) => <td>{cell}</td>)}</tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {result.caption && <p class="article-table-caption">{result.caption}</p>}
+                </div>
+              ))}
+              {secondaryFigures.map((figure: any) => (
+                <figure class="article-figure article-figure--secondary">
+                  <img src={figure.src} alt={figure.alt} loading="lazy" decoding="async" />
+                  {figure.caption && <figcaption>{figure.caption}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {detail.contribution?.length > 0 && (
+          <section class="article-section" aria-labelledby="contribution-heading">
+            <h2 id="contribution-heading">{labels.contribution}</h2>
+            <ul class="article-contribution-list">
+              {detail.contribution.map((item: string) => <li>{item}</li>)}
+            </ul>
+          </section>
+        )}
+
+        <section class="article-section article-source" aria-labelledby="evidence-heading">
+          <h2 id="evidence-heading">{labels.evidence}</h2>
+          {detail.evidenceLinks?.length > 0 ? (
+            <div class="article-evidence-links">
+              {detail.evidenceLinks.map((link: any) => (
+                <a href={link.href} target="_blank" rel="noopener">
+                  <span>{link.label} <span aria-hidden="true">↗</span></span>
+                  {link.note && <small>{link.note}</small>}
+                </a>
+              ))}
+            </div>
+          ) : project.href ? (
+            <a class="article-source-link" href={project.href} target="_blank" rel="noopener">
+              {labels.repository} <span aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            <p>{labels.private}</p>
+          )}
+        </section>
+      </>
+    ) : (
+      <>
+        {project.image && (
+          <figure class="article-figure">
+            <img src={project.image} alt={project.imageAlt} />
+            {project.imageCaption && <figcaption>{project.imageCaption}</figcaption>}
+          </figure>
+        )}
+
+        <section class="article-section" aria-labelledby="work-heading">
+          <h2 id="work-heading">{labels.work}</h2>
+          <div class="article-prose">
+            {project.bullets.map((bullet: string) => <p>{bullet}</p>)}
+          </div>
+        </section>
+
+        <section class="article-section" aria-labelledby="scope-heading">
+          <h2 id="scope-heading">{labels.scope}</h2>
+          <div class="tag-row article-tags" aria-label="Categories">
+            {project.categories.map((tag: string) => <span>{tag}</span>)}
+          </div>
+          <div class="tool-line article-tools">
+            {project.tools.map((tool: string) => <span>{tool}</span>)}
+          </div>
+        </section>
+
+        <section class="article-section article-source" aria-labelledby="source-heading">
+          <h2 id="source-heading">{labels.source}</h2>
+          {project.href ? (
+            <a class="article-source-link" href={project.href} target="_blank" rel="noopener">
+              {labels.repository} <span aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            <p>{labels.private}</p>
+          )}
+        </section>
+      </>
     )}
-
-    <section class="article-section" aria-labelledby="work-heading">
-      <h2 id="work-heading">{labels.work}</h2>
-      <div class="article-prose">
-        {project.bullets.map((bullet: string) => <p>{bullet}</p>)}
-      </div>
-    </section>
-
-    <section class="article-section" aria-labelledby="scope-heading">
-      <h2 id="scope-heading">{labels.scope}</h2>
-      <div class="tag-row article-tags" aria-label="Categories">
-        {project.categories.map((tag: string) => <span>{tag}</span>)}
-      </div>
-      <div class="tool-line article-tools">
-        {project.tools.map((tool: string) => <span>{tool}</span>)}
-      </div>
-    </section>
-
-    <section class="article-section article-source" aria-labelledby="source-heading">
-      <h2 id="source-heading">{labels.source}</h2>
-      {project.href ? (
-        <a class="article-source-link" href={project.href} target="_blank" rel="noopener">
-          {labels.repository} <span aria-hidden="true">↗</span>
-        </a>
-      ) : (
-        <p>{labels.private}</p>
-      )}
-    </section>
   </article>
 </main>
