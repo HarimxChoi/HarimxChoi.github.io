@@ -134,7 +134,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["PyTorch", "CLIP", "DINOv2", "Semantic segmentation", "COCO-Val 2014"],
     },
     "emh-agent": {
-      claim: "Cost-aware 3-year validation · TQC +183.9% vs. IVV +99.6%",
+      claim: "Cost-aware 3-year validation · TQC +183.9% (S&P 500 / IVV +99.6%)",
       lead: [
         "EMH Agent learns a daily allocation across US equities, government bonds, and cash-like assets using only the information available at each point in time. The environment carries current weights, drawdown, and prior reward forward instead of evaluating isolated predictions.",
         "The policy was evaluated over the same 756 held-out trading sessions as IVV. Transaction costs, slippage, and financing costs are deducted before returns are measured, and three independently trained TQC policies are combined deterministically.",
@@ -304,79 +304,79 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
     },
     eat: {
-      claim: "Calibration-aware medical-image training · best ECE 0.94% · macro-F1 86.37%",
+      claim: "E-AT for calibrated medical-image classification · macro-F1 0.860 · minimum ECE 1.03%",
       lead: [
-        "A classifier can be correct often and still be wrong about how confident it should be. EAT studies that gap on four-class ISIC skin-lesion classification, tracking calibration and classification quality separately throughout training.",
-        "The method uses sample difficulty to coordinate focal weighting, a bounded parameter perturbation, and consistency between two stochastic forward passes. This gives difficult examples more attention while discouraging confidence that changes under a small perturbation.",
+        "High classification accuracy is not enough when confidence is used in a medical decision. E-AT trains a balanced four-class ISIC classifier so predicted confidence more closely matches observed correctness.",
+        "Using a pretrained ConvNeXtV2-Tiny at 384 px, E-AT combines focal loss, bidirectional R-Drop, and adaptive FGM in one objective. It focuses learning on difficult samples while reducing confidence that changes under a small perturbation.",
       ],
       metricCards: [
         {
-          label: "ISIC validation",
-          value: "n = 5,268",
-          note: "Fold 3 · seed 42 · four classes",
+          label: "ISIC",
+          value: "4 classes",
+          note: "Balanced · ConvNeXtV2-Tiny · 384 px",
         },
         {
-          label: "Equal compute",
-          value: "12.79% → 5.87%",
-          note: "ECE: CE epoch 20 vs. Focal+R-Drop epoch 10",
+          label: "Macro-F1",
+          value: "0.860",
+          note: "Best classification result",
         },
         {
-          label: "Best observed",
-          value: "0.94% ECE",
-          note: "Macro-F1 reached 86.37% within 30 epochs",
+          label: "Minimum ECE",
+          value: "1.03%",
+          note: "Calibration checkpoint",
         },
       ],
       flow: {
-        title: "Train for both class accuracy and trustworthy confidence",
-        intro: "The same sample-level difficulty signal controls how strongly the objective focuses, perturbs, and regularizes each example.",
+        title: "One objective for classification and calibrated confidence",
+        intro: "E-AT couples sample difficulty, perturbation, and prediction consistency instead of calibrating only after training.",
         steps: [
           {
-            label: "Clean stochastic pass",
-            description: "Estimate the target-class probability and derive a difficulty score from the model's current confidence.",
+            label: "Image and class label",
+            description: "Run a clean stochastic forward pass and measure target-class confidence on each ISIC image.",
           },
           {
-            label: "Difficulty-aware objective",
-            description: "Use focal weighting so hard or under-confident examples contribute more strongly to the classification loss.",
+            label: "Focal difficulty",
+            description: "Give difficult samples more weight through focal loss rather than treating every example equally.",
           },
           {
-            label: "Elastic perturbation",
-            description: "Scale a bounded parameter perturbation with sample difficulty and run a second stochastic forward pass.",
+            label: "Adaptive FGM",
+            description: "Scale a bounded perturbation with sample difficulty and evaluate a second stochastic prediction.",
           },
           {
-            label: "Consistency update",
-            description: "Combine classification and bidirectional R-Drop consistency in one backward update.",
+            label: "R-Drop update",
+            description: "Optimize classification and bidirectional prediction consistency together in one update.",
           },
         ],
       },
       figures: [
         {
-          src: "/img/projects/eat/eat-equal-compute-reliability.svg",
-          alt: "Reliability curves and confidence distributions comparing cross-entropy at epoch 20 with Focal plus R-Drop at epoch 10 under the same estimated compute budget on 5,268 ISIC validation images",
-          caption: "Matched cumulative compute · CE e20 vs. Focal+R-Drop e10 · ISIC fold 3, n=5,268",
+          src: "/img/projects/eat/eat-isic-results.svg",
+          alt: "E-AT result summary on balanced four-class ISIC: macro-F1 0.860 and minimum expected calibration error 1.03 percent at separate checkpoints",
+          caption: "Balanced four-class ISIC · ConvNeXtV2-Tiny 384 px",
         },
         {
-          src: "/img/projects/eat/eat-training-curves.svg",
-          alt: "Thirty-epoch expected calibration error and macro-F1 curves for cross-entropy, Focal plus R-Drop, and adaptive robust training on ISIC validation data",
-          caption: "Calibration and classification were tracked separately after every epoch",
+          src: "/img/projects/eat/eat-method.svg",
+          alt: "E-AT training diagram linking focal sample difficulty, adaptive FGM perturbation, and bidirectional R-Drop consistency",
+          caption: "Focal loss, adaptive FGM, and bidirectional R-Drop are optimized together",
         },
       ],
       resultTables: [
         {
-          title: "Equal-compute comparison",
-          columns: ["Method", "Checkpoint", "Estimated cumulative FLOPs", "ECE", "Macro-F1"],
+          title: "ISIC result",
+          columns: ["Metric", "E-AT result", "Selection"],
           rows: [
-            ["Cross-entropy", "epoch 20", "5.52 × 10¹⁵", "12.79%", "84.32%"],
-            ["Focal + R-Drop", "epoch 10", "5.52 × 10¹⁵", "5.87%", "83.19%"],
+            ["Macro-F1 ↑", "0.860", "Classification checkpoint"],
+            ["ECE ↓", "1.03%", "Calibration checkpoint"],
           ],
-          caption: "Focal+R-Drop uses two stochastic forward passes per update, so ten epochs match the estimated compute of twenty CE epochs.",
+          caption: "Macro-F1 and ECE report their respective best checkpoints.",
         },
       ],
       contribution: [
-        "Designed the difficulty-coupled focal, perturbation, and consistency objective and implemented the training and evaluation pipeline.",
-        "Separated calibration from classification during analysis and regenerated reliability diagrams directly from saved class probabilities.",
+        "Designed the E-AT objective that couples focal difficulty, adaptive FGM, and bidirectional R-Drop.",
+        "Built the balanced ISIC training and evaluation pipeline and tracked macro-F1 and ECE separately.",
       ],
       category: "Calibration & Uncertainty",
-      builtWith: ["PyTorch", "ConvNeXt V2", "Focal loss", "R-Drop", "ISIC"],
+      builtWith: ["PyTorch", "ConvNeXtV2-Tiny", "Focal loss", "R-Drop", "FGM", "ISIC 2019"],
     },
     "langgraph-travel-agent": {
       claim: "Travel advisor delivered to a U.S. agency · concurrent supplier search with resumable human review",
@@ -510,9 +510,9 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
     monogram: {
-      claim: "Local-first knowledge pipeline · validated capture, atomic Git storage, and hybrid retrieval",
+      claim: "One share action to capture, organize, and search personal knowledge",
       lead: [
-        "Personal knowledge systems usually split capture, structure, search, and backup into separate tools. Monogram treats them as one path: accept a message or document, verify what should be saved, commit all related files atomically, and make the result searchable from the same local knowledge base.",
+        "Monogram is a personal knowledge-management system that accepts webpages, documents, notes, and conversations through one share action, organizes them automatically, and makes them searchable later.",
         "Semantic retrieval uses EmbeddingGemma-300M with an ONNX backend and a Git-backed sharded INT8 index. Dense similarity and BM25 are fused with RRF, with optional graph expansion and reranking; the implementation does not depend on FAISS or an external vector database.",
       ],
       metricCards: [
@@ -687,7 +687,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["PyTorch", "CLIP", "DINOv2", "Semantic segmentation", "COCO-Val 2014"],
     },
     "emh-agent": {
-      claim: "비용을 반영한 3년 검증 · TQC +183.9% vs. IVV +99.6%",
+      claim: "비용을 반영한 3년 검증 · TQC +183.9% (vs. S&P 500(IVV) +99.6%)",
       lead: [
         "EMH Agent는 각 시점까지 알 수 있었던 정보만 사용해 미국 주식·국채·현금성 자산의 일별 비중을 결정합니다. 개별 예측을 따로 평가하지 않고 현재 비중, drawdown과 직전 보상을 다음 의사결정 상태로 이어갑니다.",
         "IVV와 동일한 756개 검증 거래일에서 정책을 평가했습니다. 거래비용, slippage와 financing cost를 수익률에서 먼저 차감하고, 서로 다른 seed로 학습한 TQC 정책 세 개를 고정된 방식으로 결합했습니다.",
@@ -857,79 +857,79 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
     },
     eat: {
-      claim: "의료 이미지 calibration 연구 · best ECE 0.94% · macro-F1 86.37%",
+      claim: "의료 이미지 E-AT 연구 · macro-F1 0.860 · minimum ECE 1.03%",
       lead: [
-        "분류 정확도가 높아도 모델이 자신의 정답 확률을 잘못 판단할 수 있습니다. EAT는 4개 피부 병변을 분류하는 ISIC 데이터에서 정확도와 confidence의 일치 정도를 학습 전 과정에서 따로 측정한 연구입니다.",
-        "Sample difficulty를 기준으로 focal weighting, 제한된 parameter perturbation과 두 stochastic forward의 일관성을 함께 조절했습니다. 어려운 샘플에 더 집중하면서 작은 perturbation에 따라 confidence가 크게 흔들리지 않도록 학습했습니다.",
+        "의료 이미지에서는 분류 정확도뿐 아니라 모델이 출력한 confidence를 얼마나 믿을 수 있는지도 중요합니다. E-AT는 4개 피부 병변을 균형 있게 구성한 ISIC에서 예측 confidence와 실제 정답률을 맞추도록 학습한 방법입니다.",
+        "384 px pretrained ConvNeXtV2-Tiny에 focal loss, bidirectional R-Drop과 adaptive FGM을 하나의 objective로 결합했습니다. 어려운 샘플에 더 집중하면서 작은 perturbation에 따라 confidence가 크게 흔들리지 않도록 학습했습니다.",
       ],
       metricCards: [
         {
-          label: "ISIC validation",
-          value: "n = 5,268",
-          note: "Fold 3 · seed 42 · 4 classes",
+          label: "ISIC",
+          value: "4 classes",
+          note: "Balanced · ConvNeXtV2-Tiny · 384 px",
         },
         {
-          label: "동일 연산량",
-          value: "12.79% → 5.87%",
-          note: "ECE: CE epoch 20 vs. Focal+R-Drop epoch 10",
+          label: "Macro-F1",
+          value: "0.860",
+          note: "Best classification result",
         },
         {
-          label: "Best observed",
-          value: "0.94% ECE",
-          note: "30 epoch 안에서 macro-F1 86.37%",
+          label: "Minimum ECE",
+          value: "1.03%",
+          note: "Calibration checkpoint",
         },
       ],
       flow: {
         title: "분류 성능과 믿을 수 있는 confidence를 함께 학습하기",
-        intro: "같은 sample-level difficulty 신호로 각 샘플의 loss, perturbation과 consistency 강도를 함께 조절했습니다.",
+        intro: "학습이 끝난 뒤 calibration만 보정하는 대신 sample difficulty, perturbation과 prediction consistency를 하나의 objective로 연결했습니다.",
         steps: [
           {
-            label: "Clean stochastic pass",
-            description: "Target class 확률을 구하고 현재 confidence에서 sample difficulty를 계산합니다.",
+            label: "이미지와 class label",
+            description: "Clean stochastic forward에서 target class confidence와 각 ISIC 이미지의 difficulty를 계산합니다.",
           },
           {
-            label: "Difficulty-aware objective",
-            description: "어렵거나 confidence가 낮은 샘플이 분류 loss에 더 크게 반영되도록 focal weighting을 적용합니다.",
+            label: "Focal difficulty",
+            description: "모든 샘플을 같은 비중으로 보지 않고 어려운 샘플이 loss에 더 크게 반영되도록 합니다.",
           },
           {
-            label: "Elastic perturbation",
-            description: "Sample difficulty에 따라 제한된 parameter perturbation을 만들고 두 번째 stochastic forward를 실행합니다.",
+            label: "Adaptive FGM",
+            description: "Sample difficulty에 맞춘 제한된 perturbation으로 두 번째 stochastic prediction을 계산합니다.",
           },
           {
-            label: "Consistency update",
-            description: "분류 loss와 bidirectional R-Drop consistency를 한 번의 backward update로 결합합니다.",
+            label: "R-Drop update",
+            description: "분류 loss와 두 prediction의 bidirectional consistency를 한 번의 update로 함께 최적화합니다.",
           },
         ],
       },
       figures: [
         {
-          src: "/img/projects/eat/eat-equal-compute-reliability.svg",
-          alt: "ISIC validation 이미지 5,268개에서 같은 추정 연산량을 사용한 cross-entropy epoch 20과 Focal plus R-Drop epoch 10의 reliability curve 및 confidence 분포 비교",
-          caption: "동일한 누적 연산량 · CE e20 vs. Focal+R-Drop e10 · ISIC fold 3, n=5,268",
+          src: "/img/projects/eat/eat-isic-results.svg",
+          alt: "균형 4-class ISIC에서 E-AT가 서로 다른 checkpoint에서 macro-F1 0.860과 minimum ECE 1.03%를 기록한 결과",
+          caption: "Balanced 4-class ISIC · ConvNeXtV2-Tiny 384 px",
         },
         {
-          src: "/img/projects/eat/eat-training-curves.svg",
-          alt: "ISIC validation에서 cross-entropy, Focal plus R-Drop과 adaptive robust training의 30 epoch ECE 및 macro-F1 곡선",
-          caption: "매 epoch마다 calibration과 classification 성능을 분리해 추적했습니다",
+          src: "/img/projects/eat/eat-method.svg",
+          alt: "Focal sample difficulty, adaptive FGM perturbation과 bidirectional R-Drop consistency를 연결한 E-AT 학습 구조",
+          caption: "Focal loss, adaptive FGM과 bidirectional R-Drop을 하나의 objective로 학습했습니다",
         },
       ],
       resultTables: [
         {
-          title: "동일 연산량 비교",
-          columns: ["Method", "Checkpoint", "추정 누적 FLOPs", "ECE", "Macro-F1"],
+          title: "ISIC 결과",
+          columns: ["Metric", "E-AT 결과", "Selection"],
           rows: [
-            ["Cross-entropy", "epoch 20", "5.52 × 10¹⁵", "12.79%", "84.32%"],
-            ["Focal + R-Drop", "epoch 10", "5.52 × 10¹⁵", "5.87%", "83.19%"],
+            ["Macro-F1 ↑", "0.860", "Classification checkpoint"],
+            ["ECE ↓", "1.03%", "Calibration checkpoint"],
           ],
-          caption: "Focal+R-Drop은 update마다 두 번 stochastic forward를 사용하므로 10 epoch가 CE 20 epoch와 같은 추정 연산량입니다.",
+          caption: "Macro-F1과 ECE는 각각의 best checkpoint 기준입니다.",
         },
       ],
       contribution: [
-        "Difficulty와 focal, perturbation, consistency를 연결한 objective와 전체 학습·평가 pipeline을 구현했습니다.",
-        "Calibration과 classification을 분리해 분석하고 저장된 class probability에서 reliability diagram을 다시 생성했습니다.",
+        "Focal difficulty, adaptive FGM과 bidirectional R-Drop을 연결한 E-AT objective를 설계했습니다.",
+        "균형 ISIC 학습·평가 pipeline을 만들고 macro-F1과 ECE를 분리해 추적했습니다.",
       ],
       category: "Calibration & Uncertainty",
-      builtWith: ["PyTorch", "ConvNeXt V2", "Focal loss", "R-Drop", "ISIC"],
+      builtWith: ["PyTorch", "ConvNeXtV2-Tiny", "Focal loss", "R-Drop", "FGM", "ISIC 2019"],
     },
     "langgraph-travel-agent": {
       claim: "미국 여행사 납품 · 공급사 병렬 검색과 중단 후 재개가 가능한 여행 상담 Agent",
@@ -1063,9 +1063,9 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
     monogram: {
-      claim: "Local-first 지식 pipeline · 검증된 수집, 원자적 Git 저장과 hybrid retrieval",
+      claim: "공유 한 번으로 수집·정리·검색까지 연결하는 개인 지식관리(PKM) 시스템",
       lead: [
-        "개인 지식 시스템은 보통 수집, 구조화, 검색과 backup이 서로 다른 도구로 나뉩니다. Monogram은 메시지나 문서를 받고, 무엇을 저장할지 검증하고, 관련 파일을 한 번에 commit한 뒤 같은 local knowledge base에서 다시 찾는 과정을 하나로 연결합니다.",
+        "Monogram은 웹페이지, 문서, 메모, 대화처럼 형태가 다른 정보를 공유 버튼 한 번으로 받아 자동으로 정리하고, 나중에 다시 검색할 수 있게 만드는 개인 지식관리(PKM) 시스템입니다.",
         "Semantic retrieval은 EmbeddingGemma-300M ONNX backend와 Git-backed sharded INT8 index를 사용합니다. Dense similarity와 BM25를 RRF로 결합하고 필요하면 graph expansion과 reranking을 적용하며, FAISS나 외부 vector database에 의존하지 않습니다.",
       ],
       metricCards: [
