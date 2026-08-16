@@ -16,7 +16,11 @@ const welcome = "WELCOME TO HARIM'S PAGE.";
 const introductionLead =
   lang === "ko"
     ? "현실을 벡터화하고, 예측하고, 불확실성을 추정하는 것에 관심이 있습니다."
-    : "I am interested in vectorizing reality, making predictions, and estimating uncertainty.";
+    : "I am a machine learning engineer focused on vectorizing reality, making predictions, and estimating uncertainty.";
+const introductionSupport =
+  lang === "en"
+    ? "Over six years, I have connected tabular ML, NLP, computer vision, and LLM agents from data collection through evaluation and deployment across public procurement, construction, and retail. In unfamiliar domains, I first define what to predict and how far the result can be trusted, then build systems within performance, cost, and operational constraints."
+    : null;
 ---
 
 <BlogHeader homeHref={homeHref} lang={lang} />
@@ -30,6 +34,7 @@ const introductionLead =
         <div class="intro-copy">
           <h1 id="blog-intro-title">{welcome}</h1>
           <p>{introductionLead}</p>
+          {introductionSupport && <p class="intro-support">{introductionSupport}</p>}
         </div>
       </section>
 
