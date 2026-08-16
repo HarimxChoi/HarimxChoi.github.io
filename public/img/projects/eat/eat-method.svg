@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">E-AT training objective</title>
+  <desc id="desc">E-AT connects focal sample difficulty, adaptive FGM perturbation, and bidirectional R-Drop consistency in one medical-image training objective.</desc>
+  <style>
+      .bg{fill:#f7f5ef}.panel{fill:#efede7}.ink{fill:#272b31}.muted{fill:#6d7480}.line{stroke:#bab5aa}.accent{fill:#c25a35}.accent2{fill:#7867a4}.white{fill:#fff}.title{font:700 38px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}.heading{font:700 25px ui-sans-serif,system-ui,sans-serif}.label{font:21px ui-sans-serif,system-ui,sans-serif}.small{font:18px ui-sans-serif,system-ui,sans-serif}.metric{font:700 64px ui-monospace,SFMono-Regular,monospace}.formula{font:600 24px ui-monospace,SFMono-Regular,monospace}
+      @media(prefers-color-scheme:dark){.bg{fill:#1d1f21}.panel{fill:#282a2d}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.line{stroke:#66625c}.accent{fill:#e07a56}.accent2{fill:#a99add}}
+    </style>
+  <rect class="bg" width="1600" height="900" rx="24"/>
+  <text class="title ink" x="82" y="72">How E-AT trains calibrated confidence</text>
+  <text class="subtitle muted" x="82" y="108">Classification loss and prediction consistency are optimized together during training</text>
+
+  <rect class="panel" x="82" y="238" width="326" height="286" rx="20"/>
+  <circle class="accent" cx="128" cy="286" r="24"/>
+  <text class="label white" x="128" y="294" text-anchor="middle">1</text>
+  <text class="heading ink" x="112" y="354">Clean prediction</text>
+  <text class="small muted" x="112" y="406">Estimate target-class confidence</text>
+  <text class="small muted" x="112" y="438">on the original image</text>
+
+  <rect class="panel" x="452" y="238" width="326" height="286" rx="20"/>
+  <circle class="accent" cx="498" cy="286" r="24"/>
+  <text class="label white" x="498" y="294" text-anchor="middle">2</text>
+  <text class="heading ink" x="482" y="354">Focal difficulty</text>
+  <text class="small muted" x="482" y="406">Give difficult samples</text>
+  <text class="small muted" x="482" y="438">more classification weight</text>
+
+  <rect class="panel" x="822" y="238" width="326" height="286" rx="20"/>
+  <circle class="accent" cx="868" cy="286" r="24"/>
+  <text class="label white" x="868" y="294" text-anchor="middle">3</text>
+  <text class="heading ink" x="852" y="354">Adaptive FGM</text>
+  <text class="small muted" x="852" y="406">Apply a bounded perturbation</text>
+  <text class="small muted" x="852" y="438">scaled by sample difficulty</text>
+
+  <rect class="panel" x="1192" y="238" width="326" height="286" rx="20"/>
+  <circle class="accent" cx="1238" cy="286" r="24"/>
+  <text class="label white" x="1238" y="294" text-anchor="middle">4</text>
+  <text class="heading ink" x="1222" y="354">R-Drop update</text>
+  <text class="small muted" x="1222" y="406">Align two stochastic predictions</text>
+  <text class="small muted" x="1222" y="438">while optimizing class loss</text>
+
+  <path class="line" d="M420 380 H442" stroke-width="4"/><path class="line" d="M434 370 L444 380 L434 390" fill="none" stroke-width="4"/><path class="line" d="M790 380 H812" stroke-width="4"/><path class="line" d="M804 370 L814 380 L804 390" fill="none" stroke-width="4"/><path class="line" d="M1160 380 H1182" stroke-width="4"/><path class="line" d="M1174 370 L1184 380 L1174 390" fill="none" stroke-width="4"/>
+  <rect class="accent2" x="286" y="610" width="1028" height="120" rx="20" opacity=".18"/>
+  <text class="formula ink" x="800" y="660" text-anchor="middle">L = Focal(y, p₁) + λ(d) · R-Drop(p₁, p₂)</text>
+  <text class="small muted" x="800" y="700" text-anchor="middle">d controls both the hard-sample emphasis and bounded perturbation strength</text>
+  <text class="small muted" x="82" y="816">Backbone: pretrained ConvNeXtV2-Tiny · Input: 384 px ISIC image · Evaluation: macro-F1 and ECE</text>
+</svg>

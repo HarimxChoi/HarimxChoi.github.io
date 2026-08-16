@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">E-AT results on balanced four-class ISIC</title>
+  <desc id="desc">E-AT reached macro F1 0.860 and minimum expected calibration error 1.03 percent at separate checkpoints.</desc>
+  <style>
+      .bg{fill:#f7f5ef}.panel{fill:#efede7}.ink{fill:#272b31}.muted{fill:#6d7480}.line{stroke:#bab5aa}.accent{fill:#c25a35}.accent2{fill:#7867a4}.white{fill:#fff}.title{font:700 38px ui-sans-serif,system-ui,sans-serif}.subtitle{font:20px ui-sans-serif,system-ui,sans-serif}.heading{font:700 25px ui-sans-serif,system-ui,sans-serif}.label{font:21px ui-sans-serif,system-ui,sans-serif}.small{font:18px ui-sans-serif,system-ui,sans-serif}.metric{font:700 64px ui-monospace,SFMono-Regular,monospace}.formula{font:600 24px ui-monospace,SFMono-Regular,monospace}
+      @media(prefers-color-scheme:dark){.bg{fill:#1d1f21}.panel{fill:#282a2d}.ink{fill:#f1eee7}.muted{fill:#b0aaa0}.line{stroke:#66625c}.accent{fill:#e07a56}.accent2{fill:#a99add}}
+    </style>
+  <rect class="bg" width="1600" height="900" rx="24"/>
+  <text class="title ink" x="82" y="72">E-AT on medical-image classification</text>
+  <text class="subtitle muted" x="82" y="108">Balanced 4-class ISIC · ConvNeXtV2-Tiny · 384 px</text>
+
+  <rect class="panel" x="82" y="158" width="698" height="560" rx="22"/>
+  <text class="heading ink" x="130" y="222">Classification checkpoint</text>
+  <text class="metric accent" x="130" y="374">0.860</text>
+  <text class="label ink" x="134" y="418">macro-F1 ↑</text>
+  <line class="line" x1="130" y1="468" x2="732" y2="468" stroke-width="2"/>
+  <text class="small muted" x="130" y="518">How well the model separates</text>
+  <text class="small muted" x="130" y="550">the four skin-lesion classes</text>
+  <rect class="accent" x="130" y="602" width="264" height="58" rx="29"/>
+  <text class="label white" x="262" y="639" text-anchor="middle">Best macro-F1</text>
+
+  <rect class="panel" x="820" y="158" width="698" height="560" rx="22"/>
+  <text class="heading ink" x="868" y="222">Calibration checkpoint</text>
+  <text class="metric accent2" x="868" y="374">1.03%</text>
+  <text class="label ink" x="872" y="418">minimum ECE ↓</text>
+  <line class="line" x1="868" y1="468" x2="1470" y2="468" stroke-width="2"/>
+  <text class="small muted" x="868" y="518">How closely reported confidence</text>
+  <text class="small muted" x="868" y="550">matches observed correctness</text>
+  <rect class="accent2" x="868" y="602" width="264" height="58" rx="29"/>
+  <text class="label white" x="1000" y="639" text-anchor="middle">Minimum ECE</text>
+
+  <rect class="panel" x="82" y="764" width="1436" height="78" rx="16"/>
+  <text class="small ink" x="800" y="812" text-anchor="middle">F1 and ECE are selected from their respective best checkpoints rather than combined into one operating point.</text>
+</svg>

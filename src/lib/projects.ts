@@ -32,11 +32,24 @@ export function getProjects(content: any) {
       group.projects.map((project: any) => {
         const slug = projectSlugs.get(project.title);
         const lang = /[가-힣]/.test(project.summary) ? "ko" : "en";
+        const detail = getProjectDetail(slug, lang);
+        const cardImage =
+          slug === "warpquant"
+            ? {
+                src: "/img/projects/warpquant/warpquant-social-cover.png",
+                alt:
+                  lang === "ko"
+                    ? "WarpQuant INT3 LLM 양자화 전체 구조"
+                    : "WarpQuant INT3 LLM quantization overview",
+              }
+            : detail?.figures?.[0];
         const enrichedProject = {
           ...project,
           topic: group.title,
           slug,
-          detail: getProjectDetail(slug, lang),
+          detail,
+          image: cardImage?.src ?? project.image,
+          imageAlt: cardImage?.alt ?? project.imageAlt,
           publishedAt: lang === "ko" ? "2026.08.16" : "Aug 16, 2026",
         };
 

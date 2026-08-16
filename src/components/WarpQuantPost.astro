@@ -12,6 +12,9 @@ const postUrl = "https://harimxchoi.github.io/projects/warpquant";
 const repoUrl = "https://github.com/HarimxChoi/WarpQuant";
 const vlmUrl = "https://huggingface.co/HarimxChoi/WarpQuant-Qwen3.8-27B-R16E4H4";
 const textModelUrl = "https://huggingface.co/HarimxChoi/WarpQuant-Qwen3.8-27B-R16E4H4-Text";
+const qwen4VlmUrl = "https://huggingface.co/HarimxChoi/WarpQuant-Qwen3.5-4B-R16E4V4";
+const qwen4TextUrl = "https://huggingface.co/HarimxChoi/WarpQuant-Qwen3.5-4B-R16E4-Text";
+const llama8Url = "https://huggingface.co/HarimxChoi/WarpQuant-Llama-3-8B-R16E4H4";
 const references = [
   { citation: "Elias Frantar, Saleh Ashkboos, Torsten Hoefler, and Dan Alistarh. “GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers.” ICLR, 2023.", href: "https://arxiv.org/abs/2210.17323" },
   { citation: "Ji Lin et al. “AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration.” MLSys, 2024.", href: "https://arxiv.org/abs/2306.00978" },
@@ -97,6 +100,9 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
         <a href={repoUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
         <a href={vlmUrl} target="_blank" rel="noreferrer">Qwen3.8-27B VLM ↗</a>
         <a href={textModelUrl} target="_blank" rel="noreferrer">Qwen3.8-27B Text ↗</a>
+        <a href={qwen4VlmUrl} target="_blank" rel="noreferrer">Qwen3.5-4B VLM ↗</a>
+        <a href={qwen4TextUrl} target="_blank" rel="noreferrer">Qwen3.5-4B Text ↗</a>
+        <a href={llama8Url} target="_blank" rel="noreferrer">Llama 3 8B ↗</a>
       </nav>
     </header>
 
@@ -310,7 +316,7 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
     <section class="wq-section" id="kv-activation">
       <div class="section-label">05</div>
       <div class="section-body">
-        <h2>{ko ? "KV Cache와 Activation까지 줄이기" : "KV cache and activations"}</h2>
+        <h2>{ko ? "KV Cache와 Activation 양자화" : "KV cache and activations"}</h2>
         <p>
           {ko
             ? "Qwen3.8-27B에는 16개의 full-attention layer가 있습니다. 이 layer에서는 가장 최근의 128개 token을 BF16으로 유지하고, 그보다 오래된 key는 random rotation 뒤 3-bit MSE code와 1-bit QJL residual로 저장합니다. Value는 token별 group-32 INT4로 저장합니다. 새 token은 높은 정밀도로 처리하면서, 길어진 context의 대부분은 저비트로 보관하는 구조입니다."
