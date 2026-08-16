@@ -305,6 +305,11 @@ img {
   line-height: 1.7;
 }
 
+.intro-copy .intro-support {
+  max-width: 760px;
+  margin-top: 8px;
+}
+
 html[lang="ko"] .intro-copy h1,
 html[lang="ko"] .intro-copy p {
   word-break: keep-all;
