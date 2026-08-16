@@ -2,6 +2,10 @@ import { getProjectDetail } from "../data/projectDetails";
 
 const projectOrder = [
   ["WarpQuant", "warpquant"],
+  ["Uncertainty-Aware Bid ML", "probabilistic-bid-mlops"],
+  ["Document AI OCR", "document-ai-ocr"],
+  ["Procurement NLP", "procurement-nlp"],
+  ["R2CCP Bid Prediction", "r2ccp-bid-prediction"],
   ["google-surf-mcp", "google-surf-mcp"],
   ["Monogram", "monogram"],
   ["Bau Browser", "bau-browser"],

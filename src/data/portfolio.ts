@@ -36,18 +36,17 @@ export const portfolio = {
       {
         company: "Sejong Analysis Research Institute",
         role: "Researcher",
-        period: "Apr 2026–Present",
+        period: "Mar 2026–Present",
         context:
-          "Public procurement analytics service · Probabilistic forecasting and decision system with parallel GPU operations and Airflow DAGs",
+          "Public procurement analytics service · Probabilistic forecasting, routed GPU inference, and approval-gated deployment",
         categories: ["Tabular ML", "Probabilistic ML", "MLOps", "Document AI"],
         tools: [
-          "Airflow DAG",
-          "GPU orchestration",
+          "Routed GPU inference",
           "Multiprocessing",
           "Model registry",
           "Artifact validation",
           "OCR",
-          "TabICL v2 / PFN",
+          "TabICLv2",
           "Quantile / distributional regression",
           "Conformal prediction",
           "CRPS / multi-pinball",
@@ -57,7 +56,7 @@ export const portfolio = {
           "Took over a pipeline built by a 5-person AI project team over 6 months, then independently rebuilt and operated the end-to-end system within 3 months, from data collection and OCR to model training, simulation, recommendation generation, and candidate deployment.",
           "Separated OCR failures by document format and coverage, increasing OCR accuracy from approximately 50% to 90% under an internal measurement protocol.",
           "Rebuilt the probabilistic forecasting and recommendation path, improving the internal relative bid-win KPI by 35%.",
-          "Standardized quantile, conformal, and distributional models behind a 199-quantile interface, evaluated predictions with CRPS, multi-pinball loss, Monte Carlo simulation, and a 3-way KPI, and vectorized inference from 136 seconds to 25 seconds.",
+          "Standardized active quantile candidates behind a 1,000-quantile interface, evaluated distributions with CRPS, multi-pinball loss, Monte Carlo simulation, and a 3-way KPI, and vectorized inference from 136 seconds to 25 seconds.",
         ],
       },
       {
@@ -140,6 +139,74 @@ export const portfolio = {
     projectGroups: [
       {
         index: "A",
+        title: "Production ML · Document AI · Probabilistic Systems",
+        description:
+          "Work projects that turn unstructured procurement data into deployable classifiers, calibrated distributions, and approval-gated decisions.",
+        projects: [
+          {
+            title: "Uncertainty-Aware Bid ML",
+            status: "Production ML / probabilistic decision system",
+            period: "Mar 2026–Present",
+            summary:
+              "A 1,000-quantile forecasting and Monte Carlo decision pipeline with reproducible training, evaluation, artifact verification, dry runs, and approval-gated deployment.",
+            categories: ["Probabilistic ML", "Uncertainty Quantification", "MLOps"],
+            tools: ["XGBoost", "CatBoost", "TabICLv2", "Quantile regression", "Monte Carlo", "SHA256 manifests"],
+            bullets: [
+              "Standardizes heterogeneous price histories behind a q1000 interface and evaluates distribution quality with CRPS and pinball loss.",
+              "Packages training, routed GPU inference, regional simulation, policy evaluation, artifact checks, dry runs, and approved deployment in one handover system.",
+            ],
+            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover",
+            metric: "1,000 quantiles · verified candidate deployment",
+          },
+          {
+            title: "Document AI OCR",
+            status: "Production Document AI / batch extraction",
+            period: "Mar 2026–Present",
+            summary:
+              "A browserless HWP, HWPX, PDF, and ZIP extraction pipeline that separates source-field copying from deterministic amount, ratio, and unit calculations.",
+            categories: ["Document AI", "OCR", "Batch Processing"],
+            tools: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Structured logs"],
+            bullets: [
+              "Routes documents by magic bytes, restores text with format-specific parsers, and uses the LLM only to copy source fields.",
+              "Extracted all 199 documents in the measured batch and reached about 90% agreement on the license-ratio GT subset.",
+            ],
+            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr",
+            metric: "199 / 199 documents extracted",
+          },
+          {
+            title: "Procurement NLP",
+            status: "Production NLP / weak supervision / CPU serving",
+            period: "Nov 2024–Feb 2026",
+            summary:
+              "A Korean procurement-notice classifier that builds work-category labels from domain representations and weak supervision, then serves two INT8 ONNX models on CPU.",
+            categories: ["NLP", "Weak Supervision", "Model Deployment"],
+            tools: ["RoBERTa-large", "LoRA", "SBERT", "UMAP/HDBSCAN", "ONNX INT8", "FastAPI"],
+            bullets: [
+              "Uses a bidability teacher to discover an ontology, then combines hard rules with SBERT/domain-model Max-Sim labels for a multiclass student.",
+              "Reached 0.9639 Macro-F1 and 96.4% accuracy on a 500-record evaluation set; the documented deployment artifact is about 330 MB with about 50 ms CPU inference.",
+            ],
+            href: "https://github.com/HarimxChoi/nlp-analysis-agent",
+            metric: "500 records · Macro-F1 0.9639",
+          },
+          {
+            title: "R2CCP Bid Prediction",
+            status: "Probabilistic ML / conformal prediction",
+            period: "Nov 2024–Feb 2026",
+            summary:
+              "A multimodal bid-rate forecasting system that preserves disjoint conformal regions and turns eight context distributions into candidate decisions through 500K Monte Carlo simulation.",
+            categories: ["Probabilistic ML", "Conformal Prediction", "Decision Modeling"],
+            tools: ["R2CCP", "Entropy regularization", "Per-bin threshold", "8 context models", "Monte Carlo"],
+            bullets: [
+              "Rebuilt the public R2CCP inference path so the low-density gap between two modes is not collapsed into one interval.",
+              "Reached 90.7% weighted coverage on 13,984 chronological validation samples from 69,934 records, then evaluated each candidate rate with 500,000 simulations.",
+            ],
+            href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
+            metric: "13,984 validation · 90.7% coverage",
+          },
+        ],
+      },
+      {
+        index: "B",
         title: "Agentic AI · Retrieval · Product Systems",
         description:
           "Agent infrastructure that retrieves evidence, controls actions, persists state, and survives real operating constraints.",
@@ -255,7 +322,7 @@ export const portfolio = {
         ],
       },
       {
-        index: "B",
+        index: "C",
         title: "Agent Evaluation · Decision Systems",
         description:
           "Research and systems that separate observed performance from what can be known before acting.",
@@ -306,12 +373,12 @@ export const portfolio = {
               "Separates Intelligence, Trading, Arbitrage, and Household packages, while restricting external actions to a separate execution harness.",
             ],
             href: "https://github.com/HarimxChoi/emh-agent",
-            metric: "Cost-aware 3-year validation · TQC +183.9% (S&P 500 / IVV +99.6%)",
+            metric: "Cost-aware 3-year validation · TQC +183.9% vs. IVV +99.6%",
           },
         ],
       },
       {
-        index: "C",
+        index: "D",
         title: "LLM Quantization · Efficient Inference",
         description:
           "Low-bit methods for reducing the memory cost of model weights and inference state.",
@@ -344,7 +411,7 @@ export const portfolio = {
         ],
       },
       {
-        index: "D",
+        index: "E",
         title: "Computer Vision · Calibration · Reliability",
         description:
           "Vision research for scarce labels, ambiguous boundaries, deployment constraints, and signals that must be calibrated before they are trusted.",
@@ -564,18 +631,17 @@ export const portfolio = {
       {
         company: "세종분석연구원",
         role: "연구원",
-        period: "2026.04–현재",
+        period: "2026.03–현재",
         context:
-          "공공조달 분석 서비스 · 병렬 GPU·Airflow DAG 기반 확률예측 및 의사결정 시스템",
+          "공공조달 분석 서비스 · 확률예측, routed GPU inference와 승인 기반 후보 배포",
         categories: ["Tabular ML", "Probabilistic ML", "MLOps", "Document AI"],
         tools: [
-          "Airflow DAG",
-          "GPU orchestration",
+          "Routed GPU inference",
           "Multiprocessing",
           "Model registry",
           "Artifact validation",
           "OCR",
-          "TabICL v2 / PFN",
+          "TabICLv2",
           "분위 / 분포회귀",
           "Conformal prediction",
           "CRPS / multi-pinball",
@@ -585,7 +651,7 @@ export const portfolio = {
           "AI 프로젝트팀 5명이 6개월간 개발한 범위를 인수해 데이터 수집·OCR·feature 생성부터 모델 학습·시뮬레이션·추천값 생성·후보 배포까지 전체 파이프라인을 혼자 3개월 안에 재구축하고 운영했습니다.",
           "문서 형식과 coverage를 기준으로 OCR 실패를 분리하고 추출 경로를 다시 설계해 내부 측정 기준 정확도를 약 50%에서 90%로 높였습니다.",
           "확률예측과 추천값 생성 경로를 다시 구성해 내부 상대 낙찰 KPI를 35% 향상했습니다.",
-          "분위회귀·conformal·분포회귀를 199개 분위수 인터페이스로 통일해 CRPS, multi-pinball loss, Monte Carlo simulation과 3-way KPI로 평가하고, 추론 경로를 136초에서 25초로 약 5.4배 단축했습니다.",
+          "active 분위회귀 후보를 1,000개 분위수 인터페이스로 통일해 CRPS, multi-pinball loss, Monte Carlo simulation과 3-way KPI로 평가하고, 추론 경로를 136초에서 25초로 약 5.4배 단축했습니다.",
         ],
       },
       {
@@ -666,6 +732,74 @@ export const portfolio = {
     projectGroups: [
       {
         index: "A",
+        title: "Production ML · Document AI · Probabilistic Systems",
+        description:
+          "비정형 공공조달 데이터를 분류·확률분포·검증된 의사결정으로 바꾸어 실제 업무에 연결한 프로젝트입니다.",
+        projects: [
+          {
+            title: "Uncertainty-Aware Bid ML",
+            status: "Production ML / 확률적 의사결정 시스템",
+            period: "2026.03–현재",
+            summary:
+              "1,000분위 확률예측을 Monte Carlo 의사결정으로 연결하고, 학습·평가·아티팩트 검증·dry-run·승인 후 배포를 한 경로로 묶은 시스템입니다.",
+            categories: ["Probabilistic ML", "Uncertainty Quantification", "MLOps"],
+            tools: ["XGBoost", "CatBoost", "TabICLv2", "Quantile Regression", "Monte Carlo", "SHA256 manifest"],
+            bullets: [
+              "서로 다른 가격 이력을 공통 좌표로 바꾸고 q1000 interface에서 CRPS와 pinball loss로 분포 품질을 비교했습니다.",
+              "학습, routed GPU inference, 지역별 simulation, policy 평가, artifact 검증, dry-run과 승인 배포를 하나의 handover system으로 구성했습니다.",
+            ],
+            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover",
+            metric: "1,000분위 UQ · 검증된 후보만 배포",
+          },
+          {
+            title: "Document AI OCR",
+            status: "Production Document AI / batch extraction",
+            period: "2026.03–현재",
+            summary:
+              "HWP·HWPX·PDF·ZIP 문서를 브라우저 없이 수집하고, 필드 복사와 금액·비율·단위 계산을 분리한 문서 구조화 파이프라인입니다.",
+            categories: ["Document AI", "OCR", "Batch Processing"],
+            tools: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Structured Logs"],
+            bullets: [
+              "magic byte로 문서 형식을 판별하고 포맷별 parser로 원문을 복원한 뒤, LLM에는 원문 필드 복사만 맡겼습니다.",
+              "측정 batch의 199개 문서를 199/199 추출했고, 업종별 비율 GT subset에서 약 90% 일치를 기록했습니다.",
+            ],
+            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr",
+            metric: "199 / 199 문서 추출",
+          },
+          {
+            title: "Procurement NLP",
+            status: "Production NLP / weak supervision / CPU serving",
+            period: "2024.11–2026.02",
+            summary:
+              "도메인 표현과 약지도학습으로 한국어 조달 공고의 입찰가능성과 업무 카테고리를 분류하고, 두 INT8 ONNX 모델을 CPU에서 서빙한 프로젝트입니다.",
+            categories: ["NLP", "Weak Supervision", "Model Deployment"],
+            tools: ["RoBERTa-large", "LoRA", "SBERT", "UMAP/HDBSCAN", "ONNX INT8", "FastAPI"],
+            bullets: [
+              "입찰가능성 teacher의 표현으로 ontology를 만들고 hard rule과 SBERT·domain model Max-Sim 약라벨로 multiclass student를 학습했습니다.",
+              "500건 평가에서 Macro-F1 0.9639와 Accuracy 96.4%를 기록했습니다. 배포 artifact는 약 330MB, 문서화된 CPU 추론은 약 50ms입니다.",
+            ],
+            href: "https://github.com/HarimxChoi/nlp-analysis-agent",
+            metric: "500건 · Macro-F1 0.9639",
+          },
+          {
+            title: "R2CCP Bid Prediction",
+            status: "Probabilistic ML / conformal prediction",
+            period: "2024.11–2026.02",
+            summary:
+              "다봉형 입찰률 분포의 서로 떨어진 예측구간을 보존하고, 8개 문맥 분포를 50만 회 Monte Carlo simulation으로 의사결정에 연결한 프로젝트입니다.",
+            categories: ["Probabilistic ML", "Conformal Prediction", "Decision Modeling"],
+            tools: ["R2CCP", "Entropy Regularization", "Per-bin Threshold", "8 Context Models", "Monte Carlo"],
+            bullets: [
+              "공개 R2CCP 추론 경로를 다시 구현해 두 봉우리 사이의 저밀도 구간이 하나의 interval로 합쳐지지 않게 했습니다.",
+              "69,934건에서 시간순 validation 13,984건의 가중 coverage 90.7%를 확인하고 후보 입찰률마다 500,000회 simulation을 수행했습니다.",
+            ],
+            href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
+            metric: "13,984건 validation · coverage 90.7%",
+          },
+        ],
+      },
+      {
+        index: "B",
         title: "Agentic AI · Retrieval · Product Systems",
         description:
           "근거를 검색하고 행동을 통제하며 상태를 보존하고 실제 운영 제약을 견디는 Agent 인프라입니다.",
@@ -781,7 +915,7 @@ export const portfolio = {
         ],
       },
       {
-        index: "B",
+        index: "C",
         title: "Agent Evaluation · Decision Systems",
         description:
           "관측된 성능과 실행 전에 알 수 있는 정보를 분리해 평가하는 연구와 의사결정 시스템입니다.",
@@ -832,12 +966,12 @@ export const portfolio = {
               "Intelligence, Trading, Arbitrage와 Household를 독립 package로 분리하고 외부 행동은 별도의 execution harness로 제한했습니다.",
             ],
             href: "https://github.com/HarimxChoi/emh-agent",
-            metric: "비용을 반영한 3년 검증 · TQC +183.9% (vs. S&P 500(IVV) +99.6%)",
+            metric: "비용을 반영한 3년 검증 · TQC +183.9% vs. IVV +99.6%",
           },
         ],
       },
       {
-        index: "C",
+        index: "D",
         title: "LLM Quantization · Efficient Inference",
         description:
           "모델 가중치와 추론 상태의 메모리 비용을 줄이는 저비트 양자화 연구입니다.",
@@ -870,7 +1004,7 @@ export const portfolio = {
         ],
       },
       {
-        index: "D",
+        index: "E",
         title: "Computer Vision · Calibration · Reliability",
         description:
           "데이터가 부족하고 경계가 모호하며 배포 제약이 있는 환경에서 어떤 신호를 어디까지 믿을 수 있는지 다루는 Vision 연구입니다.",

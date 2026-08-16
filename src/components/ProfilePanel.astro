@@ -7,7 +7,10 @@ const { lang } = Astro.props;
 const links = [
   { label: "CV", href: lang === "ko" ? "/files/harim-choi-cv-ko.docx" : "/files/harim-choi-cv-en.docx" },
   { label: "LINKEDIN", href: "https://www.linkedin.com/in/harimxchoi" },
-  { label: "PORTFOLIO", href: "/files/harim-choi-ml-portfolio.pptx" },
+  {
+    label: "PORTFOLIO",
+    href: lang === "ko" ? "/files/harim-choi-ml-portfolio-ko.pptx" : "/files/harim-choi-ml-portfolio-en.pptx",
+  },
   { label: "GITHUB", href: "https://github.com/HarimxChoi" },
   { label: "EMAIL", href: "mailto:2.harim.choi@gmail.com" },
 ];
