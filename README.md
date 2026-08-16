@@ -6,7 +6,7 @@ Bilingual portfolio for Harim Choi, an applied machine learning engineer working
 
 Live: https://harimxchoi.github.io
 
-Portfolio deck: https://harimxchoi.github.io/files/harim-choi-ml-portfolio.pptx
+Portfolio deck: https://harimxchoi.github.io/files/harim-choi-ml-portfolio-en.pptx
 
 ## Local development
 

@@ -6,7 +6,7 @@ Applied ML, 오픈소스 Agent 인프라와 연구 프로젝트를 함께 보여
 
 Live: https://harimxchoi.github.io
 
-포트폴리오 파일: https://harimxchoi.github.io/files/harim-choi-ml-portfolio.pptx
+포트폴리오 파일: https://harimxchoi.github.io/files/harim-choi-ml-portfolio-ko.pptx
 
 ## 로컬 실행
 

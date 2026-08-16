@@ -51,6 +51,231 @@ type ProjectLanguage = "en" | "ko";
 
 const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
   en: {
+    "probabilistic-bid-mlops": {
+      claim: "Uncertainty-aware decision pipeline · 1,000-quantile forecasts · verified candidates only",
+      lead: [
+        "A point forecast cannot describe the range of plausible bid outcomes or the risk attached to each recommendation. This system represents every active model through the same 1,000-quantile interface, then turns the resulting distribution into candidate-level decisions through regional Monte Carlo simulation.",
+        "The work is packaged as one reproducible handover path: training, chronological evaluation, routed GPU inference, candidate materialization, semantic and SHA256 artifact checks, local dry runs, and explicit approval before deployment.",
+      ],
+      metricCards: [
+        { label: "Distribution interface", value: "q1000", note: "Quantiles from 0.001 through 0.999" },
+        { label: "Active candidates", value: "9 models", note: "XGBoost, CatBoost, and TabICLv2 families" },
+        { label: "Deployment boundary", value: "Verified only", note: "Manifest, semantics, size, hash, dry run, approval" },
+      ],
+      flow: {
+        title: "From heterogeneous price histories to a deployable decision",
+        intro: "The interface keeps model families interchangeable while the deployment gate keeps an evaluated candidate from becoming a write without evidence.",
+        steps: [
+          { label: "Common coordinate", description: "Map heterogeneous price histories and a 63-feature schema into one affine target coordinate." },
+          { label: "Distribution models", description: "Generate q1000 candidates with XGBoost and CatBoost quantile models plus routed TabICLv2 predictors." },
+          { label: "Regional simulation", description: "Estimate candidate validity and lowest-price probability under region-specific Monte Carlo contracts." },
+          { label: "Policy evaluation", description: "Combine time-split evaluation, historical rank signals, and operating constraints." },
+          { label: "Evidence-gated deployment", description: "Verify manifests, calibration semantics, artifact size, SHA256, and dry-run output before an approved write." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/probabilistic-bid-mlops/decision-pipeline.png",
+          alt: "Architecture diagram showing common feature coordinates, quantile models, a q1000 distribution interface, regional Monte Carlo simulation, policy evaluation, and evidence-gated deployment",
+          caption: "One path from 1,000-quantile forecasts to verified candidate deployment",
+        },
+        {
+          src: "/img/projects/probabilistic-bid-mlops/uq-model-map.png",
+          alt: "Model map separating active quantile and TabICLv2 candidates from evaluated uncertainty-model families and their distribution, decision, and operational evaluation roles",
+          caption: "Active candidates and research implementations are evaluated through distinct quality layers",
+        },
+      ],
+      resultTables: [
+        {
+          title: "Operational contract",
+          columns: ["Layer", "Implementation", "Decision output"],
+          rows: [
+            ["Forecast", "XGBoost / CatBoost quantiles, TabICLv2 routing", "1,000-quantile distribution"],
+            ["Simulation", "Region-specific Monte Carlo", "Validity and lowest-price probability"],
+            ["Evaluation", "Time split, CRPS, pinball, operational KPI", "Candidate policy"],
+            ["Deployment", "Manifest + SHA256 + dry run + approval", "Verified artifact only"],
+          ],
+        },
+      ],
+      contribution: [
+        "Unified heterogeneous model outputs behind a 1,000-quantile runtime contract and connected them to region-specific decision simulation.",
+        "Packaged training, evaluation, routed inference, artifact provenance, dry runs, and approval-gated deployment as a reproducible handover system.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover", note: "Training, runtime, production, evaluation, and artifact-verification bundle" },
+      ],
+      category: "Probabilistic ML · MLOps",
+      builtWith: ["Python", "XGBoost", "CatBoost", "TabICLv2", "Quantile regression", "Monte Carlo simulation", "SHA256 manifests"],
+    },
+    "document-ai-ocr": {
+      claim: "Document AI pipeline for HWP and PDF notices · 199 / 199 documents extracted",
+      lead: [
+        "Procurement documents arrive as HWP, HWPX, PDF, and ZIP files whose contents cannot be recovered through one parser. The pipeline downloads each file without a browser, identifies its real format from magic bytes, and routes it through a format-specific extraction path.",
+        "A lightweight LLM copies source fields but does not perform arithmetic. Amounts, ratios, and unit conversions are computed deterministically in code, while concurrent batching, retries, incremental output, and structured error logs make the extraction path recoverable.",
+      ],
+      metricCards: [
+        { label: "Measured batch", value: "199 / 199", note: "Documents extracted successfully" },
+        { label: "Processed content", value: "2.14M tokens", note: "10,754 tokens per document on average" },
+        { label: "License-ratio GT", value: "About 90%", note: "Agreement on the documented comparison subset" },
+      ],
+      flow: {
+        title: "Separate document recovery, field copying, and arithmetic",
+        intro: "Each stage has one responsibility, making extraction errors observable and numeric outputs reproducible.",
+        steps: [
+          { label: "Direct download", description: "Fetch the source URL without browser automation and retain the original bytes." },
+          { label: "Format routing", description: "Use magic bytes to distinguish HWP, HWPX, PDF, and ZIP rather than trusting the filename." },
+          { label: "Text recovery", description: "Apply rhwp, hwp5, or liteparse through format-specific paths with bounded retries." },
+          { label: "Source-field copy", description: "Ask Gemini 2.5 Flash-Lite to copy fields from the recovered text without calculation." },
+          { label: "Deterministic calculation", description: "Parse amounts, ratios, and units in code, then append structured output and error logs." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/document-ai-ocr/ocr-pipeline.png",
+          alt: "Document AI pipeline from direct download and magic-byte format routing through HWP and PDF parsers, source-field copying, deterministic numeric parsing, and recoverable batch controls",
+          caption: "Browserless format routing with a strict boundary between language extraction and numeric calculation",
+        },
+        {
+          src: "/img/projects/document-ai-ocr/ocr-results.png",
+          alt: "Document extraction result cards showing 199 of 199 documents extracted, 2.14 million tokens processed, about 90 percent license-ratio agreement, and documented batch cost of about 82 cents",
+          caption: "Anonymized measured batch · HWP/HWPX, PDF, and ZIP documents",
+        },
+      ],
+      resultTables: [
+        {
+          title: "Measured extraction batch",
+          columns: ["Measure", "Result", "Why it matters"],
+          rows: [
+            ["Documents", "199 / 199", "No failed extraction in the measured batch"],
+            ["Content", "2,140,021 tokens", "Large documents preserved instead of reduced to snippets"],
+            ["License-ratio GT", "About 90%", "Deterministic ratio handling after source-field extraction"],
+            ["Documented cost", "About $0.82", "Batch-scale use of a lightweight model"],
+          ],
+        },
+      ],
+      contribution: [
+        "Designed the direct-download, magic-byte routing, parser fallback, and deterministic numeric-processing boundary.",
+        "Built concurrent batching with stage-specific timeouts, retries, incremental CSV output, and structured error attribution.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr", note: "Document routing, extraction, parsing, batching, and analysis" },
+      ],
+      category: "Document AI",
+      builtWith: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Deterministic parsing"],
+    },
+    "procurement-nlp": {
+      claim: "500-record evaluation · Macro-F1 0.9639 · 96.4% accuracy",
+      lead: [
+        "An NLP pipeline that classifies Korean procurement notices by bidability and work category without requiring every notice to be manually labeled. A RoBERTa-large + LoRA binary model first learns domain representations; those representations support ontology construction and weak labeling for a multiclass student.",
+        "Hard rules resolve deterministic cases. Remaining notices receive Max-Sim labels from SBERT and a domain-fine-tuned RoBERTa model, then both classifiers are merged and exported to static INT8 ONNX for parallel CPU execution behind one FastAPI batch endpoint.",
+      ],
+      metricCards: [
+        { label: "Binary evaluation", value: "500 records", note: "Held-out bidability comparison" },
+        { label: "Macro-F1", value: "0.9639", note: "Fine-tuned RoBERTa-large + LoRA classifier" },
+        { label: "CPU deployment", value: "~330 MB", note: "Documented INT8 artifact · about 50 ms inference" },
+      ],
+      flow: {
+        title: "From scarce labels to a CPU-served label system",
+        intro: "The teacher does more than classify: its domain representation becomes the basis for ontology discovery and work-category supervision.",
+        steps: [
+          { label: "Bidability teacher", description: "Fine-tune KLUE RoBERTa-large with LoRA, focal loss, R-Drop, and FGM." },
+          { label: "Ontology discovery", description: "Project 1024-dimensional CLS representations through UMAP and HDBSCAN, then refine clusters with human review." },
+          { label: "Weak labels", description: "Combine hard-rule overrides with SBERT 0.9 and domain-RoBERTa 0.1 Max-Sim confidence." },
+          { label: "Multiclass student", description: "Train a class-weighted LoRA model over the dynamically constructed label set." },
+          { label: "INT8 batch serving", description: "Merge adapters, apply static ONNX quantization, and execute two models concurrently in FastAPI." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/procurement-nlp/nlp-pipeline.png",
+          alt: "Weakly supervised procurement NLP pipeline from a RoBERTa LoRA bidability teacher through ontology discovery, Max-Sim weak labels, a multiclass student, and INT8 ONNX CPU serving",
+          caption: "Domain representation, ontology construction, weak supervision, and deployment in one pipeline",
+        },
+        {
+          src: "/img/projects/procurement-nlp/nlp-benchmark.png",
+          alt: "Bar chart comparing Macro-F1 and accuracy on a 500-record bidability evaluation, with the fine-tuned RoBERTa classifier reaching 0.9639 Macro-F1 and 96.4 percent accuracy",
+          caption: "500-record bidability evaluation · Macro-F1 and accuracy",
+        },
+      ],
+      resultTables: [
+        {
+          title: "Bidability evaluation",
+          columns: ["Approach", "Macro-F1", "Accuracy"],
+          rows: [
+            ["LLM few-shot", "0.351", "54.0%"],
+            ["Fine-tuned RoBERTa + LoRA", "0.9639", "96.4%"],
+            ["RAFT", "0.350", "53.8%"],
+            ["Three-agent path", "0.9639", "96.4%"],
+          ],
+          caption: "All rows use the same 500-record binary evaluation set.",
+        },
+      ],
+      contribution: [
+        "Designed the representation-to-ontology and Max-Sim weak-label path for work-category supervision.",
+        "Trained the LoRA classifiers, exported static INT8 ONNX artifacts, and connected parallel inference to a FastAPI batch endpoint.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/nlp-analysis-agent", note: "Preprocessing, training, ontology discovery, weak labeling, quantization, and serving" },
+      ],
+      category: "Natural Language Processing",
+      builtWith: ["RoBERTa-large", "LoRA", "SBERT", "UMAP", "HDBSCAN", "ONNX Runtime INT8", "FastAPI"],
+    },
+    "r2ccp-bid-prediction": {
+      claim: "Multimodal R2CCP forecasting · 8 context models · 500K Monte Carlo decisions",
+      lead: [
+        "Instead of forcing the winning bid into a point estimate, this project models the full bid-rate distribution and carries its uncertainty into the final decision. I found that the public R2CCP inference path collapsed two modes and the low-density gap between them into one interval.",
+        "Inference was rebuilt around a per-bin conformal threshold that preserves disjoint prediction regions. Ranking position and bid-rate difference define eight context models, and a 500,000-iteration Monte Carlo layer estimates the win probability of every candidate rate.",
+      ],
+      metricCards: [
+        { label: "Modeling dataset", value: "69,934 records", note: "Chronological train and validation split" },
+        { label: "Validation", value: "13,984 samples", note: "90.73% weighted conformal coverage" },
+        { label: "Decision layer", value: "500K runs", note: "Monte Carlo simulation per candidate search" },
+      ],
+      flow: {
+        title: "Preserve the distribution, then simulate the decision",
+        intro: "Context-specific calibration keeps distinct modes separate before simulation evaluates candidate actions.",
+        steps: [
+          { label: "Context routing", description: "Combine ranking position Q1/Q2 with four bid-rate-difference quartiles." },
+          { label: "R2CCP distribution", description: "Train eight entropy-regularized context models on a chronological split." },
+          { label: "Per-bin conformal set", description: "Retain only bins above the calibrated threshold and preserve disjoint intervals." },
+          { label: "Monte Carlo decision", description: "Sample competing outcomes 500,000 times and estimate the win probability of each candidate rate." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/r2ccp-bid-prediction/r2ccp-method.png",
+          alt: "Synthetic bimodal distribution comparing a collapsed cumulative interval with per-bin conformal regions that preserve the low-density gap between modes",
+          caption: "Synthetic illustration of the interval-collapse fix",
+        },
+        {
+          src: "/img/projects/r2ccp-bid-prediction/r2ccp-coverage.png",
+          alt: "Coverage chart for eight Q by BRD context models over 13,984 chronological validation samples with 90.73 percent weighted coverage",
+          caption: "Chronological validation · 13,984 samples · weighted coverage 90.73%",
+        },
+      ],
+      resultTables: [
+        {
+          title: "Eight-context chronological validation",
+          columns: ["Context", "Coverage", "Average interval length"],
+          rows: [
+            ["Q1-BRD1", "91.39%", "0.0149"], ["Q1-BRD2", "92.23%", "0.0194"],
+            ["Q1-BRD3", "88.07%", "0.0166"], ["Q1-BRD4", "91.21%", "0.0169"],
+            ["Q2-BRD1", "86.14%", "0.0220"], ["Q2-BRD2", "81.41%", "0.0208"],
+            ["Q2-BRD3", "93.92%", "0.0285"], ["Q2-BRD4", "94.77%", "0.0534"],
+          ],
+          caption: "Weighted coverage: 12,688 / 13,984 = 90.73%.",
+        },
+      ],
+      contribution: [
+        "Diagnosed multimodal interval collapse and rebuilt inference with per-bin conformal thresholds and entropy regularization.",
+        "Designed the eight-context chronological evaluation and connected distribution forecasts to 500,000-iteration candidate simulation.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/ensemble-bid-prediction", note: "R2CCP modeling, calibration, context routing, and simulation" },
+      ],
+      category: "Probabilistic ML",
+      builtWith: ["Python", "R2CCP", "Conformal prediction", "Entropy regularization", "Monte Carlo simulation"],
+    },
     wsss: {
       claim: "State-of-the-art WSSS research · +1.5 pp mIoU over the previous SOTA",
       lead: [
@@ -134,7 +359,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["PyTorch", "CLIP", "DINOv2", "Semantic segmentation", "COCO-Val 2014"],
     },
     "emh-agent": {
-      claim: "Cost-aware 3-year validation · TQC +183.9% (S&P 500 / IVV +99.6%)",
+      claim: "Cost-aware 3-year validation · TQC +183.9% vs. IVV +99.6%",
       lead: [
         "EMH Agent learns a daily allocation across US equities, government bonds, and cash-like assets using only the information available at each point in time. The environment carries current weights, drawdown, and prior reward forward instead of evaluating isolated predictions.",
         "The policy was evaluated over the same 756 held-out trading sessions as IVV. Transaction costs, slippage, and financing costs are deducted before returns are measured, and three independently trained TQC policies are combined deterministically.",
@@ -604,6 +829,231 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     },
   },
   ko: {
+    "probabilistic-bid-mlops": {
+      claim: "확률예측·Monte Carlo 의사결정 파이프라인 · 1,000분위 UQ · 검증된 후보만 배포",
+      lead: [
+        "하나의 점예측만으로는 가능한 낙찰 범위와 각 추천값의 위험을 설명하기 어렵습니다. 이 시스템은 모든 active model을 같은 1,000분위 interface로 표현하고, 지역별 Monte Carlo simulation을 통해 분포를 후보별 의사결정으로 바꿉니다.",
+        "학습, 시간분리 평가, routed GPU inference, 후보 materialization, semantic·SHA256 artifact 검증, local dry-run과 명시적 승인 후 배포까지 하나의 재현 가능한 handover path로 구성했습니다.",
+      ],
+      metricCards: [
+        { label: "분포 interface", value: "q1000", note: "0.001부터 0.999까지 1,000개 분위수" },
+        { label: "Active candidates", value: "9 models", note: "XGBoost, CatBoost와 TabICLv2 계열" },
+        { label: "배포 경계", value: "Verified only", note: "Manifest, semantics, size, hash, dry-run, approval" },
+      ],
+      flow: {
+        title: "서로 다른 가격 이력에서 배포 가능한 의사결정까지",
+        intro: "모델 계열은 동일한 분포 interface로 교체할 수 있게 하고, 배포 gate는 평가된 후보가 근거 없이 write되는 것을 막습니다.",
+        steps: [
+          { label: "공통 좌표", description: "서로 다른 가격 이력과 63개 feature schema를 하나의 affine target coordinate로 변환합니다." },
+          { label: "분포 모델", description: "XGBoost·CatBoost 분위회귀와 routed TabICLv2로 q1000 후보를 생성합니다." },
+          { label: "지역별 simulation", description: "지역별 Monte Carlo contract로 후보 유효확률과 최저가 확률을 계산합니다." },
+          { label: "Policy 평가", description: "시간분리 평가, 과거 순위 신호와 운영 제약을 결합합니다." },
+          { label: "근거 기반 배포", description: "Manifest, calibration semantics, artifact size, SHA256와 dry-run을 확인한 뒤 승인된 후보만 배포합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/probabilistic-bid-mlops/decision-pipeline.png",
+          alt: "공통 feature 좌표, 분위모델, q1000 분포 interface, 지역별 Monte Carlo, policy 평가와 근거 기반 배포로 이어지는 의사결정 파이프라인",
+          caption: "1,000분위 확률예측을 검증된 후보 배포로 연결하는 전체 경로",
+        },
+        {
+          src: "/img/projects/probabilistic-bid-mlops/uq-model-map.png",
+          alt: "active 분위회귀와 TabICLv2 후보, 평가한 UQ 모델 계열, 분포·의사결정·운영 품질 평가를 구분한 모델 지도",
+          caption: "Active candidate와 연구·평가 모델을 구분한 UQ model map",
+        },
+      ],
+      resultTables: [
+        {
+          title: "운영 contract",
+          columns: ["Layer", "구현", "의사결정 output"],
+          rows: [
+            ["Forecast", "XGBoost / CatBoost quantile, TabICLv2 routing", "1,000분위 분포"],
+            ["Simulation", "지역별 Monte Carlo", "유효확률과 최저가 확률"],
+            ["Evaluation", "Time split, CRPS, pinball, 운영 KPI", "후보 policy"],
+            ["Deployment", "Manifest + SHA256 + dry-run + approval", "검증된 artifact"],
+          ],
+        },
+      ],
+      contribution: [
+        "서로 다른 모델 output을 1,000분위 runtime contract로 통일하고 지역별 의사결정 simulation에 연결했습니다.",
+        "학습, 평가, routed inference, artifact provenance, dry-run과 승인 배포를 재현 가능한 handover system으로 구성했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover", note: "Training, runtime, production, evaluation과 artifact verification" },
+      ],
+      category: "Probabilistic ML · MLOps",
+      builtWith: ["Python", "XGBoost", "CatBoost", "TabICLv2", "Quantile Regression", "Monte Carlo Simulation", "SHA256 Manifest"],
+    },
+    "document-ai-ocr": {
+      claim: "HWP·PDF 공고문을 구조화 데이터로 바꾸는 Document AI · 199 / 199 문서 추출",
+      lead: [
+        "공공조달 문서는 HWP, HWPX, PDF와 ZIP으로 섞여 있어 하나의 parser로 원문을 복원할 수 없습니다. 파일을 브라우저 없이 직접 내려받고 magic byte로 실제 형식을 판별한 뒤, 문서 형식에 맞는 extraction path로 보냈습니다.",
+        "경량 LLM에는 원문 필드 복사만 맡기고 금액·비율·단위 변환은 결정론적 코드로 계산했습니다. ThreadPool batch, retry, 증분 저장과 구조화 error log를 함께 구성해 중단 후에도 복구 가능한 처리 경로를 만들었습니다.",
+      ],
+      metricCards: [
+        { label: "측정 batch", value: "199 / 199", note: "전체 문서 추출 성공" },
+        { label: "처리한 원문", value: "2.14M tokens", note: "문서당 평균 10,754 tokens" },
+        { label: "업종별 비율 GT", value: "약 90%", note: "기록된 비교 subset의 일치율" },
+      ],
+      flow: {
+        title: "문서 복원, 필드 복사와 수치 계산을 분리합니다",
+        intro: "각 단계에 한 가지 책임만 두어 extraction 오류의 위치를 찾고 수치 결과를 다시 계산할 수 있게 했습니다.",
+        steps: [
+          { label: "직접 다운로드", description: "브라우저 자동화 없이 URL에서 원본 byte를 내려받습니다." },
+          { label: "포맷 routing", description: "파일명 대신 magic byte로 HWP, HWPX, PDF와 ZIP을 구분합니다." },
+          { label: "원문 복원", description: "rhwp, hwp5와 liteparse를 포맷별 경로와 bounded retry로 실행합니다." },
+          { label: "필드 복사", description: "Gemini 2.5 Flash-Lite가 복원된 원문에서 필요한 필드만 복사합니다." },
+          { label: "결정론적 계산", description: "금액, 비율과 단위를 코드로 계산하고 구조화 output과 error log를 증분 저장합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/document-ai-ocr/ocr-pipeline.png",
+          alt: "직접 다운로드와 magic-byte routing에서 HWP·PDF parser, 원문 필드 복사, 결정론적 수치 parsing과 복구 가능한 batch control로 이어지는 Document AI 파이프라인",
+          caption: "언어 추출과 수치 계산의 책임을 분리한 browserless document pipeline",
+        },
+        {
+          src: "/img/projects/document-ai-ocr/ocr-results.png",
+          alt: "199개 중 199개 문서 추출, 214만 tokens 처리, 약 90% 업종별 비율 일치와 약 0.82달러 batch cost를 보여주는 결과 카드",
+          caption: "익명화된 HWP/HWPX·PDF·ZIP 측정 batch",
+        },
+      ],
+      resultTables: [
+        {
+          title: "측정 extraction batch",
+          columns: ["지표", "결과", "의미"],
+          rows: [
+            ["문서", "199 / 199", "측정 batch에서 extraction 실패 0건"],
+            ["원문", "2,140,021 tokens", "긴 문서를 snippet으로 축약하지 않고 보존"],
+            ["업종별 비율 GT", "약 90%", "원문 필드 추출 후 결정론적 비율 처리"],
+            ["기록된 비용", "약 $0.82", "경량 모델을 이용한 batch 처리"],
+          ],
+        },
+      ],
+      contribution: [
+        "직접 다운로드, magic-byte routing, parser fallback과 결정론적 수치 처리의 경계를 설계했습니다.",
+        "단계별 timeout, retry, 증분 CSV와 구조화 error attribution을 포함한 동시 batch 처리를 구현했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr", note: "문서 routing, extraction, parsing, batching과 analysis" },
+      ],
+      category: "Document AI",
+      builtWith: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Deterministic Parsing"],
+    },
+    "procurement-nlp": {
+      claim: "500건 평가 · Macro-F1 0.9639 · Accuracy 96.4%",
+      lead: [
+        "분야 라벨이 부족한 한국어 공공조달 공고를 사람이 전부 분류하지 않고도 입찰 가능 여부와 업무 카테고리로 나누는 NLP 파이프라인입니다. RoBERTa-large + LoRA binary model이 먼저 도메인 표현을 학습하고, 그 표현으로 ontology와 multiclass 학습용 약라벨을 만들었습니다.",
+        "규칙으로 확정할 수 있는 공고를 먼저 처리하고, 나머지는 SBERT와 domain-fine-tuned RoBERTa의 Max-Sim으로 라벨링했습니다. 두 모델은 merge 후 static INT8 ONNX로 변환해 하나의 FastAPI batch endpoint에서 CPU로 병렬 실행했습니다.",
+      ],
+      metricCards: [
+        { label: "Binary evaluation", value: "500건", note: "동일한 입찰가능성 비교 set" },
+        { label: "Macro-F1", value: "0.9639", note: "RoBERTa-large + LoRA classifier" },
+        { label: "CPU deployment", value: "약 330MB", note: "문서화된 INT8 artifact · 추론 약 50ms" },
+      ],
+      flow: {
+        title: "부족한 라벨에서 CPU 서빙 가능한 분류체계까지",
+        intro: "Teacher의 도메인 표현을 분류에만 쓰지 않고 ontology discovery와 업무 카테고리 supervision의 출발점으로 사용했습니다.",
+        steps: [
+          { label: "입찰가능성 teacher", description: "KLUE RoBERTa-large를 LoRA, focal loss, R-Drop과 FGM으로 fine-tuning합니다." },
+          { label: "Ontology discovery", description: "1024차원 CLS 표현을 UMAP·HDBSCAN으로 묶고 사람이 cluster를 검토합니다." },
+          { label: "Weak labels", description: "Hard-rule override와 SBERT 0.9·domain RoBERTa 0.1 Max-Sim confidence를 결합합니다." },
+          { label: "Multiclass student", description: "동적으로 만든 label set에서 class-weighted LoRA model을 학습합니다." },
+          { label: "INT8 batch serving", description: "Adapter를 merge하고 static ONNX quantization 후 두 모델을 FastAPI에서 병렬 실행합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/procurement-nlp/nlp-pipeline.png",
+          alt: "RoBERTa LoRA 입찰가능성 teacher에서 ontology discovery, Max-Sim 약라벨, multiclass student와 INT8 ONNX CPU serving으로 이어지는 약지도학습 NLP 파이프라인",
+          caption: "도메인 표현, ontology, weak supervision과 배포를 연결한 전체 경로",
+        },
+        {
+          src: "/img/projects/procurement-nlp/nlp-benchmark.png",
+          alt: "500건 입찰가능성 평가에서 fine-tuned RoBERTa classifier가 Macro-F1 0.9639와 Accuracy 96.4%를 기록한 비교 막대그래프",
+          caption: "500건 입찰가능성 평가 · Macro-F1과 Accuracy",
+        },
+      ],
+      resultTables: [
+        {
+          title: "입찰가능성 평가",
+          columns: ["접근", "Macro-F1", "Accuracy"],
+          rows: [
+            ["LLM few-shot", "0.351", "54.0%"],
+            ["Fine-tuned RoBERTa + LoRA", "0.9639", "96.4%"],
+            ["RAFT", "0.350", "53.8%"],
+            ["Three-agent path", "0.9639", "96.4%"],
+          ],
+          caption: "모든 행은 같은 500건 binary evaluation set을 사용했습니다.",
+        },
+      ],
+      contribution: [
+        "업무 카테고리 supervision을 위한 representation-to-ontology와 Max-Sim weak-label path를 설계했습니다.",
+        "LoRA classifier를 학습하고 static INT8 ONNX로 변환해 FastAPI batch endpoint에 병렬 추론을 연결했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/nlp-analysis-agent", note: "전처리, 학습, ontology discovery, weak labeling, quantization과 serving" },
+      ],
+      category: "Natural Language Processing",
+      builtWith: ["RoBERTa-large", "LoRA", "SBERT", "UMAP", "HDBSCAN", "ONNX Runtime INT8", "FastAPI"],
+    },
+    "r2ccp-bid-prediction": {
+      claim: "다봉형 입찰 분포를 보존하는 R2CCP · 8개 문맥 모델 · 50만 회 Monte Carlo 의사결정",
+      lead: [
+        "낙찰값을 하나의 숫자로 맞히는 대신, 경쟁 구도에 따라 달라지는 입찰률 분포를 예측하고 불확실성을 실제 선택으로 연결한 프로젝트입니다. 공개 R2CCP 추론 경로가 두 봉우리와 그 사이의 저밀도 구간까지 하나의 interval로 합치는 문제를 확인했습니다.",
+        "확률이 threshold를 넘는 bin만 서로 떨어진 예측구간으로 남기도록 다시 구현했습니다. 순위 위치와 입찰률 차이로 8개 문맥 모델을 나누고, 후보 입찰률마다 500,000회 Monte Carlo simulation으로 승리확률을 계산했습니다.",
+      ],
+      metricCards: [
+        { label: "Modeling dataset", value: "69,934건", note: "시간순 train / validation split" },
+        { label: "Validation", value: "13,984건", note: "가중 conformal coverage 90.73%" },
+        { label: "Decision layer", value: "500K runs", note: "후보 탐색당 Monte Carlo simulation" },
+      ],
+      flow: {
+        title: "분포를 보존한 뒤 의사결정을 simulation합니다",
+        intro: "문맥별 calibration으로 서로 떨어진 mode를 보존한 뒤 후보 행동의 결과를 simulation합니다.",
+        steps: [
+          { label: "Context routing", description: "순위 위치 Q1/Q2와 입찰률 차이 4분위를 결합합니다." },
+          { label: "R2CCP distribution", description: "시간순 split에서 entropy-regularized 8개 문맥 모델을 학습합니다." },
+          { label: "Per-bin conformal set", description: "보정된 threshold를 넘는 bin만 남겨 서로 떨어진 interval을 보존합니다." },
+          { label: "Monte Carlo decision", description: "경쟁 결과를 500,000회 표본화해 후보 입찰률별 승리확률을 계산합니다." },
+        ],
+      },
+      figures: [
+        {
+          src: "/img/projects/r2ccp-bid-prediction/r2ccp-method.png",
+          alt: "다봉형 합성 분포에서 누적 interval collapse와 두 mode 사이 저밀도 구간을 보존하는 per-bin conformal region을 비교한 그림",
+          caption: "Interval-collapse 수정 방법을 설명하는 합성 분포",
+        },
+        {
+          src: "/img/projects/r2ccp-bid-prediction/r2ccp-coverage.png",
+          alt: "시간순 validation 13,984건에서 가중 coverage 90.73%를 기록한 Q와 BRD 조합 8개 문맥 모델의 coverage chart",
+          caption: "시간순 validation 13,984건 · 가중 coverage 90.73%",
+        },
+      ],
+      resultTables: [
+        {
+          title: "8개 문맥 시간순 validation",
+          columns: ["Context", "Coverage", "평균 interval 길이"],
+          rows: [
+            ["Q1-BRD1", "91.39%", "0.0149"], ["Q1-BRD2", "92.23%", "0.0194"],
+            ["Q1-BRD3", "88.07%", "0.0166"], ["Q1-BRD4", "91.21%", "0.0169"],
+            ["Q2-BRD1", "86.14%", "0.0220"], ["Q2-BRD2", "81.41%", "0.0208"],
+            ["Q2-BRD3", "93.92%", "0.0285"], ["Q2-BRD4", "94.77%", "0.0534"],
+          ],
+          caption: "가중 coverage: 12,688 / 13,984 = 90.73%.",
+        },
+      ],
+      contribution: [
+        "다봉 분포의 interval collapse를 찾고 per-bin conformal threshold와 entropy regularization으로 추론 구조를 다시 설계했습니다.",
+        "8개 문맥의 시간순 평가와 분포예측을 500,000회 후보 simulation에 연결했습니다.",
+      ],
+      evidenceLinks: [
+        { label: "Source code", href: "https://github.com/HarimxChoi/ensemble-bid-prediction", note: "R2CCP modeling, calibration, context routing과 simulation" },
+      ],
+      category: "Probabilistic ML",
+      builtWith: ["Python", "R2CCP", "Conformal Prediction", "Entropy Regularization", "Monte Carlo Simulation"],
+    },
     wsss: {
       claim: "WSSS SOTA 연구 · 기존 SOTA 대비 mIoU +1.5%p",
       lead: [
@@ -687,7 +1137,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["PyTorch", "CLIP", "DINOv2", "Semantic segmentation", "COCO-Val 2014"],
     },
     "emh-agent": {
-      claim: "비용을 반영한 3년 검증 · TQC +183.9% (vs. S&P 500(IVV) +99.6%)",
+      claim: "비용을 반영한 3년 검증 · TQC +183.9% vs. IVV +99.6%",
       lead: [
         "EMH Agent는 각 시점까지 알 수 있었던 정보만 사용해 미국 주식·국채·현금성 자산의 일별 비중을 결정합니다. 개별 예측을 따로 평가하지 않고 현재 비중, drawdown과 직전 보상을 다음 의사결정 상태로 이어갑니다.",
         "IVV와 동일한 756개 검증 거래일에서 정책을 평가했습니다. 거래비용, slippage와 financing cost를 수익률에서 먼저 차감하고, 서로 다른 seed로 학습한 TQC 정책 세 개를 고정된 방식으로 결합했습니다.",

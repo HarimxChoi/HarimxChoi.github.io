@@ -1106,7 +1106,13 @@ details[open] .detail-toggle-icon {
   gap: 44px;
 }
 
+.article-table-block {
+  min-width: 0;
+}
+
 .article-table-scroll {
+  width: 100%;
+  max-width: 100%;
   margin-top: 20px;
   overflow-x: auto;
   border-top: 1px solid var(--line-strong);
