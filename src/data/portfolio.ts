@@ -10,7 +10,7 @@ export const portfolio = {
     meta: {
       title: "Harim Choi | Applied Machine Learning Engineer",
       description:
-        "Applied machine learning engineer building reliable decision systems across probabilistic ML, NLP, computer vision, and agentic AI.",
+        "Machine learning engineer connecting tabular ML, NLP, computer vision, and LLM agents from data collection through evaluation and deployment.",
     },
     nav: {
       brand: "Harim Choi",
@@ -272,7 +272,7 @@ export const portfolio = {
             status: "Private local MVP / agent-native browser",
             period: "2026",
             summary:
-              "A desktop browser that keeps agent actions inspectable and inside an origin- and action-scoped approval flow.",
+              "A desktop browser that keeps agent actions inside a host-scoped propose → approve → execute flow, with every step inspectable before and after execution.",
             categories: ["Agentic AI", "Browser Automation", "Agent Safety"],
             tools: [
               "TypeScript",
@@ -287,12 +287,12 @@ export const portfolio = {
             ],
             bullets: [
               "Built the browser surface from tabs and session restoration through safe browsing, document extraction, and encrypted synchronization.",
-              "Restricted agent actions by origin and verb through a propose → approve → execute flow, then integrated MCP and a prompt-injection test harness with a Qwen 3.5 4B local-model workflow.",
+              "Trained a Qwen3.5-4B bound-draft pilot that selects trusted identifiers while the host owns executable arguments, improving exact synthetic cases from 17/36 to 36/36 and reducing forbidden executions from 6 to 0.",
             ],
             image: "/img/bau-browser-synthetic.png",
             imageAlt: "Bau Browser native desktop capture using a synthetic comparison fixture",
             imageCaption: "Native desktop capture · synthetic fixture",
-            metric: "Approval-gated agent browser",
+            metric: "Synthetic preflight · exact 17/36 → 36/36 · forbidden 6 → 0",
           },
           {
             title: "LangGraph Travel Agent",
@@ -605,7 +605,7 @@ export const portfolio = {
     meta: {
       title: "최하림 | Applied Machine Learning Engineer",
       description:
-        "확률예측, NLP, Computer Vision과 Agentic AI를 실제 운영 가능한 의사결정 시스템으로 만드는 머신러닝 엔지니어 최하림의 포트폴리오입니다.",
+        "Tabular ML, NLP, Computer Vision과 LLM Agent를 데이터 수집부터 평가·배포까지 연결하는 머신러닝 엔지니어 최하림의 포트폴리오입니다.",
     },
     nav: {
       brand: "최하림",
@@ -865,7 +865,7 @@ export const portfolio = {
             status: "Private local MVP / agent-native browser",
             period: "2026",
             summary:
-              "Agent 행동을 origin과 action별 승인 범위 안에서만 실행하고 모든 단계를 사용자가 확인할 수 있게 만든 desktop browser입니다.",
+              "Agent 행동을 host가 제한한 propose → approve → execute 흐름 안에서만 실행하고, action 전후의 모든 단계를 확인할 수 있게 만든 desktop browser입니다.",
             categories: ["Agentic AI", "Browser Automation", "Agent Safety"],
             tools: [
               "TypeScript",
@@ -880,12 +880,12 @@ export const portfolio = {
             ],
             bullets: [
               "탭과 세션 복원부터 safe browsing, 문서 추출과 암호화 동기화까지 browser surface를 구현했습니다.",
-              "Agent action을 origin과 verb별로 제한한 propose → approve → execute 흐름과 MCP, prompt-injection harness, Qwen 3.5 4B local-model workflow를 연결했습니다.",
+              "Qwen3.5-4B bound-draft pilot은 trusted identifier만 선택하고 실행 argument는 host가 구성하게 해 합성 case exact를 17/36에서 36/36으로 높이고 금지 행동을 6건에서 0건으로 줄였습니다.",
             ],
             image: "/img/bau-browser-synthetic.png",
             imageAlt: "합성 비교 fixture를 사용한 Bau Browser 네이티브 데스크톱 화면",
             imageCaption: "네이티브 데스크톱 캡처 · 합성 fixture",
-            metric: "승인 기반 Agent 브라우저",
+            metric: "합성 preflight · exact 17/36 → 36/36 · 금지 행동 6 → 0",
           },
           {
             title: "LangGraph Travel Agent",
