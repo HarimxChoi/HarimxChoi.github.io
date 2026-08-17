@@ -8,9 +8,9 @@ const sharedLinks = [
 export const portfolio = {
   en: {
     meta: {
-      title: "Harim Choi | Applied Machine Learning Engineer",
+      title: "Harim Choi | Machine Learning Engineer",
       description:
-        "Machine learning engineer connecting tabular ML, NLP, computer vision, and LLM agents from data collection through evaluation and deployment.",
+        "Machine learning engineer building reliable systems from tabular ML, NLP, computer vision, and LLM agents.",
     },
     nav: {
       brand: "Harim Choi",
@@ -20,9 +20,9 @@ export const portfolio = {
     },
     hero: {
       eyebrow: "Harim Choi · Seoul",
-      title: "Applied Machine Learning Engineer",
+      title: "Machine Learning Engineer",
       body:
-        "Production ML systems, reliable model evaluation, and agent infrastructure.",
+        "I turn data, models, and operating workflows into reliable machine-learning systems.",
       links: sharedLinks,
     },
     careerIntro: {
@@ -34,11 +34,11 @@ export const portfolio = {
     },
     career: [
       {
-        company: "Sejong Analysis Research Institute",
+        company: "Sejong Bid Institute",
         role: "Researcher",
-        period: "Mar 2026–Present",
+        period: "Apr 2026–Present",
         context:
-          "Public procurement analytics service · Probabilistic forecasting, routed GPU inference, and approval-gated deployment",
+          "Public-procurement probabilistic ML, Document AI, and production operations",
         categories: ["Tabular ML", "Probabilistic ML", "MLOps", "Document AI"],
         tools: [
           "Routed GPU inference",
@@ -53,10 +53,8 @@ export const portfolio = {
           "Monte Carlo simulation",
         ],
         bullets: [
-          "Took over a pipeline built by a 5-person AI project team over 6 months, then independently rebuilt and operated the end-to-end system within 3 months, from data collection and OCR to model training, simulation, recommendation generation, and candidate deployment.",
-          "Separated OCR failures by document format and coverage, increasing OCR accuracy from approximately 50% to 90% under an internal measurement protocol.",
-          "Rebuilt the probabilistic forecasting and recommendation path, improving the internal relative bid-win KPI by 35%.",
-          "Standardized active quantile candidates behind a 1,000-quantile interface, evaluated distributions with CRPS, multi-pinball loss, Monte Carlo simulation, and a 3-way KPI, and vectorized inference from 136 seconds to 25 seconds.",
+          "Probabilistic Bid ML & MLOps | Took over a public-procurement AI system built by a five-person team over six months and rebuilt it in three months. Modeled regional competitor bids with quantile models and CQR/R2CCP, then generated about 80,000 candidate bids per notice from a q1000 model zoo using TabICLv2, CatBoost, XGBoost, and AutoGluon. Connected candidates to Monte Carlo simulation and operated the workflow through Airflow DAGs, parallel GPU inference, artifact checksums, dry-runs, and approval-gated deployment. The system serves more than 1,000 clients, improved the internal relative bid-award KPI by 30%, and reduced inference time from 136 seconds to 25 seconds.",
+          "Document AI OCR | Collected HWP/HWPX and PDF notices, parsed them with rhwp, hwp5, and liteparse v2, and normalized the output to JSON. Used Gemini 2.5 Flash-Lite only to copy target fields while deterministic code validated amounts, ratios, and units. The pipeline processes about 2,000 new notices per day and achieved F1 0.985 on key-field extraction.",
         ],
       },
       {
@@ -64,7 +62,7 @@ export const portfolio = {
         role: "ML Engineer / Researcher",
         period: "Nov 2024–Feb 2026",
         context:
-          "Construction engineering group · Korean NLP, probabilistic forecasting, and a RAG-based document drafting agent",
+          "Procurement NLP, multimodal distribution forecasting, and RAG agents",
         categories: ["NLP", "RAG / Agentic AI", "Probabilistic ML", "Document AI"],
         tools: [
           "OCR",
@@ -78,9 +76,9 @@ export const portfolio = {
           "R2CCP / contextual calibration",
         ],
         bullets: [
-          "Trained a Korean procurement-document classifier using weak supervision and RoBERTa-large + LoRA, then exported an approximately 330 MB INT8 ONNX model with approximately 50 ms CPU inference and connected it to a FastAPI batch path.",
-          "Found multimodal interval collapse in the public R2CCP implementation, redesigned evaluation and inference with per-bin thresholds and context-specific calibration, and improved the internal KPI by approximately 30% over the prior system.",
-          "Built an internal agent that retrieved government-document OCR output and construction cost data with FAISS, calculated costs in LangChain and LangGraph, and drafted quantity takeoff sheets and official correspondence.",
+          "Multimodal PQ Bid Prediction | Divided PQ competition into eight contexts and modeled multimodal bid distributions with R2CCP. Corrected interval collapse in the public implementation with entropy regularization and per-bin conformal thresholds, preserving separated valid ranges before estimating bid probability with 500K Monte Carlo runs. Eight models trained on 69,934 cases reached 90.73% coverage on 13,984 time-ordered validation cases and improved the group-company PQ bid KPI by 35%.",
+          "Procurement NLP API | Trained a RoBERTa-large+LoRA binary model for bid eligibility, then generated detailed-domain labels through a UMAP/HDBSCAN ontology and SBERT-RoBERTa teacher-based weak labeling. Quantized the binary and multiclass models to about 330 MB with static INT8 ONNX and deployed them through a FastAPI CPU batch path. The system reached Macro-F1 0.9639 and Accuracy 96.4% for eligibility, F1 0.90 for detailed domains, and about 50 ms inference per notice.",
+          "Cost-Estimation RAG Agent | Built a FAISS-based vector index from government-document OCR output, standard-cost references, and unit-price data. Connected LangChain retrieval and a LangGraph workflow to cost estimation, quantity-takeoff sheets, and official-letter drafts.",
         ],
         evidenceImage: "/img/r2ccp-comparison.png",
         evidenceAlt:
@@ -91,7 +89,7 @@ export const portfolio = {
         company: "Sanha General Technology",
         role: "AI / Automation Engineer",
         period: "Jan 2021–Nov 2024",
-        context: "Construction engineering and surveying · Sole in-house developer",
+        context: "Document, CAD, ERP, and drone-survey automation for construction engineering",
         categories: ["Document AI", "Automation", "3D Vision / CAD"],
         tools: [
           "OCR",
@@ -104,16 +102,17 @@ export const portfolio = {
           "Survey-to-3D",
         ],
         bullets: [
-          "Independently designed and operated OCR document processing, an AutoCAD add-in, ERP integrations, and 3D workflows based on drone imagery and survey data.",
-          "Separated OCR failures and post-processing rules by document format and automated template generation, reducing document work from roughly 4 hours to about 30 minutes according to internal records.",
-          "Connected numerical-analysis output to CAD drawing generation and continued from requirements and deployment through user support without external developers.",
+          "Document Automation | Structured heterogeneous construction documents with OCR and layout parsing, then added confidence-based review and rule-based post-processing.",
+          "CAD & ERP Automation | Built an AutoCAD add-in and template automation for repetitive drawing work and connected document and drawing outputs to ERP input workflows.",
+          "Drone & Survey 3D Workflow | Converted drone imagery and survey data into 3D outputs for field review.",
+          "Result | Reduced document work from more than four hours to about 30 minutes and converted outsourced or manual document and drawing tasks into in-house automation tools.",
         ],
       },
       {
         company: "Nielsen Korea GTC",
         role: "Data Analyst",
         period: "Aug 2019–Oct 2020",
-        context: "Global retail data and market research",
+        context: "Computer vision and RPA for global retail product data",
         categories: ["Computer Vision", "RPA", "Data Engineering"],
         tools: [
           "Product image analysis",
@@ -125,7 +124,9 @@ export const portfolio = {
           "Workflow automation",
         ],
         bullets: [
-          "Combined computer vision and RPA to automate product-image analysis, attribute extraction, and barcode database construction, reducing departmental data-processing time by approximately 40% according to internal records.",
+          "Retail Vision | Extracted operational visual attributes from global retail product images and validated data quality.",
+          "Barcode Data | Connected barcode-recognition results to the product database and built a unified image and product-information workflow.",
+          "RPA & Exception Routing | Automated repetitive input and validation steps, routed only exceptions for review, and reduced department-wide processing time by about 40%.",
         ],
       },
     ],
@@ -146,47 +147,45 @@ export const portfolio = {
           {
             title: "Uncertainty-Aware Bid ML",
             status: "Production ML / probabilistic decision system",
-            period: "Mar 2026–Present",
+            period: "Apr 2026–Present",
             summary:
-              "A 1,000-quantile forecasting and Monte Carlo decision pipeline with reproducible training, evaluation, artifact verification, dry runs, and approval-gated deployment.",
+              "A q1000 and Monte Carlo decision system that provides bid-win probabilities and uncertainty for each client.",
             categories: ["Probabilistic ML", "Uncertainty Quantification", "MLOps"],
             tools: ["XGBoost", "CatBoost", "TabICLv2", "Quantile regression", "Monte Carlo", "SHA256 manifests"],
             bullets: [
-              "Standardizes heterogeneous price histories behind a q1000 interface and evaluates distribution quality with CRPS and pinball loss.",
-              "Packages training, routed GPU inference, regional simulation, policy evaluation, artifact checks, dry runs, and approved deployment in one handover system.",
+              "Models regional competitor patterns with quantile models and CQR/R2CCP, then generates about 80,000 candidate bids per notice from a q1000 model zoo.",
+              "Evaluates candidate validity, lowest-price probability, and bid-win probability through regional Monte Carlo simulation, with training, GPU inference, reporting, and verification in one pipeline.",
             ],
-            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover",
-            metric: "1,000 quantiles · verified candidate deployment",
+            metric: "Bid KPI +30% · inference 136 s → 25 s",
           },
           {
             title: "Document AI OCR",
             status: "Production Document AI / batch extraction",
-            period: "Mar 2026–Present",
+            period: "Apr 2026–Present",
             summary:
-              "A browserless HWP, HWPX, PDF, and ZIP extraction pipeline that separates source-field copying from deterministic amount, ratio, and unit calculations.",
+              "A deterministic Document AI pipeline that structures HWP, HWPX, and PDF notices while separating field copying from amount, ratio, and unit validation.",
             categories: ["Document AI", "OCR", "Batch Processing"],
             tools: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Structured logs"],
             bullets: [
-              "Routes documents by magic bytes, restores text with format-specific parsers, and uses the LLM only to copy source fields.",
-              "Extracted all 199 documents in the measured batch and reached about 90% agreement on the license-ratio GT subset.",
+              "Parses each format with rhwp, hwp5, and liteparse v2, normalizes the output to JSON, and uses a lightweight LLM only to copy required fields.",
+              "Processes about 2,000 new notices per day and validates amounts, ratios, and units with deterministic code.",
             ],
-            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr",
-            metric: "199 / 199 documents extracted",
+            metric: "F1 0.985 · about 2,000 notices/day",
           },
           {
             title: "Procurement NLP",
             status: "Production NLP / weak supervision / CPU serving",
             period: "Nov 2024–Feb 2026",
             summary:
-              "A Korean procurement-notice classifier that builds work-category labels from domain representations and weak supervision, then serves two INT8 ONNX models on CPU.",
+              "A CPU NLP API that classifies bid eligibility and detailed work categories from Korean procurement-notice titles.",
             categories: ["NLP", "Weak Supervision", "Model Deployment"],
             tools: ["RoBERTa-large", "LoRA", "SBERT", "UMAP/HDBSCAN", "ONNX INT8", "FastAPI"],
             bullets: [
-              "Uses a bidability teacher to discover an ontology, then combines hard rules with SBERT/domain-model Max-Sim labels for a multiclass student.",
-              "Reached 0.9639 Macro-F1 and 96.4% accuracy on a 500-record evaluation set; the documented deployment artifact is about 330 MB with about 50 ms CPU inference.",
+              "Builds a domain ontology with UMAP and HDBSCAN, then trains the detailed-category model from SBERT–RoBERTa weak labels and a RoBERTa-large+LoRA teacher representation.",
+              "Quantizes both models to INT8 ONNX and serves them through a FastAPI CPU batch path at about 50 ms per notice.",
             ],
             href: "https://github.com/HarimxChoi/nlp-analysis-agent",
-            metric: "500 records · Macro-F1 0.9639",
+            metric: "Macro-F1 0.9639 · category F1 0.90 · about 50 ms CPU",
           },
           {
             title: "R2CCP Bid Prediction",
@@ -197,11 +196,11 @@ export const portfolio = {
             categories: ["Probabilistic ML", "Conformal Prediction", "Decision Modeling"],
             tools: ["R2CCP", "Entropy regularization", "Per-bin threshold", "8 context models", "Monte Carlo"],
             bullets: [
-              "Rebuilt the public R2CCP inference path so the low-density gap between two modes is not collapsed into one interval.",
-              "Reached 90.7% weighted coverage on 13,984 chronological validation samples from 69,934 records, then evaluated each candidate rate with 500,000 simulations.",
+              "Corrected interval collapse in the public R2CCP implementation with entropy regularization and per-bin conformal thresholds so separated valid regions remain separated.",
+              "Trained eight context models on 69,934 cases and estimated bid-win probability for each candidate range with 500,000 Monte Carlo simulations.",
             ],
             href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
-            metric: "13,984 validation · 90.7% coverage",
+            metric: "90.73% coverage · PQ bid KPI +35%",
           },
         ],
       },
@@ -216,7 +215,7 @@ export const portfolio = {
             status: "Public OSS / MCP search infrastructure",
             period: "Apr 2026–Present",
             summary:
-              "Search, web extraction, and academic PDF parsing in one MCP. It ranks in the top 1% of MCP TOPLIST (900 / 95,000) with 270+ GitHub stars.",
+              "One MCP for general search, academic search, web extraction, and spatial PDF parsing, with parallel queries and recoverable CAPTCHA handoff.",
             categories: ["Agentic AI", "Information Retrieval", "Document Processing / Security"],
             tools: [
               "TypeScript / Node.js",
@@ -230,8 +229,8 @@ export const portfolio = {
               "Telemetry",
             ],
             bullets: [
-              "Implemented search, search_parallel, extract, search_extract, and health as 5 MCP tools, with separate HTML and PDF paths and abstract / full extraction modes.",
-              "Blocked private-network and cloud-metadata access through redirects, added rate limiting and telemetry, and regression-tested parser fallbacks against real Google markup fixtures.",
+              "Combines Google Search and Google Scholar with Playwright and Readability extraction plus coordinate-aware academic PDF parsing.",
+              "Adds provider fallback, SSRF protection, CAPTCHA continuation, and 388 tests covering search, extraction, recovery, and security.",
             ],
             href: "https://github.com/HarimxChoi/google-surf-mcp",
             image: "/img/google-surf-demo.gif",
@@ -244,7 +243,7 @@ export const portfolio = {
             status: "Public OSS / personal knowledge automation",
             period: "Apr 2026–Present",
             summary:
-              "A personal knowledge-management system that captures different kinds of information through one share action, organizes it automatically, and makes it searchable later.",
+              "A personal knowledge system that turns one share action into organized, searchable knowledge from news, social media, papers, videos, and documents.",
             categories: ["RAG / Retrieval", "Agentic AI", "Knowledge Automation"],
             tools: [
               "Python",
@@ -272,7 +271,7 @@ export const portfolio = {
             status: "Private local MVP / agent-native browser",
             period: "2026",
             summary:
-              "A desktop browser that keeps agent actions inside a host-scoped propose → approve → execute flow, with every step inspectable before and after execution.",
+              "A local-first desktop browser where users control private data and agent actions through a scoped propose → approve → execute flow.",
             categories: ["Agentic AI", "Browser Automation", "Agent Safety"],
             tools: [
               "TypeScript",
@@ -287,19 +286,19 @@ export const portfolio = {
             ],
             bullets: [
               "Built the browser surface from tabs and session restoration through safe browsing, document extraction, and encrypted synchronization.",
-              "Trained a Qwen3.5-4B bound-draft pilot that selects trusted identifiers while the host owns executable arguments, improving exact synthetic cases from 17/36 to 36/36 and reducing forbidden executions from 6 to 0.",
+              "Trained a Qwen3.5-4B bound-draft pilot that selects trusted identifiers while the host owns executable arguments. It generated the correct action and arguments in 36/36 new-domain tasks, with zero actions outside the allowed scope.",
             ],
             image: "/img/bau-browser-synthetic.png",
             imageAlt: "Bau Browser native desktop capture using a synthetic comparison fixture",
             imageCaption: "Native desktop capture · synthetic fixture",
-            metric: "Synthetic preflight · exact 17/36 → 36/36 · forbidden 6 → 0",
+            metric: "New-domain tasks · exact action binding 36/36 · out-of-scope actions 0",
           },
           {
             title: "LangGraph Travel Agent",
             status: "Delivered to a U.S. travel agency / Public OSS",
             period: "May 2025–Jul 2025",
             summary:
-              "A delivered travel advisor that coordinates concurrent supplier search, resumable LangGraph state, CRM handoff, and approval-gated outbound messages.",
+              "A travel advisor delivered to a U.S. agency that turns a natural-language request into three bookable packages and connects review, CRM, and customer messaging.",
             categories: ["Agentic AI", "Workflow Orchestration", "API Integration"],
             tools: [
               "Python",
@@ -332,7 +331,7 @@ export const portfolio = {
             status: "Private research / reliable agent evaluation",
             period: "2026–Present",
             summary:
-              "Research showing that no single LLM-agent setup is best for every task, and that the best setup is often difficult to identify before execution.",
+              "Research asking whether task text, embeddings, or hidden states can identify the best LLM-agent configuration before execution.",
             categories: ["Agentic AI", "LLM Evaluation", "Research Infrastructure"],
             tools: [
               "Python",
@@ -345,10 +344,10 @@ export const portfolio = {
               "Reproducibility harness",
             ],
             bullets: [
-              "Compared reasoning, memory, retry, and verification designs on the same tasks; choosing the best setup for each task raised success by up to 29 percentage points over one fixed setup.",
-              "Built an evaluation harness that separates the performance available after trying every setup from what a real system can choose before execution.",
+              "Ran the same 134 ALFWorld tasks across 29 agent configurations and compared pre-execution routers with bounded candidate execution and verification.",
+              "Verified execution increased recovered oracle gap from 54% to 85% and recovered 100% within an 11-configuration deployable pool; the paper is under review at TMLR.",
             ],
-            metric: "Research on the limits of agent configuration",
+            metric: "Oracle-gap recovery 54% → 85% · TMLR review",
           },
           {
             title: "EMH Agent",
@@ -369,8 +368,8 @@ export const portfolio = {
               "Provenance / reconciliation",
             ],
             bullets: [
-              "In a cost-aware 2019–2021 backtest across 756 sessions, a three-run ensemble returned 183.89% versus 99.63% for the S&P 500 ETF IVV.",
-              "Separates Intelligence, Trading, Arbitrage, and Household packages, while restricting external actions to a separate execution harness.",
+              "Uses a point-in-time information agent and a three-seed TQC ensemble to allocate IVV, IEF, and SHV without future-data leakage.",
+              "Deducts transaction costs, slippage, and financing costs before comparing return and drawdown with IVV over the same 756 trading days.",
             ],
             href: "https://github.com/HarimxChoi/emh-agent",
             metric: "Cost-aware 3-year validation · TQC +183.9% vs. IVV +99.6%",
@@ -418,7 +417,7 @@ export const portfolio = {
         projects: [
           {
             title: "WSSS",
-            status: "State-of-the-art weakly supervised segmentation research",
+            status: "Commissioned state-of-the-art weakly supervised segmentation research",
             period: "Aug 2025–Oct 2025",
             summary:
               "Improves segmentation learned from image-level labels by finding unreliable pixels in automatically generated masks and repairing only those regions before retraining.",
@@ -433,14 +432,14 @@ export const portfolio = {
               "COCO-Val / mIoU",
             ],
             bullets: [
-              "Scores each pixel using prediction history, confidence, and agreement with neighboring pixels, then focuses training on ambiguous regions.",
-              "The resulting pseudo-label refinement system reached state-of-the-art COCO-Val performance at the time of the experiment.",
+              "Keeps CLIP and DINOv2 frozen, trains only the fusion head and decoder, and identifies unreliable pixels where the two representations disagree.",
+              "Repairs only those pixels and reuses the corrected pseudo-mask for self-training.",
             ],
             href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
             image: "/img/wsss-architecture.png",
             imageAlt: "Architecture diagram for weakly supervised semantic segmentation and pseudo-label refinement",
             imageCaption: "Model and pseudo-label refinement architecture",
-            metric: "WSSS SOTA research · +1.5 pp mIoU over prior SOTA",
+            metric: "Commissioned WSSS SOTA research · 53.31% mIoU · +1.5 pp over WeCLIP+",
           },
           {
             title: "MyShot",
@@ -451,8 +450,8 @@ export const portfolio = {
             categories: ["Computer Vision", "3D Pose Estimation", "Edge AI / Evaluation"],
             tools: [
               "PyTorch",
-              "YOLO-Pose",
-              "MotionAGFormer-B",
+              "RTMPose",
+              "MotionAGFormer",
               "Monocular 3D pose",
               "Mean 3D joint error (MPJPE)",
               "X-Factor",
@@ -462,10 +461,10 @@ export const portfolio = {
               "INT8 mobile inference",
             ],
             bullets: [
-              "With clean 2D joints synchronized to Vicon motion capture, the average 3D joint error was 35.6 mm and the torso-to-hip rotation error was 3.1°.",
-              "Built a 2-stage mobile path: YOLO-Pose (6 MB) for 2D joints and MotionAGFormer-B (11.7M parameters, INT8 ~12 MB) for 3D lifting without a separate server.",
+              "Extracts real-time 2D joints with RTMPose, lifts the temporal sequence to 3D with MotionAGFormer, and computes X-Factor, knee angle, and body rotation across swing phases.",
+              "Combines GolfPose Vicon motion data with pseudo-3D golf video data for golf-specific training.",
             ],
-            metric: "3D golf pose measurement model",
+            metric: "MPJPE 35.6 mm · X-Factor MAE 3.1° · motion |r| 0.95",
           },
           {
             title: "EAT",
@@ -485,10 +484,10 @@ export const portfolio = {
               "Confidence calibration",
             ],
             bullets: [
-              "Reached macro-F1 0.860 and minimum ECE 1.03% on balanced four-class ISIC, measured at separate checkpoints.",
+              "Reached best macro-F1 0.8647 and minimum ECE 1.03% on balanced four-class ISIC, measured at separate checkpoints.",
               "Coupled sample difficulty, bounded perturbation, and consistency between two stochastic predictions in one training objective.",
             ],
-            metric: "ISIC · macro-F1 0.860 · minimum ECE 1.03%",
+            metric: "ECE 1.03% vs. CR-SAM (AAAI 2024) 1.7%",
           },
         ],
       },
@@ -496,77 +495,75 @@ export const portfolio = {
     skillsIntro: {
       number: "02",
       eyebrow: "Skills",
-      title: "A stack organized by the decision path.",
+      title: "Core technologies organized by the systems I build.",
       body:
-        "The taxonomy follows how systems are actually built: language and models, evidence retrieval, data and training, evaluation, then production operations.",
+        "The emphasis is on modern modeling, reliable decisions, efficient inference, and production delivery rather than a list of basic tools.",
     },
     skills: [
-      ["Languages", ["Python", "SQL", "TypeScript", "R", "JavaScript / Node.js"]],
       [
-        "ML / Modeling",
+        "Tabular & Probabilistic ML",
         [
-          "PyTorch",
-          "scikit-learn",
-          "Hugging Face / Transformers",
-          "Tabular / probabilistic ML (PFN, ICL)",
-          "NLP",
-          "Computer Vision",
-          "Reinforcement Learning",
-        ],
-      ],
-      [
-        "Agents / Retrieval",
-        [
-          "MCP",
-          "LangGraph",
-          "LangChain",
-          "RAG",
-          "FAISS / custom vector index",
-          "Tool calling",
-          "Structured output",
-          "Human-in-the-loop",
-          "Multi-agent orchestration",
-        ],
-      ],
-      [
-        "Data / Training",
-        [
-          "Transfer learning",
-          "Weak / semi-supervised learning",
-          "Pseudo-labeling / self-training",
-          "Dataset curation",
-          "Leakage / contamination audit",
-          "Label quality / split design",
-          "Data augmentation",
-          "Domain-shift analysis",
-        ],
-      ],
-      [
-        "Evaluation / Reliability",
-        [
-          "Calibration",
+          "TabPFN",
+          "TabICLv2",
+          "Prior-Data Fitted Networks",
+          "Tabular ICL",
+          "AutoGluon",
+          "Quantile / distributional prediction",
           "Conformal prediction",
-          "Uncertainty quantification",
+          "Calibration",
           "Monte Carlo simulation",
-          "CRPS / pinball loss",
-          "Walk-forward evaluation",
-          "Leakage audits",
-          "Ablation studies",
         ],
       ],
       [
-        "Production / MLOps",
+        "NLP & Document Intelligence",
         [
-          "Airflow / DAG",
-          "Batch orchestration",
-          "Parallel GPU operations",
-          "ONNX Runtime / quantization",
-          "CUDA / TensorRT",
-          "FastAPI",
-          "Docker / Kubernetes",
-          "AWS EC2 / S3",
-          "GCP",
-          "GitHub Actions",
+          "Transformers",
+          "PEFT / LoRA",
+          "Weak supervision",
+          "Knowledge distillation",
+          "OCR",
+          "Document parsing",
+          "Information extraction",
+        ],
+      ],
+      [
+        "Vision & Multimodal Learning",
+        [
+          "Vision-language / foundation models",
+          "Object detection",
+          "WSSS",
+          "Semantic segmentation",
+          "2D / 3D pose estimation",
+        ],
+      ],
+      [
+        "RAG & Agentic Systems",
+        [
+          "Vector retrieval",
+          "Hybrid search",
+          "Reranking",
+          "LangGraph",
+          "MCP",
+          "Tool calling",
+          "HITL",
+        ],
+      ],
+      [
+        "Efficient Model Inference",
+        [
+          "INT3 / INT8 quantization",
+          "Weight / KV / activation compression",
+          "ONNX CPU / GPU inference",
+        ],
+      ],
+      [
+        "Production ML Systems",
+        [
+          "Data / training pipelines",
+          "Parallel inference",
+          "API / batch serving",
+          "Model / artifact lifecycle",
+          "Monitoring",
         ],
       ],
     ],
@@ -596,16 +593,16 @@ export const portfolio = {
       },
     ],
     footer: {
-      line: "Applied ML · Production systems · Open source · Research",
+      line: "Machine Learning · Production systems · Open source · Research",
       location: "Seoul, South Korea",
       links: sharedLinks,
     },
   },
   ko: {
     meta: {
-      title: "최하림 | Applied Machine Learning Engineer",
+      title: "최하림 | Machine Learning Engineer",
       description:
-        "Tabular ML, NLP, Computer Vision과 LLM Agent를 데이터 수집부터 평가·배포까지 연결하는 머신러닝 엔지니어 최하림의 포트폴리오입니다.",
+        "Tabular ML, NLP, Computer Vision과 LLM Agent를 실제 의사결정 시스템으로 연결하는 머신러닝 엔지니어 최하림의 포트폴리오입니다.",
     },
     nav: {
       brand: "최하림",
@@ -615,9 +612,9 @@ export const portfolio = {
     },
     hero: {
       eyebrow: "최하림 · 서울",
-      title: "Applied Machine Learning Engineer",
+      title: "Machine Learning Engineer",
       body:
-        "프로덕션 ML 시스템, 신뢰할 수 있는 모델 평가와 Agent 인프라를 만듭니다.",
+        "데이터·모델·운영 흐름을 신뢰할 수 있는 머신러닝 시스템으로 구현합니다.",
       links: sharedLinks,
     },
     careerIntro: {
@@ -631,9 +628,9 @@ export const portfolio = {
       {
         company: "세종분석연구원",
         role: "연구원",
-        period: "2026.03–현재",
+        period: "2026.04–현재",
         context:
-          "공공조달 분석 서비스 · 확률예측, routed GPU inference와 승인 기반 후보 배포",
+          "공공조달 확률예측·Document AI 시스템 재구축 및 운영",
         categories: ["Tabular ML", "Probabilistic ML", "MLOps", "Document AI"],
         tools: [
           "Routed GPU inference",
@@ -648,17 +645,15 @@ export const portfolio = {
           "Monte Carlo simulation",
         ],
         bullets: [
-          "AI 프로젝트팀 5명이 6개월간 개발한 범위를 인수해 데이터 수집·OCR·feature 생성부터 모델 학습·시뮬레이션·추천값 생성·후보 배포까지 전체 파이프라인을 혼자 3개월 안에 재구축하고 운영했습니다.",
-          "문서 형식과 coverage를 기준으로 OCR 실패를 분리하고 추출 경로를 다시 설계해 내부 측정 기준 정확도를 약 50%에서 90%로 높였습니다.",
-          "확률예측과 추천값 생성 경로를 다시 구성해 내부 상대 낙찰 KPI를 35% 향상했습니다.",
-          "active 분위회귀 후보를 1,000개 분위수 인터페이스로 통일해 CRPS, multi-pinball loss, Monte Carlo simulation과 3-way KPI로 평가하고, 추론 경로를 136초에서 25초로 약 5.4배 단축했습니다.",
+          "확률예측·MLOps | 기존 5인 프로젝트팀이 6개월간 개발한 공공조달 AI 시스템을 인수해 3개월 안에 재구축했습니다. 지역별 경쟁사 투찰분포를 분위모델+CQR/R2CCP로 모델링하고, TabICLv2·CatBoost·XGBoost·AutoGluon q1000 model zoo에서 공고당 약 8만 개 후보를 생성했습니다. Monte Carlo simulation으로 후보별 위험·유효확률·낙찰확률을 계산하고 Airflow DAG, 병렬 GPU 추론, artifact checksum, dry-run과 승인 후 배포까지 운영했습니다. 매일 1,000개 이상 고객사에 향후 2일 내 입찰 가능한 공고의 추천가격과 낙찰확률을 제공하며, 기존 단일 분위모델 대비 내부 상대 낙찰 KPI를 30% 개선하고 추론시간을 136초에서 25초로 줄였습니다.",
+          "Document AI OCR | HWP/HWPX·PDF 공고문을 수집해 rhwp·hwp5·liteparse v2로 파싱하고 JSON으로 정규화했습니다. Gemini 2.5 Flash-Lite는 주요 필드 복사에만 사용하고 금액·비율·단위는 코드로 검증하는 결정론적 경로를 구성했습니다. 매일 약 2,000개 신규 공고를 처리하며 주요 필드 추출 F1 0.985를 달성했습니다.",
         ],
       },
       {
         company: "한맥그룹",
         role: "ML 엔지니어 / 연구원",
         period: "2024.11–2026.02",
-        context: "건설엔지니어링 그룹 · 한국어 NLP, 확률예측, RAG 기반 문서 작성 Agent",
+        context: "공공조달 NLP·다봉형 확률예측·RAG 수량산출 Agent 개발",
         categories: ["NLP", "RAG / Agentic AI", "Probabilistic ML", "Document AI"],
         tools: [
           "OCR",
@@ -672,9 +667,9 @@ export const portfolio = {
           "R2CCP / contextual calibration",
         ],
         bullets: [
-          "weak supervision과 RoBERTa-large + LoRA로 한국어 조달 문서 분류기를 학습하고, 약 330MB INT8 ONNX 모델과 약 50ms CPU 추론, FastAPI 배치 경로로 연결했습니다.",
-          "R2CCP 공개 구현에서 다봉 분포의 예측 구간이 하나로 뭉개지는 현상을 찾아 구간별 threshold와 context별 calibration으로 평가와 추론 구조를 다시 설계했고, 내부 KPI를 기존 대비 30%대 개선했습니다.",
-          "정부 문서 OCR 결과와 표준품셈·단가 데이터를 FAISS로 검색하고, LangChain·LangGraph workflow에서 원가를 산출해 수량산출서와 공문 초안을 생성하는 사내 Agent를 개발했습니다.",
+          "다봉형 PQ 낙찰예측 | PQ 경쟁환경을 8개 context로 분리하고 R2CCP로 다봉형 투찰분포를 모델링했습니다. 공개 구현체의 interval collapse를 entropy regularization과 per-bin conformal threshold로 수정해 떨어진 유효구간을 보존하고, 50만 회 Monte Carlo simulation으로 투찰범위별 낙찰확률을 계산했습니다. 69,934건으로 학습한 8개 모델이 시간순 validation 13,984건에서 coverage 90.73%를 기록했고 그룹사 PQ 낙찰 KPI를 35% 개선했습니다.",
+          "공공조달 NLP API | RoBERTa-large+LoRA로 입찰가능성 binary model을 만들고, UMAP·HDBSCAN ontology와 SBERT·RoBERTa teacher 기반 weak labeling으로 세부분야 데이터를 생성했습니다. Binary·multiclass model을 static INT8 ONNX 약 330MB로 경량화해 FastAPI batch path로 CPU 배포했습니다. 입찰가능성 Macro-F1 0.9639·Accuracy 96.4%, 세부분야 F1 0.90과 공고당 약 50ms 추론을 기록했습니다.",
+          "원가계산 RAG Agent | 정부 문서 OCR 결과와 표준품셈·단가 데이터를 FAISS 기반 Vector DB/index로 구성했습니다. LangChain retrieval과 LangGraph workflow에서 검색 결과를 원가 계산, 수량산출서와 공문 초안 생성까지 연결했습니다.",
         ],
         evidenceImage: "/img/r2ccp-comparison.png",
         evidenceAlt: "다봉 분포가 하나의 구간으로 뭉개지는 현상과 구간별 threshold를 적용한 결과 비교",
@@ -684,7 +679,7 @@ export const portfolio = {
         company: "산하종합기술",
         role: "AI / 자동화 엔지니어",
         period: "2021.01–2024.11",
-        context: "건설엔지니어링 및 측량 · 사내 단독 개발",
+        context: "건설 문서, CAD, ERP와 측량 workflow 자동화",
         categories: ["Document AI", "Automation", "3D Vision / CAD"],
         tools: [
           "OCR",
@@ -697,16 +692,17 @@ export const portfolio = {
           "Survey-to-3D",
         ],
         bullets: [
-          "OCR 문서 처리, AutoCAD add-in, ERP 연계와 드론 이미지·측량 데이터 기반 3D workflow를 직접 설계하고 운영했습니다.",
-          "문서 형식별 OCR 실패와 후처리 규칙을 분리하고 템플릿 생성을 자동화해 내부 기록에서 4시간대였던 문서 작업을 30분대로 줄였습니다.",
-          "수치해석 결과를 CAD 도면 생성과 연결하고 요구사항 정리부터 개발·배포·사용자 지원까지 외부 개발자 없이 수행했습니다.",
+          "문서 자동화 | 형식이 다른 건설 문서를 OCR·layout parsing으로 구조화하고 confidence 기반 검토와 규칙 기반 후처리를 적용했습니다.",
+          "CAD·ERP 자동화 | 반복 도면 작업을 줄이는 AutoCAD add-in과 template automation을 개발하고 문서·도면 결과를 ERP 입력 흐름에 연결했습니다.",
+          "드론·측량 3D workflow | 드론 이미지와 측량 데이터를 현장 검토용 3D 결과로 변환하는 workflow를 구축했습니다.",
+          "성과 | 4시간 이상 걸리던 문서 작업을 약 30분대로 단축하고 외주·수작업 문서와 도면 업무를 사내 자동화 도구로 전환했습니다.",
         ],
       },
       {
         company: "닐슨코리아 GTC",
         role: "데이터 분석가",
         period: "2019.08–2020.10",
-        context: "글로벌 리테일 데이터 및 시장조사",
+        context: "글로벌 리테일 상품 데이터의 Computer Vision·RPA 자동화",
         categories: ["Computer Vision", "RPA", "Data Engineering"],
         tools: [
           "상품 이미지 분석",
@@ -718,7 +714,9 @@ export const portfolio = {
           "Workflow 자동화",
         ],
         bullets: [
-          "Computer Vision과 RPA를 결합해 상품 이미지 분석, 속성 추출과 바코드 데이터베이스 구축을 자동화하고, 부서 데이터 처리 시간을 내부 기록 기준 약 40% 줄였습니다.",
+          "Retail Vision | 글로벌 리테일 상품 이미지에서 업무에 필요한 시각 속성을 추출하고 품질을 검사했습니다.",
+          "Barcode Data | 바코드 인식 결과를 상품 데이터베이스와 연결해 이미지·상품정보 처리 흐름을 구축했습니다.",
+          "RPA & Exception Routing | 반복 입력과 검수 단계를 자동화하고 예외 항목만 별도 검토하도록 분리해 부서 전체 처리시간을 약 40% 단축했습니다.",
         ],
       },
     ],
@@ -739,47 +737,45 @@ export const portfolio = {
           {
             title: "Uncertainty-Aware Bid ML",
             status: "Production ML / 확률적 의사결정 시스템",
-            period: "2026.03–현재",
+            period: "2026.04–현재",
             summary:
-              "1,000분위 확률예측을 Monte Carlo 의사결정으로 연결하고, 학습·평가·아티팩트 검증·dry-run·승인 후 배포를 한 경로로 묶은 시스템입니다.",
+              "고객사별 낙찰확률과 불확실성을 함께 제공하는 q1000·Monte Carlo 의사결정 ML입니다.",
             categories: ["Probabilistic ML", "Uncertainty Quantification", "MLOps"],
             tools: ["XGBoost", "CatBoost", "TabICLv2", "Quantile Regression", "Monte Carlo", "SHA256 manifest"],
             bullets: [
-              "서로 다른 가격 이력을 공통 좌표로 바꾸고 q1000 interface에서 CRPS와 pinball loss로 분포 품질을 비교했습니다.",
-              "학습, routed GPU inference, 지역별 simulation, policy 평가, artifact 검증, dry-run과 승인 배포를 하나의 handover system으로 구성했습니다.",
+              "지역별 경쟁사 투찰 패턴을 분위모델과 CQR/R2CCP 분포로 모델링하고 q1000 model zoo에서 공고당 약 8만 개 후보 투찰값을 생성했습니다.",
+              "지역별 Monte Carlo simulation으로 유효확률, 최저가 확률과 예상 낙찰확률을 계산하고 학습·GPU 추론·리포트·검증을 하나의 pipeline으로 운영했습니다.",
             ],
-            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover",
-            metric: "1,000분위 UQ · 검증된 후보만 배포",
+            metric: "낙찰 KPI +30% · 추론 136초 → 25초",
           },
           {
             title: "Document AI OCR",
             status: "Production Document AI / batch extraction",
-            period: "2026.03–현재",
+            period: "2026.04–현재",
             summary:
-              "HWP·HWPX·PDF·ZIP 문서를 브라우저 없이 수집하고, 필드 복사와 금액·비율·단위 계산을 분리한 문서 구조화 파이프라인입니다.",
+              "HWP·HWPX·PDF 공고문을 구조화하고 필드 복사와 금액·비율·단위 검증을 분리한 결정론적 Document AI pipeline입니다.",
             categories: ["Document AI", "OCR", "Batch Processing"],
             tools: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Structured Logs"],
             bullets: [
-              "magic byte로 문서 형식을 판별하고 포맷별 parser로 원문을 복원한 뒤, LLM에는 원문 필드 복사만 맡겼습니다.",
-              "측정 batch의 199개 문서를 199/199 추출했고, 업종별 비율 GT subset에서 약 90% 일치를 기록했습니다.",
+              "rhwp, hwp5와 liteparse v2로 본문을 추출해 JSON으로 정규화하고, 경량 LLM에는 필요한 필드 복사만 맡겼습니다.",
+              "매일 약 2,000개 신규 공고를 처리하며 금액·비율·단위는 코드로 계산하고 검증했습니다.",
             ],
-            href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr",
-            metric: "199 / 199 문서 추출",
+            metric: "F1 0.985 · 일 약 2,000건",
           },
           {
             title: "Procurement NLP",
             status: "Production NLP / weak supervision / CPU serving",
             period: "2024.11–2026.02",
             summary:
-              "도메인 표현과 약지도학습으로 한국어 조달 공고의 입찰가능성과 업무 카테고리를 분류하고, 두 INT8 ONNX 모델을 CPU에서 서빙한 프로젝트입니다.",
+              "공고명만으로 입찰가능성과 세부분야를 분류하고 CPU에서 운영하는 한국어 조달 NLP API입니다.",
             categories: ["NLP", "Weak Supervision", "Model Deployment"],
             tools: ["RoBERTa-large", "LoRA", "SBERT", "UMAP/HDBSCAN", "ONNX INT8", "FastAPI"],
             bullets: [
-              "입찰가능성 teacher의 표현으로 ontology를 만들고 hard rule과 SBERT·domain model Max-Sim 약라벨로 multiclass student를 학습했습니다.",
-              "500건 평가에서 Macro-F1 0.9639와 Accuracy 96.4%를 기록했습니다. 배포 artifact는 약 330MB, 문서화된 CPU 추론은 약 50ms입니다.",
+              "UMAP·HDBSCAN으로 분야별 ontology를 만들고 RoBERTa-large+LoRA teacher 표현과 SBERT–RoBERTa weak labeling으로 multiclass model을 학습했습니다.",
+              "두 모델을 INT8 ONNX로 양자화하고 FastAPI CPU batch path에서 공고당 약 50ms로 추론했습니다.",
             ],
             href: "https://github.com/HarimxChoi/nlp-analysis-agent",
-            metric: "500건 · Macro-F1 0.9639",
+            metric: "Macro-F1 0.9639 · 세부분야 F1 0.90 · 약 50ms CPU",
           },
           {
             title: "R2CCP Bid Prediction",
@@ -790,11 +786,11 @@ export const portfolio = {
             categories: ["Probabilistic ML", "Conformal Prediction", "Decision Modeling"],
             tools: ["R2CCP", "Entropy Regularization", "Per-bin Threshold", "8 Context Models", "Monte Carlo"],
             bullets: [
-              "공개 R2CCP 추론 경로를 다시 구현해 두 봉우리 사이의 저밀도 구간이 하나의 interval로 합쳐지지 않게 했습니다.",
-              "69,934건에서 시간순 validation 13,984건의 가중 coverage 90.7%를 확인하고 후보 입찰률마다 500,000회 simulation을 수행했습니다.",
+              "공개 R2CCP 구현체의 interval collapse를 entropy regularization과 per-bin conformal threshold로 수정해 떨어진 유효구간을 보존했습니다.",
+              "69,934건으로 8개 context model을 학습하고 후보별 50만 회 Monte Carlo simulation으로 투찰범위별 낙찰확률을 계산했습니다.",
             ],
             href: "https://github.com/HarimxChoi/ensemble-bid-prediction",
-            metric: "13,984건 validation · coverage 90.7%",
+            metric: "Coverage 90.73% · PQ 낙찰 KPI +35%",
           },
         ],
       },
@@ -809,7 +805,7 @@ export const portfolio = {
             status: "Public OSS / MCP 검색 인프라",
             period: "2026.04–현재",
             summary:
-              "검색, 웹 본문 추출과 학술 PDF 해석을 하나의 MCP로 통합했습니다. MCP TOPLIST 95,000개 중 900위, 상위 1%와 GitHub 270+ stars를 기록했습니다.",
+              "일반검색, 학술검색, 웹 본문 추출과 좌표 기반 PDF parsing을 하나의 MCP로 통합하고 병렬검색과 CAPTCHA 복구를 지원합니다.",
             categories: ["Agentic AI", "Information Retrieval", "Document Processing / Security"],
             tools: [
               "TypeScript / Node.js",
@@ -823,8 +819,8 @@ export const portfolio = {
               "Telemetry",
             ],
             bullets: [
-              "search, search_parallel, extract, search_extract, health 5개 도구와 HTML·PDF 분리 처리, abstract / full 추출 모드를 구현했습니다.",
-              "redirect 단계까지 사설망과 cloud metadata 접근을 차단하고 rate limit·telemetry·실제 Google markup fixture 기반 회귀 검사를 추가했습니다.",
+              "Google Search·Scholar, Playwright·Readability 본문 추출과 문서 좌표·읽기 순서를 복원하는 학술 PDF parsing을 한 경로로 구성했습니다.",
+              "Provider fallback, SSRF 방어, CAPTCHA handoff와 검색·추출·복구·보안을 다루는 388개 test를 구성했습니다.",
             ],
             href: "https://github.com/HarimxChoi/google-surf-mcp",
             image: "/img/google-surf-demo.gif",
@@ -837,7 +833,7 @@ export const portfolio = {
             status: "Public OSS / 개인 지식관리(PKM) 자동화",
             period: "2026.04–현재",
             summary:
-              "공유 버튼 한 번으로 형태가 다른 정보를 수집·정리하고, 나중에 다시 검색할 수 있게 만드는 개인 지식관리(PKM) 자동화 시스템입니다.",
+              "뉴스·SNS·논문·영상과 문서를 공유 한 번으로 정리하고 나중에 다시 검색하는 개인 지식관리 시스템입니다.",
             categories: ["RAG / Retrieval", "Agentic AI", "Knowledge Automation"],
             tools: [
               "Python",
@@ -865,7 +861,7 @@ export const portfolio = {
             status: "Private local MVP / agent-native browser",
             period: "2026",
             summary:
-              "Agent 행동을 host가 제한한 propose → approve → execute 흐름 안에서만 실행하고, action 전후의 모든 단계를 확인할 수 있게 만든 desktop browser입니다.",
+              "사용자가 프라이버시와 Agent 실행권한을 직접 관리하고, 허용한 범위 안에서만 행동하게 만든 local-first desktop browser입니다.",
             categories: ["Agentic AI", "Browser Automation", "Agent Safety"],
             tools: [
               "TypeScript",
@@ -880,19 +876,19 @@ export const portfolio = {
             ],
             bullets: [
               "탭과 세션 복원부터 safe browsing, 문서 추출과 암호화 동기화까지 browser surface를 구현했습니다.",
-              "Qwen3.5-4B bound-draft pilot은 trusted identifier만 선택하고 실행 argument는 host가 구성하게 해 합성 case exact를 17/36에서 36/36으로 높이고 금지 행동을 6건에서 0건으로 줄였습니다.",
+              "Qwen3.5-4B bound-draft pilot은 trusted identifier만 선택하고 실행 argument는 host가 구성하게 했습니다. 새로운 도메인의 36개 task에서 행동과 인수를 36/36 정확히 생성했고, 허용 범위를 벗어난 행동은 0건이었습니다.",
             ],
             image: "/img/bau-browser-synthetic.png",
             imageAlt: "합성 비교 fixture를 사용한 Bau Browser 네이티브 데스크톱 화면",
             imageCaption: "네이티브 데스크톱 캡처 · 합성 fixture",
-            metric: "합성 preflight · exact 17/36 → 36/36 · 금지 행동 6 → 0",
+            metric: "새로운 도메인 task · 행동·인수 36/36 · 허용 범위 밖 행동 0건",
           },
           {
             title: "LangGraph Travel Agent",
             status: "미국 여행사 납품 / Public OSS",
             period: "2025.05–2025.07",
             summary:
-              "공급사 병렬 검색, 재개 가능한 LangGraph state, CRM 연동과 승인 후 외부 전송을 결합해 미국 여행사에 납품한 여행 상담 Agent입니다.",
+              "자연어 여행요청을 예약 가능한 3개 상품으로 만들고 상담자 검토, CRM과 고객 연락까지 연결해 미국 여행사에 납품한 Agent입니다.",
             categories: ["Agentic AI", "Workflow Orchestration", "API Integration"],
             tools: [
               "Python",
@@ -925,7 +921,7 @@ export const portfolio = {
             status: "Private research / 신뢰 가능한 Agent 평가",
             period: "2026–현재",
             summary:
-              "모든 과제에 가장 좋은 LLM Agent 구성은 없으며, 실행 전에 어떤 구성이 최선인지 판단하기 어렵다는 한계를 밝힌 연구입니다.",
+              "Task text, embedding이나 hidden state만으로 실행 전에 최적 LLM Agent 설정을 선택할 수 있는지 검증한 연구입니다.",
             categories: ["Agentic AI", "LLM Evaluation", "Research Infrastructure"],
             tools: [
               "Python",
@@ -938,10 +934,10 @@ export const portfolio = {
               "Reproducibility harness",
             ],
             bullets: [
-              "추론 방식, memory, retry와 검증 구조를 동일한 과제에서 비교했으며, 과제마다 가장 좋은 구성을 선택하면 하나의 고정 구성보다 성공률이 최대 29%p 높았습니다.",
-              "모든 구성을 실행한 뒤 알 수 있는 최고 성능과 실제 시스템이 실행 전에 선택할 수 있는 성능을 분리해 평가하는 harness를 구축했습니다.",
+              "같은 134개 ALFWorld task를 29개 Agent 설정으로 실행하고, 실행 전 router와 여러 후보를 직접 실행한 뒤 검증하는 방식을 비교했습니다.",
+              "검증된 실행은 최적 성능과의 격차 회수율을 54%에서 85%로 높였고 11개 배포 후보군에서는 100% 회수했습니다. 논문은 TMLR review 중입니다.",
             ],
-            metric: "Agent 구성 선택의 한계 연구",
+            metric: "최적 격차 회수 54% → 85% · TMLR review",
           },
           {
             title: "EMH Agent",
@@ -962,8 +958,8 @@ export const portfolio = {
               "Provenance / reconciliation",
             ],
             bullets: [
-              "거래비용·슬리피지·조달비용을 반영한 2019–2021년 756개 session의 backtest에서 3회 실행 ensemble은 183.89%, S&P 500 ETF IVV는 99.63% 누적수익률을 기록했습니다.",
-              "Intelligence, Trading, Arbitrage와 Household를 독립 package로 분리하고 외부 행동은 별도의 execution harness로 제한했습니다.",
+              "Point-in-time 정보수집 Agent와 3개 seed의 TQC ensemble로 IVV·IEF·SHV 투자비중을 결정하고 미래정보 누수를 차단했습니다.",
+              "거래비용, slippage와 차입비용을 차감한 뒤 같은 756거래일의 수익률과 drawdown을 IVV와 비교했습니다.",
             ],
             href: "https://github.com/HarimxChoi/emh-agent",
             metric: "비용을 반영한 3년 검증 · TQC +183.9% vs. IVV +99.6%",
@@ -1011,7 +1007,7 @@ export const portfolio = {
         projects: [
           {
             title: "WSSS",
-            status: "WSSS SOTA 연구",
+            status: "WSSS SOTA 연구용역",
             period: "2025.08–2025.10",
             summary:
               "이미지 단위 정답만으로 segmentation을 학습할 때, 자동 생성된 mask에서 신뢰하기 어려운 pixel만 찾아 복원한 뒤 다시 학습하는 방법입니다.",
@@ -1026,14 +1022,14 @@ export const portfolio = {
               "COCO-Val / mIoU",
             ],
             bullets: [
-              "이전 예측, confidence와 주변 pixel의 일관성을 결합해 pixel별 신뢰도를 계산하고 모호한 영역에 학습을 집중했습니다.",
-              "실험 당시 COCO-Val에서 SOTA 성능을 달성한 pseudo-label refinement 시스템입니다.",
+              "CLIP과 DINOv2 backbone은 고정하고 두 표현을 결합하는 fusion head와 decoder만 학습했습니다.",
+              "두 표현이 다르게 판단한 pixel만 복원한 뒤 수정한 pseudo-mask를 self-training에 다시 사용했습니다.",
             ],
             href: "https://github.com/HarimxChoi/wsss-refined-pseudolabels",
             image: "/img/wsss-architecture.png",
             imageAlt: "약지도학습 semantic segmentation과 pseudo-label refinement 구조",
             imageCaption: "모델 및 pseudo-label refinement 구조",
-            metric: "WSSS SOTA 연구 · 기존 SOTA 대비 mIoU +1.5%p",
+            metric: "WSSS SOTA 연구용역 · mIoU 53.31% · WeCLIP+ 대비 +1.5%p",
           },
           {
             title: "MyShot",
@@ -1044,8 +1040,8 @@ export const portfolio = {
             categories: ["Computer Vision", "3D Pose Estimation", "Edge AI / Evaluation"],
             tools: [
               "PyTorch",
-              "YOLO-Pose",
-              "MotionAGFormer-B",
+              "RTMPose",
+              "MotionAGFormer",
               "Monocular 3D pose",
               "평균 3D 관절 오차(MPJPE)",
               "X-Factor",
@@ -1055,10 +1051,10 @@ export const portfolio = {
               "INT8 mobile inference",
             ],
             bullets: [
-              "Vicon 모션캡처와 동기화된 clean-2D 관절 입력에서 평균 3D 관절 오차 35.6mm와 몸통·골반 회전각 오차 3.1°를 기록했습니다.",
-              "YOLO-Pose 6MB와 MotionAGFormer-B 11.7M parameters, INT8 약 12MB의 2단계 경로를 별도 서버 없이 스마트폰에서 동작하도록 구현했습니다.",
+              "RTMPose로 실시간 2D 관절을 추출하고 MotionAGFormer로 3D 자세를 복원해 X-Factor, 무릎 각도와 신체 회전을 스윙 단계별로 계산했습니다.",
+              "GolfPose Vicon motion data와 실제 골프영상의 pseudo-3D data를 결합해 골프 스윙에 맞게 학습했습니다.",
             ],
-            metric: "3D 골프 자세 측정 모델",
+            metric: "MPJPE 35.6mm · X-Factor MAE 3.1° · motion |r| 0.95",
           },
           {
             title: "EAT",
@@ -1078,10 +1074,10 @@ export const portfolio = {
               "Confidence calibration",
             ],
             bullets: [
-              "균형 4-class ISIC에서 macro-F1 0.860과 minimum ECE 1.03%를 서로 다른 checkpoint에서 기록했습니다.",
+              "균형 4-class ISIC에서 최고 macro-F1 0.8647과 minimum ECE 1.03%를 서로 다른 checkpoint에서 기록했습니다.",
               "Sample difficulty, 제한된 perturbation과 두 stochastic prediction의 consistency를 하나의 objective로 연결했습니다.",
             ],
-            metric: "ISIC · macro-F1 0.860 · minimum ECE 1.03%",
+            metric: "ECE 1.03% vs. CR-SAM (AAAI 2024) 1.7%",
           },
         ],
       },
@@ -1089,77 +1085,75 @@ export const portfolio = {
     skillsIntro: {
       number: "02",
       eyebrow: "핵심 기술",
-      title: "의사결정 경로를 기준으로 구성한 기술 스택입니다.",
+      title: "구축한 시스템을 기준으로 정리한 핵심 기술입니다.",
       body:
-        "언어와 모델, 근거 검색, 데이터와 학습, 평가, 프로덕션 운영의 순서로 실제 시스템을 구축합니다.",
+        "기초 도구를 나열하기보다 최신 모델링, 신뢰도 평가, 효율적 추론과 프로덕션 구현 역량을 중심으로 정리했습니다.",
     },
     skills: [
-      ["언어", ["Python", "SQL", "TypeScript", "R", "JavaScript / Node.js"]],
       [
-        "ML / 모델링",
+        "Tabular & Probabilistic ML",
         [
-          "PyTorch",
-          "scikit-learn",
-          "Hugging Face / Transformers",
-          "Tabular / probabilistic ML (PFN, ICL)",
-          "NLP",
-          "Computer Vision",
-          "Reinforcement Learning",
-        ],
-      ],
-      [
-        "Agent / Retrieval",
-        [
-          "MCP",
-          "LangGraph",
-          "LangChain",
-          "RAG",
-          "FAISS / custom vector index",
-          "Tool calling",
-          "Structured output",
-          "Human-in-the-loop",
-          "Multi-agent orchestration",
-        ],
-      ],
-      [
-        "데이터 / 학습",
-        [
-          "Transfer learning",
-          "Weak / semi-supervised learning",
-          "Pseudo-labeling / self-training",
-          "Dataset curation",
-          "Leakage / contamination audit",
-          "Label quality / split design",
-          "Data augmentation",
-          "Domain-shift analysis",
-        ],
-      ],
-      [
-        "평가 / 신뢰성",
-        [
-          "Calibration",
+          "TabPFN",
+          "TabICLv2",
+          "Prior-Data Fitted Networks",
+          "Tabular ICL",
+          "AutoGluon",
+          "Quantile / distributional prediction",
           "Conformal prediction",
-          "Uncertainty quantification",
+          "Calibration",
           "Monte Carlo simulation",
-          "CRPS / pinball loss",
-          "Walk-forward evaluation",
-          "Leakage audit",
-          "Ablation",
         ],
       ],
       [
-        "프로덕션 / MLOps",
+        "NLP & Document Intelligence",
         [
-          "Airflow / DAG",
-          "Batch orchestration",
-          "Parallel GPU operations",
-          "ONNX Runtime / quantization",
-          "CUDA / TensorRT",
-          "FastAPI",
-          "Docker / Kubernetes",
-          "AWS EC2 / S3",
-          "GCP",
-          "GitHub Actions",
+          "Transformers",
+          "PEFT / LoRA",
+          "Weak supervision",
+          "Knowledge distillation",
+          "OCR",
+          "Document parsing",
+          "Information extraction",
+        ],
+      ],
+      [
+        "Vision & Multimodal Learning",
+        [
+          "Vision-language / foundation models",
+          "Object detection",
+          "WSSS",
+          "Semantic segmentation",
+          "2D / 3D pose estimation",
+        ],
+      ],
+      [
+        "RAG & Agentic Systems",
+        [
+          "Vector retrieval",
+          "Hybrid search",
+          "Reranking",
+          "LangGraph",
+          "MCP",
+          "Tool calling",
+          "HITL",
+        ],
+      ],
+      [
+        "Efficient Model Inference",
+        [
+          "INT3 / INT8 quantization",
+          "Weight / KV / activation compression",
+          "ONNX CPU / GPU inference",
+        ],
+      ],
+      [
+        "Production ML Systems",
+        [
+          "Data / training pipelines",
+          "Parallel inference",
+          "API / batch serving",
+          "Model / artifact lifecycle",
+          "Monitoring",
         ],
       ],
     ],
@@ -1189,7 +1183,7 @@ export const portfolio = {
       },
     ],
     footer: {
-      line: "Applied ML · Production systems · Open source · Research",
+      line: "Machine Learning · Production systems · Open source · Research",
       location: "서울, 대한민국",
       links: sharedLinks,
     },
