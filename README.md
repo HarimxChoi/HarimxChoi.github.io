@@ -2,11 +2,11 @@
 
 English | [한국어](./README.ko.md)
 
-Bilingual portfolio for Harim Choi, an applied machine learning engineer working across production ML, open-source agent infrastructure, and research.
+Bilingual portfolio for Harim Choi, a machine learning engineer interested in prediction, uncertainty, and production systems across tabular ML, NLP, computer vision, and LLM agents.
 
 Live: https://harimxchoi.github.io
 
-Portfolio deck: https://harimxchoi.github.io/files/harim-choi-ml-portfolio-en.pptx
+Portfolio PDF: https://harimxchoi.github.io/files/harim-choi-ml-portfolio-en.pdf
 
 ## Local development
 

@@ -52,15 +52,15 @@ type ProjectLanguage = "en" | "ko";
 const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
   en: {
     "probabilistic-bid-mlops": {
-      claim: "Uncertainty-aware decision pipeline · 1,000-quantile forecasts · verified candidates only",
+      claim: "Client-level bid probability and uncertainty · q1000 forecasts · Monte Carlo decisions",
       lead: [
-        "A point forecast cannot describe the range of plausible bid outcomes or the risk attached to each recommendation. This system represents every active model through the same 1,000-quantile interface, then turns the resulting distribution into candidate-level decisions through regional Monte Carlo simulation.",
-        "The work is packaged as one reproducible handover path: training, chronological evaluation, routed GPU inference, candidate materialization, semantic and SHA256 artifact checks, local dry runs, and explicit approval before deployment.",
+        "A single point forecast could not provide more than 1,000 clients with both analyst-level recommendations and a clear account of uncertainty. The system models regional competitor patterns as XGBoost+CQR and R2CCP distributions, then represents TabICLv2, CatBoost, XGBoost, and AutoGluon candidates through one q1000 interface.",
+        "Each notice produces about 80,000 candidate bids. Regional Monte Carlo simulation estimates validity, lowest-price probability, and expected bid-win probability, while training, parallel GPU inference, reporting, artifact checks, dry runs, and approval-gated deployment remain one reproducible operating path.",
       ],
       metricCards: [
         { label: "Distribution interface", value: "q1000", note: "Quantiles from 0.001 through 0.999" },
-        { label: "Active candidates", value: "9 models", note: "XGBoost, CatBoost, and TabICLv2 families" },
-        { label: "Deployment boundary", value: "Verified only", note: "Manifest, semantics, size, hash, dry run, approval" },
+        { label: "Internal bid KPI", value: "+30%", note: "Compared with the prior single-quantile model" },
+        { label: "Inference", value: "136 s → 25 s", note: "Vectorized simulation and evaluation" },
       ],
       flow: {
         title: "From heterogeneous price histories to a deployable decision",
@@ -98,25 +98,22 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
       ],
       contribution: [
-        "Unified heterogeneous model outputs behind a 1,000-quantile runtime contract and connected them to region-specific decision simulation.",
-        "Packaged training, evaluation, routed inference, artifact provenance, dry runs, and approval-gated deployment as a reproducible handover system.",
-      ],
-      evidenceLinks: [
-        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover", note: "Training, runtime, production, evaluation, and artifact-verification bundle" },
+        "Unified the model zoo behind a q1000 contract and connected about 80,000 candidate bids per notice to region-specific decision simulation.",
+        "Built the training, evaluation, routed inference, reporting, artifact provenance, dry-run, and approval-gated deployment path that serves more than 1,000 clients.",
       ],
       category: "Probabilistic ML · MLOps",
       builtWith: ["Python", "XGBoost", "CatBoost", "TabICLv2", "Quantile regression", "Monte Carlo simulation", "SHA256 manifests"],
     },
     "document-ai-ocr": {
-      claim: "Document AI pipeline for HWP and PDF notices · 199 / 199 documents extracted",
+      claim: "Document AI for HWP and PDF notices · key-field F1 0.985 · about 2,000 notices/day",
       lead: [
         "Procurement documents arrive as HWP, HWPX, PDF, and ZIP files whose contents cannot be recovered through one parser. The pipeline downloads each file without a browser, identifies its real format from magic bytes, and routes it through a format-specific extraction path.",
         "A lightweight LLM copies source fields but does not perform arithmetic. Amounts, ratios, and unit conversions are computed deterministically in code, while concurrent batching, retries, incremental output, and structured error logs make the extraction path recoverable.",
       ],
       metricCards: [
-        { label: "Measured batch", value: "199 / 199", note: "Documents extracted successfully" },
-        { label: "Processed content", value: "2.14M tokens", note: "10,754 tokens per document on average" },
-        { label: "License-ratio GT", value: "About 90%", note: "Agreement on the documented comparison subset" },
+        { label: "Key-field extraction", value: "F1 0.985", note: "HWP/HWPX and PDF procurement notices" },
+        { label: "Daily throughput", value: "About 2,000", note: "New notices processed automatically" },
+        { label: "Numeric boundary", value: "Deterministic", note: "Amounts, ratios, and units validated in code" },
       ],
       flow: {
         title: "Separate document recovery, field copying, and arithmetic",
@@ -157,22 +154,19 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Designed the direct-download, magic-byte routing, parser fallback, and deterministic numeric-processing boundary.",
         "Built concurrent batching with stage-specific timeouts, retries, incremental CSV output, and structured error attribution.",
       ],
-      evidenceLinks: [
-        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr", note: "Document routing, extraction, parsing, batching, and analysis" },
-      ],
       category: "Document AI",
       builtWith: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Deterministic parsing"],
     },
     "procurement-nlp": {
-      claim: "500-record evaluation · Macro-F1 0.9639 · 96.4% accuracy",
+      claim: "Procurement-title NLP API · Macro-F1 0.9639 · category F1 0.90 · about 50 ms CPU",
       lead: [
         "An NLP pipeline that classifies Korean procurement notices by bidability and work category without requiring every notice to be manually labeled. A RoBERTa-large + LoRA binary model first learns domain representations; those representations support ontology construction and weak labeling for a multiclass student.",
         "Hard rules resolve deterministic cases. Remaining notices receive Max-Sim labels from SBERT and a domain-fine-tuned RoBERTa model, then both classifiers are merged and exported to static INT8 ONNX for parallel CPU execution behind one FastAPI batch endpoint.",
       ],
       metricCards: [
-        { label: "Binary evaluation", value: "500 records", note: "Held-out bidability comparison" },
-        { label: "Macro-F1", value: "0.9639", note: "Fine-tuned RoBERTa-large + LoRA classifier" },
-        { label: "CPU deployment", value: "~330 MB", note: "Documented INT8 artifact · about 50 ms inference" },
+        { label: "Bid eligibility", value: "Macro-F1 0.9639", note: "Accuracy 96.4%" },
+        { label: "Detailed categories", value: "F1 0.90", note: "Weakly supervised multiclass model" },
+        { label: "CPU deployment", value: "~50 ms", note: "Static INT8 ONNX · about 330 MB" },
       ],
       flow: {
         title: "From scarce labels to a CPU-served label system",
@@ -212,7 +206,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "Designed the representation-to-ontology and Max-Sim weak-label path for work-category supervision.",
-        "Trained the LoRA classifiers, exported static INT8 ONNX artifacts, and connected parallel inference to a FastAPI batch endpoint.",
+        "Trained the binary and multiclass LoRA classifiers, exported static INT8 ONNX artifacts, and connected parallel inference to a FastAPI batch endpoint.",
       ],
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/nlp-analysis-agent", note: "Preprocessing, training, ontology discovery, weak labeling, quantization, and serving" },
@@ -229,7 +223,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       metricCards: [
         { label: "Modeling dataset", value: "69,934 records", note: "Chronological train and validation split" },
         { label: "Validation", value: "13,984 samples", note: "90.73% weighted conformal coverage" },
-        { label: "Decision layer", value: "500K runs", note: "Monte Carlo simulation per candidate search" },
+        { label: "Operational result", value: "+35% KPI", note: "Group-company PQ bid performance" },
       ],
       flow: {
         title: "Preserve the distribution, then simulate the decision",
@@ -268,7 +262,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "Diagnosed multimodal interval collapse and rebuilt inference with per-bin conformal thresholds and entropy regularization.",
-        "Designed the eight-context chronological evaluation and connected distribution forecasts to 500,000-iteration candidate simulation.",
+        "Designed the eight-context chronological evaluation and connected distribution forecasts to 500,000-iteration candidate simulation used in bid decisions.",
       ],
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/ensemble-bid-prediction", note: "R2CCP modeling, calibration, context routing, and simulation" },
@@ -277,9 +271,9 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "R2CCP", "Conformal prediction", "Entropy regularization", "Monte Carlo simulation"],
     },
     wsss: {
-      claim: "State-of-the-art WSSS research · +1.5 pp mIoU over the previous SOTA",
+      claim: "Contract WSSS research · 53.31% COCO-Val mIoU · +1.5 pp over WeCLIP+",
       lead: [
-        "When segmentation is trained from image-level labels alone, automatically generated masks contain pixels the model should not trust. This method finds only those unreliable pixels, repairs them, and retrains the model with cleaner supervision.",
+        "A client asked me to improve WeCLIP+, the state of the art at the time, using only image-level labels. Automatically generated masks accumulate errors around object boundaries and background regions, so the method identifies only the pixels that should not be trusted, repairs them, and retrains with cleaner supervision.",
         "Frozen CLIP and DINOv2 representations provide complementary signals. Their agreement becomes a pixel-level reliability map, disagreeing pixels are repaired, and the feature-fusion heads and decoder are trained on the refined masks.",
       ],
       metricCards: [
@@ -473,8 +467,8 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Verified execution",
-          value: "K = 11",
-          note: "Reached the deployable capture ceiling",
+          value: "54% → 85%",
+          note: "Recovered oracle gap; 100% in the K=11 deployable pool",
         },
       ],
       flow: {
@@ -523,13 +517,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "Built the 134-task × 29-configuration evaluation matrix and separated oracle headroom from what a deployable selector can actually identify.",
-        "Implemented routing baselines, activation probes, contamination controls, and the verified-execution capture evaluation.",
+        "Implemented routing baselines, activation probes, contamination controls, and verified-execution capture evaluation; the resulting paper is under review at TMLR.",
       ],
       category: "Agent Evaluation",
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
     },
     eat: {
-      claim: "E-AT for calibrated medical-image classification · macro-F1 0.860 · minimum ECE 1.03%",
+      claim: "E-AT for calibrated medical-image classification · macro-F1 0.8647 · ECE 1.03% vs. CR-SAM 1.7%",
       lead: [
         "High classification accuracy is not enough when confidence is used in a medical decision. E-AT trains a balanced four-class ISIC classifier so predicted confidence more closely matches observed correctness.",
         "Using a pretrained ConvNeXtV2-Tiny at 384 px, E-AT combines focal loss, bidirectional R-Drop, and adaptive FGM in one objective. It focuses learning on difficult samples while reducing confidence that changes under a small perturbation.",
@@ -542,13 +536,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Macro-F1",
-          value: "0.860",
+          value: "0.8647",
           note: "Best classification result",
         },
         {
           label: "Minimum ECE",
           value: "1.03%",
-          note: "Calibration checkpoint",
+          note: "CR-SAM (AAAI 2024): 1.7%",
         },
       ],
       flow: {
@@ -576,7 +570,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       figures: [
         {
           src: "/img/projects/eat/eat-isic-results.svg",
-          alt: "E-AT result summary on balanced four-class ISIC: macro-F1 0.860 and minimum expected calibration error 1.03 percent at separate checkpoints",
+          alt: "E-AT result summary on balanced four-class ISIC: macro-F1 0.8647 and minimum expected calibration error 1.03 percent at separate checkpoints",
           caption: "Balanced four-class ISIC · ConvNeXtV2-Tiny 384 px",
         },
         {
@@ -590,8 +584,9 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           title: "ISIC result",
           columns: ["Metric", "E-AT result", "Selection"],
           rows: [
-            ["Macro-F1 ↑", "0.860", "Classification checkpoint"],
+            ["Macro-F1 ↑", "0.8647", "Classification checkpoint"],
             ["ECE ↓", "1.03%", "Calibration checkpoint"],
+            ["CR-SAM ECE ↓", "1.7%", "AAAI 2024 reference"],
           ],
           caption: "Macro-F1 and ECE report their respective best checkpoints.",
         },
@@ -650,12 +645,12 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       claim: "Single-camera golf swing reconstruction · mean |r| 0.95 on six independent motion-capture trials",
       lead: [
         "MyShot turns a smartphone golf video into a time-aligned 3D skeleton and measures how the torso and pelvis rotate through the swing. The difficult part is not drawing a pose on one frame, but preserving the motion pattern when depth is inferred from a single camera.",
-        "A 2D pose detector first tracks the golfer, then a 243-frame MotionAGFormer model lifts the sequence into 3D. Training data, evaluation clips, and motion-capture trials are kept disjoint so that the temporal biomechanics can be checked outside the source video domain.",
+        "RTMPose first extracts 2D joints, then MotionAGFormer lifts the temporal sequence into 3D. GolfPose Vicon motion data and pseudo-3D golf videos provide golf-specific training, while independent motion-capture trials test whether the reconstructed X-Factor follows the real motion pattern.",
       ],
       metricCards: [
         { label: "Independent mocap", value: "6 trials", note: "CMU golf swings not used for training" },
         { label: "X-Factor pattern", value: "mean |r| 0.95", note: "Predicted vs. motion-capture torso rotation" },
-        { label: "Clean-2D study", value: "35.6 mm", note: "Mean 3D joint error on synchronized validation" },
+        { label: "Clean-2D study", value: "35.6 mm", note: "MPJPE · X-Factor MAE 3.1°" },
       ],
       flow: {
         title: "From a monocular video to a biomechanical time series",
@@ -689,10 +684,10 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Separated clean-2D lifting accuracy from real-video detection error so model limits remain visible at deployment time.",
       ],
       category: "Computer Vision",
-      builtWith: ["PyTorch", "MotionAGFormer", "2D pose", "Monocular 3D pose", "Motion capture"],
+      builtWith: ["PyTorch", "RTMPose", "MotionAGFormer", "Monocular 3D pose", "Motion capture"],
     },
     "google-surf-mcp": {
-      claim: "Search and extraction infrastructure for AI agents · 6 MCP tools · 388 tests",
+      claim: "Search, web, and academic PDF infrastructure for AI agents · MCP TOPLIST Top 1%",
       lead: [
         "Agent search fails in more places than the search box: providers throttle, redirects hide internal targets, pages change markup, PDFs lose reading order, and CAPTCHA interrupts automation. google-surf-mcp turns those failures into one recoverable tool boundary.",
         "The server combines Google and academic search with web and PDF extraction, parallel execution, provider fallback, CAPTCHA handoff, cache control, parser self-healing, and SSRF protection. Agents receive structured results without carrying browser-specific recovery logic into every workflow.",
@@ -700,7 +695,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       metricCards: [
         { label: "MCP interface", value: "6 tools", note: "Search, parallel search, web, PDF, and academic retrieval" },
         { label: "Validation", value: "388 / 388", note: "Full Vitest suite across 44 test files" },
-        { label: "Runtime boundary", value: "Recoverable", note: "Fallback, cache, CAPTCHA handoff, and self-healing parsers" },
+        { label: "MCP TOPLIST", value: "Top 1%", note: "Published npm package" },
       ],
       flow: {
         title: "One agent interface across unstable search and document sources",
@@ -731,19 +726,19 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/google-surf-mcp", note: "Published MCP server, tests, and runtime documentation" },
       ],
-      category: "Production ML Infrastructure",
+      category: "Agent Systems · Open Source Infrastructure",
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
     monogram: {
       claim: "One share action to capture, organize, and search personal knowledge",
       lead: [
-        "Monogram is a personal knowledge-management system that accepts webpages, documents, notes, and conversations through one share action, organizes them automatically, and makes them searchable later.",
+        "News, social media, arXiv papers, YouTube, and reports quickly became scattered bookmarks with no record of why they mattered. Monogram accepts links, messages, documents, and code through one share action, organizes them automatically, and makes them searchable later.",
         "Semantic retrieval uses EmbeddingGemma-300M with an ONNX backend and a Git-backed sharded INT8 index. Dense similarity and BM25 are fused with RRF, with optional graph expansion and reranking; the implementation does not depend on FAISS or an external vector database.",
       ],
       metricCards: [
         { label: "Capture pipeline", value: "5 stages", note: "Orchestrator, classifier, extractor, verifier, writer" },
         { label: "Storage boundary", value: "1 Git commit", note: "Related notes and assets written atomically" },
-        { label: "Semantic index", value: "256-d INT8", note: "Domain-by-month JSONL shards" },
+        { label: "Agent access", value: "13 MCP tools", note: "The same knowledge can be reused as agent context" },
       ],
       flow: {
         title: "From an unstructured input to a searchable, versioned note",
@@ -783,15 +778,15 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "EmbeddingGemma", "ONNX Runtime", "BM25 / RRF", "Git Tree API"],
     },
     "bau-browser": {
-      claim: "Agent-native browser with bounded actions · exact 17/36 → 36/36 and forbidden executions 6 → 0",
+      claim: "A local-first browser where users control private data and agent authority",
       lead: [
-        "A browser agent can read untrusted pages and then act with a user's identity, so a fluent plan is not enough. Bau Browser keeps targets, verbs, origins, arguments, approval, execution, and receipts inside separate host-owned boundaries that remain inspectable before and after an action.",
+        "Conventional browsers were heavy for the workflow I wanted, and simply attaching an agent made it hard to see where browsing data went or which actions the agent could take. Bau Browser keeps browsing data, agent memory, and execution records local, while the user controls allowed sites and action scope.",
         "The local model selects a compact bound draft rather than writing executable arguments. Trusted bindings and TaskSpec data are compiled by the host, shown through a propose–approve–execute flow, and recorded with postconditions and a decision log.",
       ],
       metricCards: [
-        { label: "Synthetic exact", value: "17/36 → 36/36", note: "Base vs. bound-draft adapter" },
-        { label: "Forbidden execution", value: "6 → 0", note: "Origin-disjoint 36-case preflight" },
-        { label: "Safety gate", value: "12/12", note: "Adapter passed recovery and verification cases" },
+        { label: "Action binding", value: "36/36", note: "Correct action and arguments on new-domain tasks" },
+        { label: "Out-of-scope actions", value: "0", note: "User-defined origin and action scope enforced" },
+        { label: "Safety gate", value: "12/12", note: "Recovery and verification cases passed" },
       ],
       flow: {
         title: "The model proposes identifiers; the host owns executable authority",
@@ -810,11 +805,6 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           caption: "Executable values and authority remain in the trusted host, not in model output",
         },
         {
-          src: "/img/projects/bau-browser/bau-bound-draft-preflight.svg",
-          alt: "Synthetic 36-case comparison showing base exact responses 17 of 36 and six forbidden executions versus adapter exact responses 36 of 36 and zero forbidden executions",
-          caption: "Origin-disjoint synthetic preflight · not a live or official browser benchmark",
-        },
-        {
           src: "/img/bau-browser-synthetic.png",
           alt: "Native Bau Browser desktop capture using a synthetic product-comparison fixture",
           caption: "Native desktop capture · synthetic fixture",
@@ -830,15 +820,15 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
   },
   ko: {
     "probabilistic-bid-mlops": {
-      claim: "확률예측·Monte Carlo 의사결정 파이프라인 · 1,000분위 UQ · 검증된 후보만 배포",
+      claim: "고객사별 낙찰확률과 불확실성 · q1000 예측 · Monte Carlo 의사결정",
       lead: [
-        "하나의 점예측만으로는 가능한 낙찰 범위와 각 추천값의 위험을 설명하기 어렵습니다. 이 시스템은 모든 active model을 같은 1,000분위 interface로 표현하고, 지역별 Monte Carlo simulation을 통해 분포를 후보별 의사결정으로 바꿉니다.",
-        "학습, 시간분리 평가, routed GPU inference, 후보 materialization, semantic·SHA256 artifact 검증, local dry-run과 명시적 승인 후 배포까지 하나의 재현 가능한 handover path로 구성했습니다.",
+        "하나의 점예측만으로는 1,000개 이상의 고객사에 분석 품질과 불확실성을 함께 제공하기 어려웠습니다. 지역별 경쟁사의 투찰 패턴을 XGBoost+CQR과 R2CCP 분포로 모델링하고, TabICLv2·CatBoost·XGBoost·AutoGluon 후보를 하나의 q1000 interface로 표현했습니다.",
+        "공고마다 약 8만 개 후보 투찰값을 만들고 지역별 Monte Carlo simulation으로 유효확률, 최저가 확률과 예상 낙찰확률을 계산했습니다. 학습, 병렬 GPU 추론, 리포트, artifact 검증, dry-run과 승인 후 배포까지 하나의 재현 가능한 운영 경로로 구성했습니다.",
       ],
       metricCards: [
         { label: "분포 interface", value: "q1000", note: "0.001부터 0.999까지 1,000개 분위수" },
-        { label: "Active candidates", value: "9 models", note: "XGBoost, CatBoost와 TabICLv2 계열" },
-        { label: "배포 경계", value: "Verified only", note: "Manifest, semantics, size, hash, dry-run, approval" },
+        { label: "내부 낙찰 KPI", value: "+30%", note: "기존 단일 분위모델 대비" },
+        { label: "추론시간", value: "136초 → 25초", note: "Simulation·평가 연산 벡터화" },
       ],
       flow: {
         title: "서로 다른 가격 이력에서 배포 가능한 의사결정까지",
@@ -876,25 +866,22 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
       ],
       contribution: [
-        "서로 다른 모델 output을 1,000분위 runtime contract로 통일하고 지역별 의사결정 simulation에 연결했습니다.",
-        "학습, 평가, routed inference, artifact provenance, dry-run과 승인 배포를 재현 가능한 handover system으로 구성했습니다.",
-      ],
-      evidenceLinks: [
-        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/feat/handover", note: "Training, runtime, production, evaluation과 artifact verification" },
+        "Model zoo를 q1000 contract로 통일하고 공고당 약 8만 개 후보를 지역별 의사결정 simulation과 연결했습니다.",
+        "1,000개 이상 고객사에 제공되는 학습, 평가, routed inference, 리포트, artifact provenance, dry-run과 승인 후 배포 경로를 구축했습니다.",
       ],
       category: "Probabilistic ML · MLOps",
       builtWith: ["Python", "XGBoost", "CatBoost", "TabICLv2", "Quantile Regression", "Monte Carlo Simulation", "SHA256 Manifest"],
     },
     "document-ai-ocr": {
-      claim: "HWP·PDF 공고문을 구조화 데이터로 바꾸는 Document AI · 199 / 199 문서 추출",
+      claim: "HWP·PDF 공고문 Document AI · 주요 필드 F1 0.985 · 일 약 2,000건",
       lead: [
         "공공조달 문서는 HWP, HWPX, PDF와 ZIP으로 섞여 있어 하나의 parser로 원문을 복원할 수 없습니다. 파일을 브라우저 없이 직접 내려받고 magic byte로 실제 형식을 판별한 뒤, 문서 형식에 맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 원문 필드 복사만 맡기고 금액·비율·단위 변환은 결정론적 코드로 계산했습니다. ThreadPool batch, retry, 증분 저장과 구조화 error log를 함께 구성해 중단 후에도 복구 가능한 처리 경로를 만들었습니다.",
       ],
       metricCards: [
-        { label: "측정 batch", value: "199 / 199", note: "전체 문서 추출 성공" },
-        { label: "처리한 원문", value: "2.14M tokens", note: "문서당 평균 10,754 tokens" },
-        { label: "업종별 비율 GT", value: "약 90%", note: "기록된 비교 subset의 일치율" },
+        { label: "주요 필드 추출", value: "F1 0.985", note: "HWP/HWPX·PDF 나라장터 공고문" },
+        { label: "일 처리량", value: "약 2,000건", note: "신규 공고 자동 처리" },
+        { label: "수치 검증", value: "Deterministic", note: "금액·비율·단위를 코드로 검증" },
       ],
       flow: {
         title: "문서 복원, 필드 복사와 수치 계산을 분리합니다",
@@ -935,22 +922,19 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "직접 다운로드, magic-byte routing, parser fallback과 결정론적 수치 처리의 경계를 설계했습니다.",
         "단계별 timeout, retry, 증분 CSV와 구조화 error attribution을 포함한 동시 batch 처리를 구현했습니다.",
       ],
-      evidenceLinks: [
-        { label: "Source code", href: "https://github.com/HarimxChoi/sejong-con-bid-model/tree/ocr", note: "문서 routing, extraction, parsing, batching과 analysis" },
-      ],
       category: "Document AI",
       builtWith: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Deterministic Parsing"],
     },
     "procurement-nlp": {
-      claim: "500건 평가 · Macro-F1 0.9639 · Accuracy 96.4%",
+      claim: "공고명 NLP API · Macro-F1 0.9639 · 세부분야 F1 0.90 · CPU 약 50ms",
       lead: [
         "분야 라벨이 부족한 한국어 공공조달 공고를 사람이 전부 분류하지 않고도 입찰 가능 여부와 업무 카테고리로 나누는 NLP 파이프라인입니다. RoBERTa-large + LoRA binary model이 먼저 도메인 표현을 학습하고, 그 표현으로 ontology와 multiclass 학습용 약라벨을 만들었습니다.",
         "규칙으로 확정할 수 있는 공고를 먼저 처리하고, 나머지는 SBERT와 domain-fine-tuned RoBERTa의 Max-Sim으로 라벨링했습니다. 두 모델은 merge 후 static INT8 ONNX로 변환해 하나의 FastAPI batch endpoint에서 CPU로 병렬 실행했습니다.",
       ],
       metricCards: [
-        { label: "Binary evaluation", value: "500건", note: "동일한 입찰가능성 비교 set" },
-        { label: "Macro-F1", value: "0.9639", note: "RoBERTa-large + LoRA classifier" },
-        { label: "CPU deployment", value: "약 330MB", note: "문서화된 INT8 artifact · 추론 약 50ms" },
+        { label: "입찰가능성", value: "Macro-F1 0.9639", note: "Accuracy 96.4%" },
+        { label: "세부분야", value: "F1 0.90", note: "Weakly supervised multiclass model" },
+        { label: "CPU 배포", value: "약 50ms", note: "Static INT8 ONNX · 약 330MB" },
       ],
       flow: {
         title: "부족한 라벨에서 CPU 서빙 가능한 분류체계까지",
@@ -990,7 +974,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "업무 카테고리 supervision을 위한 representation-to-ontology와 Max-Sim weak-label path를 설계했습니다.",
-        "LoRA classifier를 학습하고 static INT8 ONNX로 변환해 FastAPI batch endpoint에 병렬 추론을 연결했습니다.",
+        "Binary·multiclass LoRA classifier를 학습하고 static INT8 ONNX로 변환해 FastAPI batch endpoint에 병렬 추론을 연결했습니다.",
       ],
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/nlp-analysis-agent", note: "전처리, 학습, ontology discovery, weak labeling, quantization과 serving" },
@@ -1007,7 +991,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       metricCards: [
         { label: "Modeling dataset", value: "69,934건", note: "시간순 train / validation split" },
         { label: "Validation", value: "13,984건", note: "가중 conformal coverage 90.73%" },
-        { label: "Decision layer", value: "500K runs", note: "후보 탐색당 Monte Carlo simulation" },
+        { label: "운영 결과", value: "+35% KPI", note: "그룹사 PQ 낙찰 성과" },
       ],
       flow: {
         title: "분포를 보존한 뒤 의사결정을 simulation합니다",
@@ -1046,7 +1030,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "다봉 분포의 interval collapse를 찾고 per-bin conformal threshold와 entropy regularization으로 추론 구조를 다시 설계했습니다.",
-        "8개 문맥의 시간순 평가와 분포예측을 500,000회 후보 simulation에 연결했습니다.",
+        "8개 문맥의 시간순 평가와 분포예측을 실제 투찰 의사결정에 사용하는 500,000회 후보 simulation에 연결했습니다.",
       ],
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/ensemble-bid-prediction", note: "R2CCP modeling, calibration, context routing과 simulation" },
@@ -1055,9 +1039,9 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "R2CCP", "Conformal Prediction", "Entropy Regularization", "Monte Carlo Simulation"],
     },
     wsss: {
-      claim: "WSSS SOTA 연구 · 기존 SOTA 대비 mIoU +1.5%p",
+      claim: "WSSS SOTA 연구용역 · COCO-Val mIoU 53.31% · WeCLIP+ 대비 +1.5%p",
       lead: [
-        "이미지 단위 정답만으로 segmentation을 학습할 때, 자동 생성된 mask에서 신뢰하기 어려운 pixel만 찾아 복원한 뒤 다시 학습하는 방법입니다.",
+        "클라이언트로부터 당시 SOTA였던 WeCLIP+의 성능을 개선하는 연구용역을 의뢰받았습니다. 이미지 단위 정답만으로 segmentation을 학습하면 자동 생성 mask의 경계와 배경에 잘못된 pixel이 누적되기 때문에, 신뢰하기 어려운 pixel만 찾아 복원한 뒤 다시 학습했습니다.",
         "CLIP과 DINOv2 backbone은 고정한 채 서로 보완적인 신호로 사용했습니다. 두 표현이 일치하는 정도로 pixel별 reliability map을 만들고, 의견이 다른 pixel만 복원한 뒤 feature-fusion head와 decoder를 학습했습니다.",
       ],
       metricCards: [
@@ -1251,8 +1235,8 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Verified execution",
-          value: "K = 11",
-          note: "Deployable capture ceiling 도달",
+          value: "54% → 85%",
+          note: "최적 격차 회수율 · 11개 배포 후보군에서는 100%",
         },
       ],
       flow: {
@@ -1301,13 +1285,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "134개 과제 × 29개 구성의 평가 matrix를 만들고, 사후에 알 수 있는 oracle headroom과 실제 selector가 식별할 수 있는 성능을 분리했습니다.",
-        "Routing baseline, activation probe, contamination control과 verified-execution capture 평가를 구현했습니다.",
+        "Routing baseline, activation probe, contamination control과 verified-execution capture 평가를 구현했으며, 이 결과를 바탕으로 작성한 논문은 TMLR review 중입니다.",
       ],
       category: "Agent Evaluation",
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
     },
     eat: {
-      claim: "의료 이미지 E-AT 연구 · macro-F1 0.860 · minimum ECE 1.03%",
+      claim: "의료 이미지 E-AT 연구 · macro-F1 0.8647 · ECE 1.03% vs. CR-SAM 1.7%",
       lead: [
         "의료 이미지에서는 분류 정확도뿐 아니라 모델이 출력한 confidence를 얼마나 믿을 수 있는지도 중요합니다. E-AT는 4개 피부 병변을 균형 있게 구성한 ISIC에서 예측 confidence와 실제 정답률을 맞추도록 학습한 방법입니다.",
         "384 px pretrained ConvNeXtV2-Tiny에 focal loss, bidirectional R-Drop과 adaptive FGM을 하나의 objective로 결합했습니다. 어려운 샘플에 더 집중하면서 작은 perturbation에 따라 confidence가 크게 흔들리지 않도록 학습했습니다.",
@@ -1320,13 +1304,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Macro-F1",
-          value: "0.860",
+          value: "0.8647",
           note: "Best classification result",
         },
         {
           label: "Minimum ECE",
           value: "1.03%",
-          note: "Calibration checkpoint",
+          note: "CR-SAM (AAAI 2024): 1.7%",
         },
       ],
       flow: {
@@ -1354,7 +1338,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       figures: [
         {
           src: "/img/projects/eat/eat-isic-results.svg",
-          alt: "균형 4-class ISIC에서 E-AT가 서로 다른 checkpoint에서 macro-F1 0.860과 minimum ECE 1.03%를 기록한 결과",
+          alt: "균형 4-class ISIC에서 E-AT가 서로 다른 checkpoint에서 macro-F1 0.8647과 minimum ECE 1.03%를 기록한 결과",
           caption: "Balanced 4-class ISIC · ConvNeXtV2-Tiny 384 px",
         },
         {
@@ -1368,8 +1352,9 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           title: "ISIC 결과",
           columns: ["Metric", "E-AT 결과", "Selection"],
           rows: [
-            ["Macro-F1 ↑", "0.860", "Classification checkpoint"],
+            ["Macro-F1 ↑", "0.8647", "Classification checkpoint"],
             ["ECE ↓", "1.03%", "Calibration checkpoint"],
+            ["CR-SAM ECE ↓", "1.7%", "AAAI 2024 reference"],
           ],
           caption: "Macro-F1과 ECE는 각각의 best checkpoint 기준입니다.",
         },
@@ -1428,12 +1413,12 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       claim: "스마트폰 골프 스윙 3D 복원 · 독립 모션캡처 6개에서 X-Factor 평균 |r| 0.95",
       lead: [
         "MyShot은 스마트폰으로 촬영한 골프 영상을 시간축이 맞는 3D skeleton으로 바꾸고, 스윙 중 몸통과 골반의 회전을 측정합니다. 한 프레임에 pose를 그리는 것보다 단안 영상에서 추정한 깊이가 전체 스윙의 동작 패턴을 유지하게 만드는 것이 핵심 문제였습니다.",
-        "먼저 2D pose detector로 관절을 추적하고, 243-frame MotionAGFormer가 sequence를 3D로 변환합니다. 학습 데이터와 평가 clip, motion-capture trial을 분리해 source video 밖에서도 시간적 biomechanics가 유지되는지 확인했습니다.",
+        "RTMPose가 2D 관절을 추출하고 MotionAGFormer가 시간 sequence를 3D로 변환합니다. GolfPose Vicon motion data와 실제 골프영상의 pseudo-3D data로 학습하고, 별도의 motion-capture trial에서 복원한 X-Factor가 실제 움직임을 따라가는지 평가했습니다.",
       ],
       metricCards: [
         { label: "독립 mocap", value: "6 trials", note: "학습에 사용하지 않은 CMU 골프 스윙" },
         { label: "X-Factor 패턴", value: "평균 |r| 0.95", note: "예측값과 motion-capture 몸통 회전 비교" },
-        { label: "Clean-2D 실험", value: "35.6 mm", note: "동기화 validation의 평균 3D 관절 오차" },
+        { label: "Clean-2D 실험", value: "35.6 mm", note: "MPJPE · X-Factor MAE 3.1°" },
       ],
       flow: {
         title: "단안 영상에서 biomechanics time series까지",
@@ -1467,10 +1452,10 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Clean-2D lifting 성능과 실제 영상의 detection error를 분리해 deployment에서의 한계를 함께 확인했습니다.",
       ],
       category: "Computer Vision",
-      builtWith: ["PyTorch", "MotionAGFormer", "2D pose", "Monocular 3D pose", "Motion capture"],
+      builtWith: ["PyTorch", "RTMPose", "MotionAGFormer", "Monocular 3D pose", "Motion capture"],
     },
     "google-surf-mcp": {
-      claim: "AI Agent 검색·문서 추출 인프라 · MCP 도구 6개 · 테스트 388개",
+      claim: "AI Agent 검색·웹·학술 PDF 인프라 · MCP TOPLIST Top 1%",
       lead: [
         "Agent 검색은 검색창 밖에서 더 자주 실패합니다. Provider가 차단되고, redirect가 내부 주소를 숨기며, 웹 markup이 바뀌고, PDF의 읽기 순서가 무너지거나 CAPTCHA가 자동화를 중단시킵니다. google-surf-mcp는 이런 실패를 복구 가능한 하나의 tool boundary로 묶었습니다.",
         "Google·학술 검색, 웹·PDF 추출, 병렬 실행, provider fallback, CAPTCHA handoff, cache, parser self-healing과 SSRF 방어를 결합했습니다. Agent는 각 workflow마다 브라우저 복구 로직을 다시 만들지 않고 구조화된 결과를 받을 수 있습니다.",
@@ -1478,7 +1463,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       metricCards: [
         { label: "MCP interface", value: "6 tools", note: "검색, 병렬 검색, 웹, PDF와 학술 검색" },
         { label: "검증", value: "388 / 388", note: "44개 test file 전체 Vitest 통과" },
-        { label: "Runtime 경계", value: "복구 가능", note: "Fallback, cache, CAPTCHA handoff와 self-healing parser" },
+        { label: "MCP TOPLIST", value: "Top 1%", note: "npm package 공개" },
       ],
       flow: {
         title: "불안정한 검색과 문서 소스를 하나의 Agent interface로",
@@ -1509,19 +1494,19 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/google-surf-mcp", note: "배포된 MCP server, test와 runtime 문서" },
       ],
-      category: "Production ML Infrastructure",
+      category: "Agent Systems · Open Source Infrastructure",
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
     monogram: {
       claim: "공유 한 번으로 수집·정리·검색까지 연결하는 개인 지식관리(PKM) 시스템",
       lead: [
-        "Monogram은 웹페이지, 문서, 메모, 대화처럼 형태가 다른 정보를 공유 버튼 한 번으로 받아 자동으로 정리하고, 나중에 다시 검색할 수 있게 만드는 개인 지식관리(PKM) 시스템입니다.",
+        "뉴스, SNS, arXiv 논문, YouTube와 학술 리포트가 이유를 잃은 북마크로 흩어지는 문제를 해결하고 싶었습니다. Monogram은 링크, 메시지, 문서와 코드를 공유 버튼 한 번으로 받아 자동으로 정리하고, 나중에 다시 검색할 수 있게 만드는 개인 지식관리 시스템입니다.",
         "Semantic retrieval은 EmbeddingGemma-300M ONNX backend와 Git-backed sharded INT8 index를 사용합니다. Dense similarity와 BM25를 RRF로 결합하고 필요하면 graph expansion과 reranking을 적용하며, FAISS나 외부 vector database에 의존하지 않습니다.",
       ],
       metricCards: [
         { label: "Capture pipeline", value: "5 stages", note: "Orchestrator, classifier, extractor, verifier, writer" },
         { label: "Storage 경계", value: "1 Git commit", note: "연관 note와 asset을 원자적으로 저장" },
-        { label: "Semantic index", value: "256-d INT8", note: "Domain×월 단위 JSONL shard" },
+        { label: "Agent access", value: "13 MCP tools", note: "동일한 지식을 Agent context로 재사용" },
       ],
       flow: {
         title: "정리되지 않은 입력에서 검색 가능한 versioned note까지",
@@ -1561,14 +1546,14 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "EmbeddingGemma", "ONNX Runtime", "BM25 / RRF", "Git Tree API"],
     },
     "bau-browser": {
-      claim: "행동 범위를 제한한 Agent browser · exact 17/36 → 36/36, 금지 행동 6 → 0",
+      claim: "프라이버시와 Agent 실행권한을 사용자가 직접 통제하는 local-first browser",
       lead: [
-        "Browser Agent는 신뢰할 수 없는 페이지를 읽은 뒤 사용자의 권한으로 행동할 수 있기 때문에 자연스러운 plan만으로는 부족합니다. Bau Browser는 target, verb, origin, argument, 승인, 실행과 receipt를 서로 다른 host-owned boundary에 두고 action 전후를 사용자가 확인할 수 있게 했습니다.",
+        "기존 browser는 원하는 workflow에 무겁고, Agent를 단순히 붙이면 browsing data가 어디로 전송되는지와 Agent가 어떤 행동을 할 수 있는지 확인하기 어렵습니다. Bau Browser는 browsing data, Agent memory와 실행기록을 local에 두고 사용자가 허용한 사이트와 행동 범위를 직접 관리하게 했습니다.",
         "Local model은 실행 argument를 직접 쓰지 않고 compact bound draft에서 identifier만 선택합니다. Trusted binding과 TaskSpec으로 host가 action을 compile하고 propose–approve–execute 흐름을 거친 뒤 postcondition과 decision log를 기록합니다.",
       ],
       metricCards: [
-        { label: "Synthetic exact", value: "17/36 → 36/36", note: "Base 대비 bound-draft adapter" },
-        { label: "금지 행동", value: "6 → 0", note: "Origin-disjoint 36-case preflight" },
+        { label: "행동·인수 생성", value: "36/36", note: "새로운 도메인 task에서 정확히 생성" },
+        { label: "허용 범위 밖 행동", value: "0건", note: "사용자가 지정한 origin·action scope 준수" },
         { label: "Safety gate", value: "12/12", note: "Recovery와 verification case 통과" },
       ],
       flow: {
@@ -1586,11 +1571,6 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           src: "/img/projects/bau-browser/bau-execution-architecture.svg",
           alt: "Desktop browser와 scoped PageGraph에서 bound draft, host compiler, propose approve execute, browser 또는 MCP action, receipt, postcondition과 decision log로 이어지는 Bau Browser 구조도",
           caption: "실행값과 권한은 모델 출력이 아니라 trusted host에 남습니다",
-        },
-        {
-          src: "/img/projects/bau-browser/bau-bound-draft-preflight.svg",
-          alt: "합성 36개 case에서 base exact 17/36과 금지 행동 6건이 adapter exact 36/36과 금지 행동 0건으로 바뀐 비교 결과",
-          caption: "Origin-disjoint synthetic preflight · live 또는 공식 browser benchmark가 아닙니다",
         },
         {
           src: "/img/bau-browser-synthetic.png",
