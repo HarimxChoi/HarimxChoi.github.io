@@ -54,8 +54,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "probabilistic-bid-mlops": {
       claim: "Client-level bid probability and uncertainty · q1000 forecasts · Monte Carlo decisions",
       lead: [
-        "A single point forecast could not provide more than 1,000 clients with both analyst-level recommendations and a clear account of uncertainty. The system models regional competitor patterns as XGBoost+CQR and R2CCP distributions, then represents TabICLv2, CatBoost, XGBoost, and AutoGluon candidates through one q1000 interface.",
-        "Each notice produces about 80,000 candidate bids. Regional Monte Carlo simulation estimates validity, lowest-price probability, and expected bid-win probability, while training, parallel GPU inference, reporting, artifact checks, dry runs, and approval-gated deployment remain one reproducible operating path.",
+        "A bid recommendation was not useful if a client could not see how likely it was to win or how much uncertainty surrounded it. Regional competition and client conditions changed the meaning of the same point estimate, while a small analyst team could not review more than 1,000 clients consistently. The project therefore needed to produce bid probability, downside risk, and a recommendation together rather than return one number.",
       ],
       metricCards: [
         { label: "Distribution interface", value: "q1000", note: "Quantiles from 0.001 through 0.999" },
@@ -107,8 +106,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "document-ai-ocr": {
       claim: "Document AI for HWP and PDF notices · key-field F1 0.985 · about 2,000 notices/day",
       lead: [
-        "Procurement documents arrive as HWP, HWPX, PDF, and ZIP files whose contents cannot be recovered through one parser. The pipeline downloads each file without a browser, identifies its real format from magic bytes, and routes it through a format-specific extraction path.",
-        "A lightweight LLM copies source fields but does not perform arithmetic. Amounts, ratios, and unit conversions are computed deterministically in code, while concurrent batching, retries, incremental output, and structured error logs make the extraction path recoverable.",
+        "Key inputs for model training and joint-bid matching, such as discipline shares and construction-capacity criteria, existed only inside attached HWP and PDF notices rather than in the listing API. Manually opening about 2,000 new notices each day could not support real-time feature creation or client matching. The required system had to structure those documents automatically while keeping every amount and ratio reproducible.",
       ],
       metricCards: [
         { label: "Key-field extraction", value: "F1 0.985", note: "HWP/HWPX and PDF procurement notices" },
@@ -160,8 +158,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "procurement-nlp": {
       claim: "Procurement-title NLP API · Macro-F1 0.9639 · category F1 0.90 · about 50 ms CPU",
       lead: [
-        "An NLP pipeline that classifies Korean procurement notices by bidability and work category without requiring every notice to be manually labeled. A RoBERTa-large + LoRA binary model first learns domain representations; those representations support ontology construction and weak labeling for a multiclass student.",
-        "Hard rules resolve deterministic cases. Remaining notices receive Max-Sim labels from SBERT and a domain-fine-tuned RoBERTa model, then both classifiers are merged and exported to static INT8 ONNX for parallel CPU execution behind one FastAPI batch endpoint.",
+        "Incoming notices had to be routed immediately by bid eligibility and work category using only the title. Detailed labels were scarce, and the production environment had no inference GPU. The project therefore needed to build a domain taxonomy without exhaustive annotation and serve both decisions quickly on CPU.",
       ],
       metricCards: [
         { label: "Bid eligibility", value: "Macro-F1 0.9639", note: "Accuracy 96.4%" },
@@ -217,8 +214,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "r2ccp-bid-prediction": {
       claim: "Multimodal R2CCP forecasting · 8 context models · 500K Monte Carlo decisions",
       lead: [
-        "Instead of forcing the winning bid into a point estimate, this project models the full bid-rate distribution and carries its uncertainty into the final decision. I found that the public R2CCP inference path collapsed two modes and the low-density gap between them into one interval.",
-        "Inference was rebuilt around a per-bin conformal threshold that preserves disjoint prediction regions. Ranking position and bid-rate difference define eight context models, and a 500,000-iteration Monte Carlo layer estimates the win probability of every candidate rate.",
+        "PQ bids are evaluated by both technical and price scores. As the technical score falls, viable price bands split around invalid regions, so actual bid behavior becomes multimodal rather than forming one central peak. A useful decision system had to preserve those separated regions and estimate the win probability of each candidate rate instead of returning one point or one merged interval.",
       ],
       metricCards: [
         { label: "Modeling dataset", value: "69,934 records", note: "Chronological train and validation split" },
@@ -273,8 +269,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     wsss: {
       claim: "Contract WSSS research · 53.31% COCO-Val mIoU · +1.5 pp over WeCLIP+",
       lead: [
-        "A client asked me to improve WeCLIP+, the state of the art at the time, using only image-level labels. Automatically generated masks accumulate errors around object boundaries and background regions, so the method identifies only the pixels that should not be trusted, repairs them, and retrains with cleaner supervision.",
-        "Frozen CLIP and DINOv2 representations provide complementary signals. Their agreement becomes a pixel-level reliability map, disagreeing pixels are repaired, and the feature-fusion heads and decoder are trained on the refined masks.",
+        "A client commissioned a study to improve WeCLIP+, then the state of the art, using only image-level labels. The pseudo-masks used for training accumulated wrong pixels at object boundaries and in the background, and those errors were amplified during self-training. The research question was whether only the unreliable pixels could be identified and repaired instead of rebuilding every mask.",
       ],
       metricCards: [
         {
@@ -355,8 +350,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "emh-agent": {
       claim: "Cost-aware 3-year validation · TQC +183.9% vs. IVV +99.6%",
       lead: [
-        "EMH Agent learns a daily allocation across US equities, government bonds, and cash-like assets using only the information available at each point in time. The environment carries current weights, drawdown, and prior reward forward instead of evaluating isolated predictions.",
-        "The policy was evaluated over the same 756 held-out trading sessions as IVV. Transaction costs, slippage, and financing costs are deducted before returns are measured, and three independently trained TQC policies are combined deterministically.",
+        "Could a model make investment decisions more consistently than emotion-driven human judgment? To test that question fairly, the agent had to use only information available on each date and be evaluated after realistic trading, slippage, and financing costs. The goal was a reproducible decision process, not a backtest that benefited from future information.",
       ],
       metricCards: [
         {
@@ -451,8 +445,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     vargo: {
       claim: "Agent routing hits an identification wall · verified execution reaches the deployable ceiling",
       lead: [
-        "Twenty-nine agent configurations produce different winners across the same 134 ALFWorld tasks, with as much as 29 percentage points of per-task headroom over one fixed configuration. The central problem is not whether better configurations exist, but whether a router can identify the winner before running it.",
-        "Task text, frozen embeddings, hidden states, fine-tuned encoders, contextual routers, and deployment-time bandits all failed to recover that ordering reliably. Vargo therefore changes the decision: execute a bounded sequence of candidates, verify each outcome, and stop as soon as success is certified.",
+        "The best combination of agent scaffold, memory, retry, and verifier changed from task to task. Could task text, embeddings, or hidden states identify that best configuration before any candidate was run? If not, the practical question became how much of the performance gap could be recovered by executing and verifying a limited number of candidates.",
       ],
       metricCards: [
         {
@@ -525,8 +518,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     eat: {
       claim: "E-AT for calibrated medical-image classification · macro-F1 0.8647 · ECE 1.03% vs. CR-SAM 1.7%",
       lead: [
-        "High classification accuracy is not enough when confidence is used in a medical decision. E-AT trains a balanced four-class ISIC classifier so predicted confidence more closely matches observed correctness.",
-        "Using a pretrained ConvNeXtV2-Tiny at 384 px, E-AT combines focal loss, bidirectional R-Drop, and adaptive FGM in one objective. It focuses learning on difficult samples while reducing confidence that changes under a small perturbation.",
+        "In medical image classification, a correct label is not enough if the confidence cannot be trusted. Two models with similar accuracy can create very different risk when one remains overconfident on its mistakes. The research therefore asked whether classification quality and confidence calibration could be improved within the same training objective.",
       ],
       metricCards: [
         {
@@ -601,8 +593,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "langgraph-travel-agent": {
       claim: "Travel advisor delivered to a U.S. agency · concurrent supplier search with resumable human review",
       lead: [
-        "A travel request is not one model call: missing customer information, supplier latency, budget constraints, package comparison, CRM handoff, and outbound communication all have to remain consistent across a long-running workflow.",
-        "This system keeps that state in LangGraph, pauses when customer information is incomplete, searches Amadeus and Hotelbeds concurrently, and turns the results into Budget, Balanced, and Premium packages before a human reviews the next action.",
+        "A U.S. travel agency asked for an agent that could turn a natural-language request into flight, hotel, attraction, and restaurant options that respected each customer's budget and schedule. In the manual workflow, missing information, supplier searches, package comparison, CRM updates, and follow-up communication were repeated across separate tools. The system needed to preserve context from the first request through human review and customer contact.",
       ],
       metricCards: [
         { label: "Supplier search", value: "Concurrent", note: "Amadeus and Hotelbeds via asyncio.gather" },
@@ -644,8 +635,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     myshot: {
       claim: "Single-camera golf swing reconstruction · mean |r| 0.95 on six independent motion-capture trials",
       lead: [
-        "MyShot turns a smartphone golf video into a time-aligned 3D skeleton and measures how the torso and pelvis rotate through the swing. The difficult part is not drawing a pose on one frame, but preserving the motion pattern when depth is inferred from a single camera.",
-        "RTMPose first extracts 2D joints, then MotionAGFormer lifts the temporal sequence into 3D. GolfPose Vicon motion data and pseudo-3D golf videos provide golf-specific training, while independent motion-capture trials test whether the reconstructed X-Factor follows the real motion pattern.",
+        "Golf coaching is expensive, and it is difficult to understand what is wrong with a swing while practicing alone. I wanted a golfer to record one smartphone video and receive a 3D view of torso, pelvis, and knee motion that could be reviewed repeatedly at home. A useful solution had to preserve the full temporal swing pattern rather than draw a 2D pose on isolated frames.",
       ],
       metricCards: [
         { label: "Independent mocap", value: "6 trials", note: "CMU golf swings not used for training" },
@@ -689,8 +679,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "google-surf-mcp": {
       claim: "Search, web, and academic PDF infrastructure for AI agents · MCP TOPLIST Top 1%",
       lead: [
-        "Agent search fails in more places than the search box: providers throttle, redirects hide internal targets, pages change markup, PDFs lose reading order, and CAPTCHA interrupts automation. google-surf-mcp turns those failures into one recoverable tool boundary.",
-        "The server combines Google and academic search with web and PDF extraction, parallel execution, provider fallback, CAPTCHA handoff, cache control, parser self-healing, and SSRF protection. Agents receive structured results without carrying browser-specific recovery logic into every workflow.",
+        "An LLM agent needs more than search-result links; it must read current web pages and the body of academic PDFs before it can answer with useful evidence. Existing tools separated web search, academic search, and parsing, while weak PDF extraction and provider failures made the workflow slow and unreliable. I built one search interface that could retrieve, read, and recover from those failures for the agent.",
       ],
       metricCards: [
         { label: "MCP interface", value: "6 tools", note: "Search, parallel search, web, PDF, and academic retrieval" },
@@ -732,8 +721,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     monogram: {
       claim: "One share action to capture, organize, and search personal knowledge",
       lead: [
-        "News, social media, arXiv papers, YouTube, and reports quickly became scattered bookmarks with no record of why they mattered. Monogram accepts links, messages, documents, and code through one share action, organizes them automatically, and makes them searchable later.",
-        "Semantic retrieval uses EmbeddingGemma-300M with an ONNX backend and a Git-backed sharded INT8 index. Dense similarity and BM25 are fused with RRF, with optional graph expansion and reranking; the implementation does not depend on FAISS or an external vector database.",
+        "Useful ideas from news, social media, arXiv, YouTube, and reports were becoming scattered across apps and bookmarks, then disappearing when I needed them again. I wanted one share action to capture any source, preserve why it mattered, organize it automatically, and make it searchable later. The goal was a personal knowledge system that both I and my agents could reuse.",
       ],
       metricCards: [
         { label: "Capture pipeline", value: "5 stages", note: "Orchestrator, classifier, extractor, verifier, writer" },
@@ -780,8 +768,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "bau-browser": {
       claim: "A local-first browser where users control private data and agent authority",
       lead: [
-        "Conventional browsers were heavy for the workflow I wanted, and simply attaching an agent made it hard to see where browsing data went or which actions the agent could take. Bau Browser keeps browsing data, agent memory, and execution records local, while the user controls allowed sites and action scope.",
-        "The local model selects a compact bound draft rather than writing executable arguments. Trusted bindings and TaskSpec data are compiled by the host, shown through a propose–approve–execute flow, and recorded with postconditions and a decision log.",
+        "Chrome felt heavier and less controllable than the browsing workflow I wanted, and adding an agent raised a second problem: users could not easily see where browsing data went or which actions the agent was allowed to take. I wanted a desktop browser that kept personal data local and made agent permissions, approvals, and execution records visible to the user.",
       ],
       metricCards: [
         { label: "Action binding", value: "36/36", note: "Correct action and arguments on new-domain tasks" },
@@ -822,8 +809,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "probabilistic-bid-mlops": {
       claim: "고객사별 낙찰확률과 불확실성 · q1000 예측 · Monte Carlo 의사결정",
       lead: [
-        "하나의 점예측만으로는 1,000개 이상의 고객사에 분석 품질과 불확실성을 함께 제공하기 어려웠습니다. 지역별 경쟁사의 투찰 패턴을 XGBoost+CQR과 R2CCP 분포로 모델링하고, TabICLv2·CatBoost·XGBoost·AutoGluon 후보를 하나의 q1000 interface로 표현했습니다.",
-        "공고마다 약 8만 개 후보 투찰값을 만들고 지역별 Monte Carlo simulation으로 유효확률, 최저가 확률과 예상 낙찰확률을 계산했습니다. 학습, 병렬 GPU 추론, 리포트, artifact 검증, dry-run과 승인 후 배포까지 하나의 재현 가능한 운영 경로로 구성했습니다.",
+        "추천값 하나만으로는 고객사에게 낙찰 가능성과 위험을 함께 설명할 수 없었습니다. 같은 예측값도 지역·공고별 경쟁환경에 따라 의미가 달랐고, 소수의 분석 인력이 1,000개 이상의 고객사를 일관된 기준으로 검토하기도 어려웠습니다. 하나의 숫자를 반환하는 모델이 아니라 추천값, 낙찰확률과 불확실성을 함께 제공하는 의사결정 시스템이 필요했습니다.",
       ],
       metricCards: [
         { label: "분포 interface", value: "q1000", note: "0.001부터 0.999까지 1,000개 분위수" },
@@ -875,8 +861,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "document-ai-ocr": {
       claim: "HWP·PDF 공고문 Document AI · 주요 필드 F1 0.985 · 일 약 2,000건",
       lead: [
-        "공공조달 문서는 HWP, HWPX, PDF와 ZIP으로 섞여 있어 하나의 parser로 원문을 복원할 수 없습니다. 파일을 브라우저 없이 직접 내려받고 magic byte로 실제 형식을 판별한 뒤, 문서 형식에 맞는 extraction path로 보냈습니다.",
-        "경량 LLM에는 원문 필드 복사만 맡기고 금액·비율·단위 변환은 결정론적 코드로 계산했습니다. ThreadPool batch, retry, 증분 저장과 구조화 error log를 함께 구성해 중단 후에도 복구 가능한 처리 경로를 만들었습니다.",
+        "모델 학습과 공동도급 매칭에 필요한 분야별 지분과 시공능력 기준은 공고 API가 아니라 첨부된 HWP·PDF 안에만 있었습니다. 하루 약 2,000개의 신규 문서를 사람이 직접 열어보는 방식으로는 feature 생성과 고객사 매칭을 실시간으로 처리할 수 없었습니다. 문서를 자동으로 구조화하면서도 금액과 비율은 다시 계산하고 확인할 수 있는 처리 경로가 필요했습니다.",
       ],
       metricCards: [
         { label: "주요 필드 추출", value: "F1 0.985", note: "HWP/HWPX·PDF 나라장터 공고문" },
@@ -928,8 +913,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "procurement-nlp": {
       claim: "공고명 NLP API · Macro-F1 0.9639 · 세부분야 F1 0.90 · CPU 약 50ms",
       lead: [
-        "분야 라벨이 부족한 한국어 공공조달 공고를 사람이 전부 분류하지 않고도 입찰 가능 여부와 업무 카테고리로 나누는 NLP 파이프라인입니다. RoBERTa-large + LoRA binary model이 먼저 도메인 표현을 학습하고, 그 표현으로 ontology와 multiclass 학습용 약라벨을 만들었습니다.",
-        "규칙으로 확정할 수 있는 공고를 먼저 처리하고, 나머지는 SBERT와 domain-fine-tuned RoBERTa의 Max-Sim으로 라벨링했습니다. 두 모델은 merge 후 static INT8 ONNX로 변환해 하나의 FastAPI batch endpoint에서 CPU로 병렬 실행했습니다.",
+        "실시간으로 들어오는 공고를 담당 부서에 곧바로 연결하려면 공고명만으로 입찰 가능 여부와 세부 분야를 판단해야 했습니다. 하지만 하천·소방·정보통신 같은 세부분야 라벨은 거의 없었고 운영 환경에는 추론용 GPU도 없었습니다. 모든 공고를 수작업으로 라벨링하지 않고 도메인 분류체계를 만들며, 두 가지 판단을 CPU에서 빠르게 제공하는 pipeline이 필요했습니다.",
       ],
       metricCards: [
         { label: "입찰가능성", value: "Macro-F1 0.9639", note: "Accuracy 96.4%" },
@@ -985,8 +969,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "r2ccp-bid-prediction": {
       claim: "다봉형 입찰 분포를 보존하는 R2CCP · 8개 문맥 모델 · 50만 회 Monte Carlo 의사결정",
       lead: [
-        "낙찰값을 하나의 숫자로 맞히는 대신, 경쟁 구도에 따라 달라지는 입찰률 분포를 예측하고 불확실성을 실제 선택으로 연결한 프로젝트입니다. 공개 R2CCP 추론 경로가 두 봉우리와 그 사이의 저밀도 구간까지 하나의 interval로 합치는 문제를 확인했습니다.",
-        "확률이 threshold를 넘는 bin만 서로 떨어진 예측구간으로 남기도록 다시 구현했습니다. 순위 위치와 입찰률 차이로 8개 문맥 모델을 나누고, 후보 입찰률마다 500,000회 Monte Carlo simulation으로 승리확률을 계산했습니다.",
+        "PQ 입찰은 기술점수와 가격점수를 함께 평가합니다. 기술점수가 낮아질수록 유효한 가격대가 입찰 불가능 구간을 사이에 두고 갈라져 실제 투찰행태가 하나의 봉우리가 아닌 다봉분포로 나타났습니다. 하나의 예측값이나 합쳐진 구간이 아니라 서로 떨어진 유효구간을 보존하고 후보별 낙찰확률을 계산하는 시스템이 필요했습니다.",
       ],
       metricCards: [
         { label: "Modeling dataset", value: "69,934건", note: "시간순 train / validation split" },
@@ -1041,8 +1024,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     wsss: {
       claim: "WSSS SOTA 연구용역 · COCO-Val mIoU 53.31% · WeCLIP+ 대비 +1.5%p",
       lead: [
-        "클라이언트로부터 당시 SOTA였던 WeCLIP+의 성능을 개선하는 연구용역을 의뢰받았습니다. 이미지 단위 정답만으로 segmentation을 학습하면 자동 생성 mask의 경계와 배경에 잘못된 pixel이 누적되기 때문에, 신뢰하기 어려운 pixel만 찾아 복원한 뒤 다시 학습했습니다.",
-        "CLIP과 DINOv2 backbone은 고정한 채 서로 보완적인 신호로 사용했습니다. 두 표현이 일치하는 정도로 pixel별 reliability map을 만들고, 의견이 다른 pixel만 복원한 뒤 feature-fusion head와 decoder를 학습했습니다.",
+        "클라이언트로부터 이미지 단위 정답만 사용해 당시 SOTA였던 WeCLIP+의 성능을 개선하는 연구용역을 의뢰받았습니다. 자동으로 만든 pseudo-mask에는 객체 경계와 배경의 잘못된 pixel이 포함됐고, 이 오류는 self-training을 반복할수록 누적됐습니다. 전체 mask를 다시 만드는 대신 신뢰하기 어려운 pixel만 찾아 복원할 수 있는지가 핵심 연구 질문이었습니다.",
       ],
       metricCards: [
         {
@@ -1123,8 +1105,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "emh-agent": {
       claim: "비용을 반영한 3년 검증 · TQC +183.9% vs. IVV +99.6%",
       lead: [
-        "EMH Agent는 각 시점까지 알 수 있었던 정보만 사용해 미국 주식·국채·현금성 자산의 일별 비중을 결정합니다. 개별 예측을 따로 평가하지 않고 현재 비중, drawdown과 직전 보상을 다음 의사결정 상태로 이어갑니다.",
-        "IVV와 동일한 756개 검증 거래일에서 정책을 평가했습니다. 거래비용, slippage와 financing cost를 수익률에서 먼저 차감하고, 서로 다른 seed로 학습한 TQC 정책 세 개를 고정된 방식으로 결합했습니다.",
+        "AI가 사람의 감정에 흔들리지 않고 더 일관된 투자 판단을 내릴 수 있을지 궁금했습니다. 이 질문을 제대로 확인하려면 미래 정보를 보지 않고, 각 시점까지 누적된 정보만으로 판단하며 거래비용과 slippage까지 반영해야 했습니다. 결과 숫자만 좋은 backtest가 아니라 같은 조건에서 다시 실행할 수 있는 투자 의사결정 과정을 만들고자 했습니다.",
       ],
       metricCards: [
         {
@@ -1219,8 +1200,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     vargo: {
       claim: "Agent routing의 identification wall · 실행·검증으로 deployable ceiling 도달",
       lead: [
-        "같은 ALFWorld 과제 134개에서도 29개 Agent 구성의 승자는 과제마다 달랐고, 과제별 최적 구성을 쓸 때 하나의 고정 구성보다 최대 29%p의 성능 여지가 있었습니다. 문제는 더 좋은 구성이 있는지가 아니라, 실행 전에 그 승자를 알아낼 수 있는가였습니다.",
-        "Task text, frozen embedding, hidden state, fine-tuned encoder, contextual router와 deployment-time bandit까지 비교했지만 승자 순서를 안정적으로 복원하지 못했습니다. 그래서 Vargo는 후보를 제한된 순서로 실행하고, 매번 결과를 검증해 성공이 확인되면 멈추는 방식으로 문제를 바꿨습니다.",
+        "Agent의 scaffold, memory, retry와 verifier 조합은 task마다 최적값이 달랐습니다. 그렇다면 task text, embedding이나 hidden state만 보고 실행 전에 가장 좋은 구성을 선택할 수 있을까? 그것이 어렵다면 제한된 후보를 직접 실행하고 검증하는 방식이 최적 성능과의 차이를 얼마나 회복할 수 있는지가 핵심 연구 질문이었습니다.",
       ],
       metricCards: [
         {
@@ -1293,8 +1273,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     eat: {
       claim: "의료 이미지 E-AT 연구 · macro-F1 0.8647 · ECE 1.03% vs. CR-SAM 1.7%",
       lead: [
-        "의료 이미지에서는 분류 정확도뿐 아니라 모델이 출력한 confidence를 얼마나 믿을 수 있는지도 중요합니다. E-AT는 4개 피부 병변을 균형 있게 구성한 ISIC에서 예측 confidence와 실제 정답률을 맞추도록 학습한 방법입니다.",
-        "384 px pretrained ConvNeXtV2-Tiny에 focal loss, bidirectional R-Drop과 adaptive FGM을 하나의 objective로 결합했습니다. 어려운 샘플에 더 집중하면서 작은 perturbation에 따라 confidence가 크게 흔들리지 않도록 학습했습니다.",
+        "의료 이미지 모델은 정답을 맞히는 것만큼 틀릴 때 얼마나 확신하는지도 중요합니다. 정확도가 비슷해도 틀린 예측에 높은 confidence를 주는 모델은 사람이 결과를 과신하게 만들 수 있습니다. 분류 성능을 유지하면서 예측 confidence의 신뢰도까지 같은 학습 과정에서 개선할 수 있는지를 연구했습니다.",
       ],
       metricCards: [
         {
@@ -1369,8 +1348,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "langgraph-travel-agent": {
       claim: "미국 여행사 납품 · 공급사 병렬 검색과 중단 후 재개가 가능한 여행 상담 Agent",
       lead: [
-        "여행 상담은 한 번의 모델 호출로 끝나지 않습니다. 누락된 고객 정보, 공급사 응답 지연, 예산 제약, 패키지 비교, CRM 연동과 외부 전송이 긴 workflow 안에서 일관되게 이어져야 합니다.",
-        "이 시스템은 상태를 LangGraph에 유지하고 고객 정보가 부족하면 멈춘 뒤 이어서 실행합니다. Amadeus와 Hotelbeds를 병렬 검색하고 Budget, Balanced, Premium 패키지로 정리한 다음 사람이 다음 action을 검토할 수 있게 했습니다.",
+        "미국 여행사는 고객의 자연어 요청을 받아 예산과 일정에 맞는 항공편·숙소·관광지·맛집을 찾아주는 Agent를 요청했습니다. 기존 상담에서는 누락 정보 확인, 공급사 검색, 패키지 비교, CRM 저장과 후속 연락을 서로 다른 도구에서 반복해야 했습니다. 첫 요청부터 상담자 검토와 고객 연락까지 같은 맥락을 유지하는 workflow가 필요했습니다.",
       ],
       metricCards: [
         { label: "공급사 검색", value: "병렬 실행", note: "Amadeus와 Hotelbeds를 asyncio.gather로 호출" },
@@ -1412,8 +1390,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     myshot: {
       claim: "스마트폰 골프 스윙 3D 복원 · 독립 모션캡처 6개에서 X-Factor 평균 |r| 0.95",
       lead: [
-        "MyShot은 스마트폰으로 촬영한 골프 영상을 시간축이 맞는 3D skeleton으로 바꾸고, 스윙 중 몸통과 골반의 회전을 측정합니다. 한 프레임에 pose를 그리는 것보다 단안 영상에서 추정한 깊이가 전체 스윙의 동작 패턴을 유지하게 만드는 것이 핵심 문제였습니다.",
-        "RTMPose가 2D 관절을 추출하고 MotionAGFormer가 시간 sequence를 3D로 변환합니다. GolfPose Vicon motion data와 실제 골프영상의 pseudo-3D data로 학습하고, 별도의 motion-capture trial에서 복원한 X-Factor가 실제 움직임을 따라가는지 평가했습니다.",
+        "골프 레슨은 비용이 높고 혼자 연습할 때는 자신의 자세가 왜 잘못됐는지 파악하기 어렵습니다. 스마트폰으로 스윙을 한 번 촬영하면 몸통·골반·무릎의 움직임을 3D로 확인하고 집에서도 반복적으로 자세를 교정할 수 있게 만들고 싶었습니다. 이를 위해 한 프레임의 2D pose가 아니라 전체 스윙의 시간적 움직임을 유지하는 3D 복원이 필요했습니다.",
       ],
       metricCards: [
         { label: "독립 mocap", value: "6 trials", note: "학습에 사용하지 않은 CMU 골프 스윙" },
@@ -1457,8 +1434,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "google-surf-mcp": {
       claim: "AI Agent 검색·웹·학술 PDF 인프라 · MCP TOPLIST Top 1%",
       lead: [
-        "Agent 검색은 검색창 밖에서 더 자주 실패합니다. Provider가 차단되고, redirect가 내부 주소를 숨기며, 웹 markup이 바뀌고, PDF의 읽기 순서가 무너지거나 CAPTCHA가 자동화를 중단시킵니다. google-surf-mcp는 이런 실패를 복구 가능한 하나의 tool boundary로 묶었습니다.",
-        "Google·학술 검색, 웹·PDF 추출, 병렬 실행, provider fallback, CAPTCHA handoff, cache, parser self-healing과 SSRF 방어를 결합했습니다. Agent는 각 workflow마다 브라우저 복구 로직을 다시 만들지 않고 구조화된 결과를 받을 수 있습니다.",
+        "LLM Agent가 유용한 답을 내려면 검색 결과 링크뿐 아니라 최신 웹페이지와 학술 PDF의 본문까지 읽을 수 있어야 합니다. 기존 tool은 일반검색·학술검색·본문 추출이 분리돼 느렸고, 검색 품질과 PDF parsing도 불안정했습니다. Agent가 하나의 interface에서 근거를 검색하고 읽으며 실패까지 복구할 수 있는 검색 인프라가 필요했습니다.",
       ],
       metricCards: [
         { label: "MCP interface", value: "6 tools", note: "검색, 병렬 검색, 웹, PDF와 학술 검색" },
@@ -1500,8 +1476,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     monogram: {
       claim: "공유 한 번으로 수집·정리·검색까지 연결하는 개인 지식관리(PKM) 시스템",
       lead: [
-        "뉴스, SNS, arXiv 논문, YouTube와 학술 리포트가 이유를 잃은 북마크로 흩어지는 문제를 해결하고 싶었습니다. Monogram은 링크, 메시지, 문서와 코드를 공유 버튼 한 번으로 받아 자동으로 정리하고, 나중에 다시 검색할 수 있게 만드는 개인 지식관리 시스템입니다.",
-        "Semantic retrieval은 EmbeddingGemma-300M ONNX backend와 Git-backed sharded INT8 index를 사용합니다. Dense similarity와 BM25를 RRF로 결합하고 필요하면 graph expansion과 reranking을 적용하며, FAISS나 외부 vector database에 의존하지 않습니다.",
+        "뉴스, SNS, arXiv, YouTube와 학술 리포트에서 본 정보가 여러 앱과 북마크에 흩어져 필요할 때 다시 찾기 어려웠습니다. 어떤 형태의 지식이든 공유 버튼 한 번으로 수집하고, 왜 중요했는지와 출처를 보존하며 자동으로 정리·분류·검색하고 싶었습니다. 사람과 Agent가 같은 지식을 다시 사용할 수 있는 개인 지식관리 시스템이 목표였습니다.",
       ],
       metricCards: [
         { label: "Capture pipeline", value: "5 stages", note: "Orchestrator, classifier, extractor, verifier, writer" },
@@ -1548,8 +1523,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
     "bau-browser": {
       claim: "프라이버시와 Agent 실행권한을 사용자가 직접 통제하는 local-first browser",
       lead: [
-        "기존 browser는 원하는 workflow에 무겁고, Agent를 단순히 붙이면 browsing data가 어디로 전송되는지와 Agent가 어떤 행동을 할 수 있는지 확인하기 어렵습니다. Bau Browser는 browsing data, Agent memory와 실행기록을 local에 두고 사용자가 허용한 사이트와 행동 범위를 직접 관리하게 했습니다.",
-        "Local model은 실행 argument를 직접 쓰지 않고 compact bound draft에서 identifier만 선택합니다. Trusted binding과 TaskSpec으로 host가 action을 compile하고 propose–approve–execute 흐름을 거친 뒤 postcondition과 decision log를 기록합니다.",
+        "Chrome이 무겁고 불편하다고 느꼈고, Agent를 브라우저에 붙이는 순간 사용자의 프라이버시와 행동 통제권이 더 중요해진다고 생각했습니다. 기존 방식에서는 browsing data가 어디로 가는지, Agent가 어떤 사이트에서 무엇을 할 수 있는지 확인하기 어려웠습니다. 개인 데이터를 local에 두고 Agent의 권한·승인·실행기록을 사용자가 직접 관리하는 desktop browser를 만들고 싶었습니다.",
       ],
       metricCards: [
         { label: "행동·인수 생성", value: "36/36", note: "새로운 도메인 task에서 정확히 생성" },
