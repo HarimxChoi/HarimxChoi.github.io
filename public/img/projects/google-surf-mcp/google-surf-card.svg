@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">SEARCH · WEB · PDF</title>
+<desc id="desc">ONE MCP FOR CURRENT, READABLE EVIDENCE</desc>
+<style>
+.bg{fill:#f7f6f2}.surface{fill:#fff}.soft{fill:#dfe9e6}.ink{fill:#202827}.muted{fill:#566361}.accent{fill:#587776}.line{stroke:#c7ceca;stroke-width:3}
+.eyebrow{font:700 30px ui-monospace,SFMono-Regular,monospace;letter-spacing:2px}.title{font:750 92px ui-sans-serif,system-ui,sans-serif;letter-spacing:-2px}.subtitle{font:600 34px ui-sans-serif,system-ui,sans-serif;letter-spacing:.5px}
+.step{font:750 46px ui-sans-serif,system-ui,sans-serif}.body{font:30px ui-sans-serif,system-ui,sans-serif}.metric{font:700 40px ui-monospace,SFMono-Regular,monospace}.arrow{fill:none;stroke:#587776;stroke-width:7}
+@media (prefers-color-scheme:dark){.bg{fill:#18211f}.surface{fill:#22302d}.soft{fill:#29423f}.ink{fill:#eef2ef}.muted{fill:#b7c3c0}.accent{fill:#8db0ab}.line{stroke:#465754}.arrow{stroke:#8db0ab}}
+</style>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto"><path d="M0,0 L0,8 L11,4 z" class="accent"/></marker></defs>
+<rect class="bg" width="1600" height="1000" rx="30"/>
+<text class="eyebrow accent" x="80" y="100">AGENT SEARCH INFRASTRUCTURE</text>
+<text class="title ink" x="80" y="220">SEARCH · WEB · PDF</text>
+<text class="subtitle muted" x="80" y="292">ONE MCP FOR CURRENT, READABLE EVIDENCE</text>
+<rect class="surface line" x="80" y="360" width="420" height="220" rx="28"/><text class="step ink" x="116" y="430">SEARCH</text><text class="body muted" x="116" y="492">Google + Scholar</text><path class="arrow" d="M510 470 H558" marker-end="url(#arrow)"/><rect class="surface line" x="580" y="360" width="420" height="220" rx="28"/><text class="step ink" x="616" y="430">EXTRACT</text><text class="body muted" x="616" y="492">Web + academic PDF</text><path class="arrow" d="M1010 470 H1058" marker-end="url(#arrow)"/><rect class="surface line" x="1080" y="360" width="420" height="220" rx="28"/><text class="step ink" x="1116" y="430">RECOVER</text><text class="body muted" x="1116" y="492">Fallback + CAPTCHA</text>
+<rect class="soft" x="80" y="690" width="1420" height="170" rx="30"/>
+<text class="metric ink" x="790" y="792" text-anchor="middle">MCP TOPLIST · TOP 1%</text>
+</svg>

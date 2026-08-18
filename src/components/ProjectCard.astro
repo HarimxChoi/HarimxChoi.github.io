@@ -11,7 +11,7 @@ const articleHref = lang === "ko" ? `/ko/projects/${slug}/` : `/projects/${slug}
 const articleLabel = lang === "ko" ? "읽기" : "Read";
 ---
 
-<a class:list={["project-card", project.image && "project-card--visual"]} href={articleHref}>
+<a class:list={["project-card", project.image && "project-card--visual", slug === "myshot" && "project-card--myshot"]} href={articleHref}>
   <span class="project-preview">
     {project.image ? (
       <span class="project-thumbnail">

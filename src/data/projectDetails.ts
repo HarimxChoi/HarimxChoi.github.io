@@ -19,6 +19,8 @@ export interface ProjectFigure {
   src: string;
   alt: string;
   caption?: string;
+  kind?: "image" | "video";
+  poster?: string;
 }
 
 export interface ProjectResultTable {
@@ -100,7 +102,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Unified the model zoo behind a q1000 contract and connected about 80,000 candidate bids per notice to region-specific decision simulation.",
         "Built the training, evaluation, routed inference, reporting, artifact provenance, dry-run, and approval-gated deployment path that serves more than 1,000 clients.",
       ],
-      category: "Probabilistic ML · MLOps",
+      category: "Tabular ML · UQ · Decision Systems",
       builtWith: ["Python", "XGBoost", "CatBoost", "TabICLv2", "Quantile regression", "Monte Carlo simulation", "SHA256 manifests"],
     },
     "document-ai-ocr": {
@@ -152,7 +154,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Designed the direct-download, magic-byte routing, parser fallback, and deterministic numeric-processing boundary.",
         "Built concurrent batching with stage-specific timeouts, retries, incremental CSV output, and structured error attribution.",
       ],
-      category: "Document AI",
+      category: "Document AI · Information Extraction",
       builtWith: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Deterministic parsing"],
     },
     "procurement-nlp": {
@@ -208,7 +210,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/nlp-analysis-agent", note: "Preprocessing, training, ontology discovery, weak labeling, quantization, and serving" },
       ],
-      category: "Natural Language Processing",
+      category: "Korean NLP · Weak Supervision · CPU Serving",
       builtWith: ["RoBERTa-large", "LoRA", "SBERT", "UMAP", "HDBSCAN", "ONNX Runtime INT8", "FastAPI"],
     },
     "r2ccp-bid-prediction": {
@@ -263,7 +265,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/ensemble-bid-prediction", note: "R2CCP modeling, calibration, context routing, and simulation" },
       ],
-      category: "Probabilistic ML",
+      category: "Conformal Prediction · Multimodal Forecasting",
       builtWith: ["Python", "R2CCP", "Conformal prediction", "Entropy regularization", "Monte Carlo simulation"],
     },
     wsss: {
@@ -344,7 +346,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           note: "Training, refinement, and evaluation implementation",
         },
       ],
-      category: "Computer Vision",
+      category: "Weak Supervision · Semantic Segmentation",
       builtWith: ["PyTorch", "CLIP", "DINOv2", "Semantic segmentation", "COCO-Val 2014"],
     },
     "emh-agent": {
@@ -439,7 +441,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           note: "Point-in-time dataset, training, and evaluation implementation",
         },
       ],
-      category: "Reinforcement Learning",
+      category: "Reinforcement Learning · Portfolio Decision",
       builtWith: ["Python", "TQC", "Point-in-time data", "Gymnasium", "Stable-Baselines3"],
     },
     vargo: {
@@ -512,7 +514,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Built the 134-task × 29-configuration evaluation matrix and separated oracle headroom from what a deployable selector can actually identify.",
         "Implemented routing baselines, activation probes, contamination controls, and verified-execution capture evaluation; the resulting paper is under review at TMLR.",
       ],
-      category: "Agent Evaluation",
+      category: "Agent Evaluation · Decision Science",
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
     },
     eat: {
@@ -587,7 +589,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Designed the E-AT objective that couples focal difficulty, adaptive FGM, and bidirectional R-Drop.",
         "Built the balanced ISIC training and evaluation pipeline and tracked macro-F1 and ECE separately.",
       ],
-      category: "Calibration & Uncertainty",
+      category: "Calibration · Medical Vision",
       builtWith: ["PyTorch", "ConvNeXtV2-Tiny", "Focal loss", "R-Drop", "FGM", "ISIC 2019"],
     },
     "langgraph-travel-agent": {
@@ -629,39 +631,42 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/langgraph-travel-agent", note: "Graph, API, supplier tools, and typed travel-package models" },
       ],
-      category: "Agent Systems",
+      category: "Agent Workflow · API Orchestration",
       builtWith: ["Python", "LangGraph", "FastAPI", "AsyncIO", "Amadeus / Hotelbeds"],
     },
     myshot: {
-      claim: "Single-camera golf swing reconstruction · mean |r| 0.95 on six independent motion-capture trials",
+      claim: "Smartphone video to 3D swing and shot outcome · clubhead-speed median error 6.1%",
       lead: [
-        "Golf coaching is expensive, and it is difficult to understand what is wrong with a swing while practicing alone. I wanted a golfer to record one smartphone video and receive a 3D view of torso, pelvis, and knee motion that could be reviewed repeatedly at home. A useful solution had to preserve the full temporal swing pattern rather than draw a 2D pose on isolated frames.",
+        "Golf coaching and equipment are expensive, and practicing alone makes it difficult to see both what is wrong with a swing and how that movement changes ball speed, direction, and carry. Most pose tools stop at drawing body motion. I wanted one smartphone video to connect swing correction with the outcome of the shot.",
       ],
       metricCards: [
-        { label: "Independent mocap", value: "6 trials", note: "CMU golf swings not used for training" },
-        { label: "X-Factor pattern", value: "mean |r| 0.95", note: "Predicted vs. motion-capture torso rotation" },
-        { label: "Clean-2D study", value: "35.6 mm", note: "MPJPE · X-Factor MAE 3.1°" },
+        { label: "Clubhead speed", value: "6.1%", note: "Median error on GolfPose Vicon motion" },
+        { label: "3D reconstruction", value: "35.6 mm", note: "MPJPE · X-Factor MAE 3.1°" },
+        { label: "Carry ground truth", value: "25 pairs", note: "Built from 50 AIHub swing clips" },
       ],
       flow: {
-        title: "From a monocular video to a biomechanical time series",
-        intro: "The pipeline separates 2D detection error from 3D lifting and evaluates both joint geometry and the motion pattern used in golf analysis.",
+        title: "From one phone video to posture, speed, direction, and carry",
+        intro: "The system treats body motion, club motion, and the ball as one sequence, then separates measured signals from calibrated and physics-based estimates.",
         steps: [
-          { label: "Video and 2D joints", description: "Detect the golfer and normalize 17 joints across the full swing rather than treating frames independently." },
-          { label: "Temporal 3D lifting", description: "Use a 243-frame MotionAGFormer window to infer depth and preserve motion continuity." },
-          { label: "Biomechanics", description: "Derive torso, pelvis, X-Factor, and knee trajectories from the reconstructed skeleton." },
-          { label: "Cross-domain evaluation", description: "Compare time-aligned curves with independent CMU motion capture and inspect domain shift separately." },
+          { label: "Golfer, club, and ball", description: "Track the three targets through address, top, impact, and finish instead of analyzing the golfer alone." },
+          { label: "2D to 3D motion", description: "Lift RTMPose joints with a temporal MotionAGFormer model trained with GolfPose Vicon and pseudo-3D swing data." },
+          { label: "Swing mechanics", description: "Compute joint movement, X-Factor, swing power, club path, and clubhead speed across the full motion." },
+          { label: "Personal calibration", description: "Use physique and per-club carry or ball-speed records as calibration inputs rather than forcing one population model on every golfer." },
+          { label: "Shot outcome and reliability", description: "Estimate ball speed, start direction, and carry with a physics-based ball-flight model, while pose disagreement and jitter flag unreliable frames." },
         ],
       },
       figures: [
         {
-          src: "/img/projects/myshot/myshot-golfdb-2d-to-3d.png",
-          alt: "An anonymized four-phase golf swing example showing the source frame, detected 2D joints, and reconstructed 3D skeleton at address, top, impact, and finish",
-          caption: "Anonymized research-dataset example · current model · address, top, impact, and finish",
+          src: "/img/projects/myshot/myshot-vision-tracking.mp4",
+          poster: "/img/projects/myshot/myshot-vision-tracking.png",
+          kind: "video",
+          alt: "An anonymized swing video with golfer, club, and ball boxes, a pose skeleton, changing joint angles, and the tracked ball path",
+          caption: "Frame-aligned AIHub research-data example · face anonymized · golfer, club, ball, pose, and angle tracking",
         },
         {
-          src: "/img/projects/myshot/myshot-method.svg",
-          alt: "Method diagram from monocular golf video through 2D pose detection and 243-frame MotionAGFormer lifting to 3D joints and biomechanical curves",
-          caption: "Detection, temporal lifting, biomechanics, and cross-domain validation are evaluated separately",
+          src: "/img/projects/myshot/myshot-golfdb-2d-to-3d.png",
+          alt: "An anonymized four-phase golf swing example showing the source frame, detected 2D joints, and reconstructed 3D skeleton at address, top, impact, and finish",
+          caption: "Single-camera input · 2D joints · current-model 3D reconstruction",
         },
         {
           src: "/img/projects/myshot/myshot-cmu-xfactor.png",
@@ -670,11 +675,11 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
       ],
       contribution: [
-        "Built the 2D-to-3D training and inference path, phase-aligned biomechanics, disjoint data split, leakage audit, and cross-domain evaluation.",
-        "Separated clean-2D lifting accuracy from real-video detection error so model limits remain visible at deployment time.",
+        "Built the path from target tracking and 2D-to-3D motion to joint metrics, clubhead speed, personal calibration, and a physics-based ball-flight model.",
+        "Found that body-only 30 fps motion was too weak for direct carry regression, then redesigned the system around ball and club tracking plus per-club calibration.",
       ],
-      category: "Computer Vision",
-      builtWith: ["PyTorch", "RTMPose", "MotionAGFormer", "Monocular 3D pose", "Motion capture"],
+      category: "Object Detection · Human Pose · 3D Vision · Ball-flight Prediction",
+      builtWith: ["YOLO11", "RTMPose", "MotionAGFormer", "Physics-based ball flight", "Reliability scoring"],
     },
     "google-surf-mcp": {
       claim: "Search, web, and academic PDF infrastructure for AI agents · MCP TOPLIST Top 1%",
@@ -715,7 +720,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/google-surf-mcp", note: "Published MCP server, tests, and runtime documentation" },
       ],
-      category: "Agent Systems · Open Source Infrastructure",
+      category: "MCP · Search Infrastructure",
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
     monogram: {
@@ -762,11 +767,11 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/monogram", note: "Capture pipeline, Git storage, retrieval, MCP server, and dashboard" },
       ],
-      category: "RAG & Retrieval",
+      category: "PKM · Knowledge Automation",
       builtWith: ["Python", "EmbeddingGemma", "ONNX Runtime", "BM25 / RRF", "Git Tree API"],
     },
     "bau-browser": {
-      claim: "A local-first browser where users control private data and agent authority",
+      claim: "Agentic Browser · a local-first desktop where users control private data and agent authority",
       lead: [
         "Chrome felt heavier and less controllable than the browsing workflow I wanted, and adding an agent raised a second problem: users could not easily see where browsing data went or which actions the agent was allowed to take. I wanted a desktop browser that kept personal data local and made agent permissions, approvals, and execution records visible to the user.",
       ],
@@ -801,7 +806,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Built the Electron browser surface, scoped agent contracts, host compiler, two-phase HITL, MCP boundary, receipts, postconditions, and SQLite decision log.",
         "Designed and trained the compact Qwen3.5-4B bound-draft pilot, then evaluated the frozen 36-case synthetic gate across exactness, compilation, binding, safety, and forbidden actions.",
       ],
-      category: "Agent Safety",
+      category: "Agentic Browser · Agent Safety",
       builtWith: ["TypeScript", "Electron", "MCP", "Qwen3.5-4B", "SQLite"],
     },
   },
@@ -855,7 +860,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Model zoo를 q1000 contract로 통일하고 공고당 약 8만 개 후보를 지역별 의사결정 simulation과 연결했습니다.",
         "1,000개 이상 고객사에 제공되는 학습, 평가, routed inference, 리포트, artifact provenance, dry-run과 승인 후 배포 경로를 구축했습니다.",
       ],
-      category: "Probabilistic ML · MLOps",
+      category: "Tabular ML · UQ · Decision Systems",
       builtWith: ["Python", "XGBoost", "CatBoost", "TabICLv2", "Quantile Regression", "Monte Carlo Simulation", "SHA256 Manifest"],
     },
     "document-ai-ocr": {
@@ -907,7 +912,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "직접 다운로드, magic-byte routing, parser fallback과 결정론적 수치 처리의 경계를 설계했습니다.",
         "단계별 timeout, retry, 증분 CSV와 구조화 error attribution을 포함한 동시 batch 처리를 구현했습니다.",
       ],
-      category: "Document AI",
+      category: "Document AI · Information Extraction",
       builtWith: ["Python", "HWP/HWPX", "PDF", "Gemini 2.5 Flash-Lite", "ThreadPool", "Deterministic Parsing"],
     },
     "procurement-nlp": {
@@ -963,7 +968,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/nlp-analysis-agent", note: "전처리, 학습, ontology discovery, weak labeling, quantization과 serving" },
       ],
-      category: "Natural Language Processing",
+      category: "Korean NLP · Weak Supervision · CPU Serving",
       builtWith: ["RoBERTa-large", "LoRA", "SBERT", "UMAP", "HDBSCAN", "ONNX Runtime INT8", "FastAPI"],
     },
     "r2ccp-bid-prediction": {
@@ -1018,7 +1023,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/ensemble-bid-prediction", note: "R2CCP modeling, calibration, context routing과 simulation" },
       ],
-      category: "Probabilistic ML",
+      category: "Conformal Prediction · Multimodal Forecasting",
       builtWith: ["Python", "R2CCP", "Conformal Prediction", "Entropy Regularization", "Monte Carlo Simulation"],
     },
     wsss: {
@@ -1099,7 +1104,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           note: "학습, refinement와 평가 구현",
         },
       ],
-      category: "Computer Vision",
+      category: "Weak Supervision · Semantic Segmentation",
       builtWith: ["PyTorch", "CLIP", "DINOv2", "Semantic segmentation", "COCO-Val 2014"],
     },
     "emh-agent": {
@@ -1194,7 +1199,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           note: "Point-in-time dataset, 학습과 평가 구현",
         },
       ],
-      category: "Reinforcement Learning",
+      category: "Reinforcement Learning · Portfolio Decision",
       builtWith: ["Python", "TQC", "Point-in-time data", "Gymnasium", "Stable-Baselines3"],
     },
     vargo: {
@@ -1267,7 +1272,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "134개 과제 × 29개 구성의 평가 matrix를 만들고, 사후에 알 수 있는 oracle headroom과 실제 selector가 식별할 수 있는 성능을 분리했습니다.",
         "Routing baseline, activation probe, contamination control과 verified-execution capture 평가를 구현했으며, 이 결과를 바탕으로 작성한 논문은 TMLR review 중입니다.",
       ],
-      category: "Agent Evaluation",
+      category: "Agent Evaluation · Decision Science",
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
     },
     eat: {
@@ -1342,7 +1347,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Focal difficulty, adaptive FGM과 bidirectional R-Drop을 연결한 E-AT objective를 설계했습니다.",
         "균형 ISIC 학습·평가 pipeline을 만들고 macro-F1과 ECE를 분리해 추적했습니다.",
       ],
-      category: "Calibration & Uncertainty",
+      category: "Calibration · Medical Vision",
       builtWith: ["PyTorch", "ConvNeXtV2-Tiny", "Focal loss", "R-Drop", "FGM", "ISIC 2019"],
     },
     "langgraph-travel-agent": {
@@ -1384,39 +1389,42 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/langgraph-travel-agent", note: "Graph, API, supplier tool과 typed travel-package model" },
       ],
-      category: "Agent Systems",
+      category: "Agent Workflow · API Orchestration",
       builtWith: ["Python", "LangGraph", "FastAPI", "AsyncIO", "Amadeus / Hotelbeds"],
     },
     myshot: {
-      claim: "스마트폰 골프 스윙 3D 복원 · 독립 모션캡처 6개에서 X-Factor 평균 |r| 0.95",
+      claim: "스마트폰 영상에서 3D 스윙과 샷 결과까지 · 클럽헤드 속도 중앙오차 6.1%",
       lead: [
-        "골프 레슨은 비용이 높고 혼자 연습할 때는 자신의 자세가 왜 잘못됐는지 파악하기 어렵습니다. 스마트폰으로 스윙을 한 번 촬영하면 몸통·골반·무릎의 움직임을 3D로 확인하고 집에서도 반복적으로 자세를 교정할 수 있게 만들고 싶었습니다. 이를 위해 한 프레임의 2D pose가 아니라 전체 스윙의 시간적 움직임을 유지하는 3D 복원이 필요했습니다.",
+        "골프 레슨과 장비는 비용이 높고, 혼자 연습할 때는 자세가 왜 잘못됐는지뿐 아니라 그 움직임이 공의 속도·방향·비거리에 어떤 영향을 주는지 알기 어렵습니다. 일반 pose tool은 몸의 움직임을 보여주는 데서 끝납니다. 스마트폰 영상 하나로 스윙 교정과 실제 샷 결과를 함께 분석하고 싶었습니다.",
       ],
       metricCards: [
-        { label: "독립 mocap", value: "6 trials", note: "학습에 사용하지 않은 CMU 골프 스윙" },
-        { label: "X-Factor 패턴", value: "평균 |r| 0.95", note: "예측값과 motion-capture 몸통 회전 비교" },
-        { label: "Clean-2D 실험", value: "35.6 mm", note: "MPJPE · X-Factor MAE 3.1°" },
+        { label: "클럽헤드 속도", value: "6.1%", note: "GolfPose Vicon motion 중앙오차" },
+        { label: "3D 복원", value: "35.6 mm", note: "MPJPE · X-Factor MAE 3.1°" },
+        { label: "Carry GT", value: "25 pairs", note: "AIHub 스윙 영상 50개에서 구축" },
       ],
       flow: {
-        title: "단안 영상에서 biomechanics time series까지",
-        intro: "2D detection 오차와 3D lifting 오차를 분리하고, 관절 위치와 실제 골프 분석에 쓰는 동작 패턴을 함께 평가했습니다.",
+        title: "휴대폰 영상 하나에서 자세·속도·방향·비거리까지",
+        intro: "몸, 클럽과 공의 움직임을 하나의 sequence로 처리하고, 직접 측정한 신호와 개인 보정·물리 계산 결과를 구분해 연결했습니다.",
         steps: [
-          { label: "영상과 2D 관절", description: "프레임을 따로 처리하지 않고 전체 스윙의 17개 관절을 검출하고 정규화합니다." },
-          { label: "Temporal 3D lifting", description: "243-frame MotionAGFormer window로 깊이를 추정하고 동작의 연속성을 유지합니다." },
-          { label: "Biomechanics", description: "복원된 skeleton에서 몸통, 골반, X-Factor와 무릎 움직임을 계산합니다." },
-          { label: "Cross-domain 평가", description: "독립 CMU motion capture의 시간 곡선과 비교하고 domain shift를 별도로 확인합니다." },
+          { label: "골퍼·클럽·공 추적", description: "골퍼만 보지 않고 address, top, impact와 finish 전 구간에서 세 target을 함께 추적합니다." },
+          { label: "2D에서 3D motion으로", description: "RTMPose 관절을 GolfPose Vicon과 pseudo-3D swing data로 학습한 MotionAGFormer로 변환합니다." },
+          { label: "스윙 mechanics", description: "관절 움직임, X-Factor, swing power, club path와 clubhead speed를 전체 motion에서 계산합니다." },
+          { label: "개인 calibration", description: "모든 골퍼에게 하나의 식을 적용하지 않고 사용자 체격과 클럽별 carry·ball-speed 기록을 보정값으로 사용합니다." },
+          { label: "샷 결과와 reliability", description: "Physics-based ball-flight model로 ball speed, 시작 방향과 carry를 계산하고 pose disagreement와 jitter로 불안정한 frame을 구분합니다." },
         ],
       },
       figures: [
         {
-          src: "/img/projects/myshot/myshot-golfdb-2d-to-3d.png",
-          alt: "익명화한 골프 스윙의 address, top, impact, finish에서 원본 frame, 2D 관절과 3D skeleton 복원 결과를 비교한 예시",
-          caption: "익명화한 연구 데이터 예시 · 현재 모델 · address, top, impact, finish",
+          src: "/img/projects/myshot/myshot-vision-tracking.mp4",
+          poster: "/img/projects/myshot/myshot-vision-tracking.png",
+          kind: "video",
+          alt: "익명화한 골프 스윙 영상에 골퍼·클럽·공 box, pose skeleton, 관절각과 공의 이동 경로를 함께 표시한 예시",
+          caption: "Frame-aligned AIHub 연구 데이터 예시 · 얼굴 익명화 · 골퍼·클럽·공·pose·관절각 tracking",
         },
         {
-          src: "/img/projects/myshot/myshot-method.svg",
-          alt: "단안 골프 영상에서 2D pose detection, 243-frame MotionAGFormer 3D lifting, biomechanics curve와 cross-domain validation으로 이어지는 구조도",
-          caption: "Detection, temporal lifting, biomechanics와 cross-domain validation을 분리해 평가했습니다",
+          src: "/img/projects/myshot/myshot-golfdb-2d-to-3d.png",
+          alt: "익명화한 골프 스윙의 address, top, impact, finish에서 원본 frame, 2D 관절과 3D skeleton 복원 결과를 비교한 예시",
+          caption: "단안 영상 입력 · 2D 관절 · 현재 모델의 3D 복원",
         },
         {
           src: "/img/projects/myshot/myshot-cmu-xfactor.png",
@@ -1425,11 +1433,11 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
       ],
       contribution: [
-        "2D-to-3D 학습·추론 경로, phase-aligned biomechanics, disjoint split, leakage audit와 cross-domain 평가를 구현했습니다.",
-        "Clean-2D lifting 성능과 실제 영상의 detection error를 분리해 deployment에서의 한계를 함께 확인했습니다.",
+        "Target tracking과 2D-to-3D motion부터 관절지표, clubhead speed, 개인 calibration과 physics-based ball-flight model까지 연결했습니다.",
+        "30fps body motion만으로 carry를 직접 회귀하는 신호가 약한 것을 확인하고 ball·club tracking과 클럽별 calibration 중심으로 구조를 바꿨습니다.",
       ],
-      category: "Computer Vision",
-      builtWith: ["PyTorch", "RTMPose", "MotionAGFormer", "Monocular 3D pose", "Motion capture"],
+      category: "Object Detection · Human Pose · 3D Vision · Ball-flight Prediction",
+      builtWith: ["YOLO11", "RTMPose", "MotionAGFormer", "Physics-based ball flight", "Reliability scoring"],
     },
     "google-surf-mcp": {
       claim: "AI Agent 검색·웹·학술 PDF 인프라 · MCP TOPLIST Top 1%",
@@ -1470,7 +1478,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/google-surf-mcp", note: "배포된 MCP server, test와 runtime 문서" },
       ],
-      category: "Agent Systems · Open Source Infrastructure",
+      category: "MCP · Search Infrastructure",
       builtWith: ["TypeScript", "MCP", "Playwright", "PDF extraction", "Vitest"],
     },
     monogram: {
@@ -1517,11 +1525,11 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       evidenceLinks: [
         { label: "Source code", href: "https://github.com/HarimxChoi/monogram", note: "Capture pipeline, Git storage, retrieval, MCP server와 dashboard" },
       ],
-      category: "RAG & Retrieval",
+      category: "PKM · Knowledge Automation",
       builtWith: ["Python", "EmbeddingGemma", "ONNX Runtime", "BM25 / RRF", "Git Tree API"],
     },
     "bau-browser": {
-      claim: "프라이버시와 Agent 실행권한을 사용자가 직접 통제하는 local-first browser",
+      claim: "Agentic Browser · 프라이버시와 Agent 실행권한을 사용자가 직접 통제하는 local-first desktop",
       lead: [
         "Chrome이 무겁고 불편하다고 느꼈고, Agent를 브라우저에 붙이는 순간 사용자의 프라이버시와 행동 통제권이 더 중요해진다고 생각했습니다. 기존 방식에서는 browsing data가 어디로 가는지, Agent가 어떤 사이트에서 무엇을 할 수 있는지 확인하기 어려웠습니다. 개인 데이터를 local에 두고 Agent의 권한·승인·실행기록을 사용자가 직접 관리하는 desktop browser를 만들고 싶었습니다.",
       ],
@@ -1556,7 +1564,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         "Electron browser surface, scoped agent contract, host compiler, two-phase HITL, MCP boundary, receipt, postcondition과 SQLite decision log를 구현했습니다.",
         "Compact Qwen3.5-4B bound-draft pilot을 설계·학습하고 frozen 36-case synthetic gate에서 exactness, compilation, binding, safety와 금지 행동을 평가했습니다.",
       ],
-      category: "Agent Safety",
+      category: "Agentic Browser · Agent Safety",
       builtWith: ["TypeScript", "Electron", "MCP", "Qwen3.5-4B", "SQLite"],
     },
   },
