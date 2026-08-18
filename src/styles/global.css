@@ -676,6 +676,11 @@ details[open] .detail-toggle-icon {
   object-fit: contain;
 }
 
+.project-card--myshot .project-thumbnail img {
+  padding: 0;
+  object-fit: cover;
+}
+
 .project-thumbnail--empty {
   position: relative;
   background:
@@ -923,11 +928,13 @@ details[open] .detail-toggle-icon {
   margin: clamp(54px, 8vw, 88px) 0 0;
 }
 
-.article-figure img {
+.article-figure img,
+.article-figure video {
   width: 100%;
   max-height: 560px;
   object-fit: cover;
   border: 1px solid var(--line);
+  display: block;
 }
 
 .article-figure figcaption {
@@ -943,10 +950,20 @@ details[open] .detail-toggle-icon {
   background: var(--surface);
 }
 
-.article-figure--primary img {
+.article-figure--primary img,
+.article-figure--primary video {
   max-height: none;
   border: 0;
   object-fit: contain;
+}
+
+.article-figure--media-fill {
+  padding: 0;
+  overflow: hidden;
+}
+
+.article-figure--media-fill figcaption {
+  padding: 0 20px 18px;
 }
 
 .article-figure--primary figcaption {
@@ -1167,7 +1184,8 @@ details[open] .detail-toggle-icon {
   margin-top: 0;
 }
 
-.article-figure--secondary img {
+.article-figure--secondary img,
+.article-figure--secondary video {
   object-fit: contain;
 }
 

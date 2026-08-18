@@ -80,8 +80,22 @@ const secondaryFigures = detail?.figures?.slice(1) ?? [];
     {detail ? (
       <>
         {primaryFigure && (
-          <figure class="article-figure article-figure--primary">
-            <img src={primaryFigure.src} alt={primaryFigure.alt} loading="eager" decoding="async" />
+          <figure class:list={["article-figure", "article-figure--primary", project.slug === "myshot" && "article-figure--media-fill"]}>
+            {primaryFigure.kind === "video" ? (
+              <video
+                src={primaryFigure.src}
+                poster={primaryFigure.poster}
+                aria-label={primaryFigure.alt}
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+                preload="metadata"
+              />
+            ) : (
+              <img src={primaryFigure.src} alt={primaryFigure.alt} loading="eager" decoding="async" />
+            )}
             {primaryFigure.caption && <figcaption>{primaryFigure.caption}</figcaption>}
           </figure>
         )}
@@ -151,7 +165,20 @@ const secondaryFigures = detail?.figures?.slice(1) ?? [];
               ))}
               {secondaryFigures.map((figure: any) => (
                 <figure class="article-figure article-figure--secondary">
-                  <img src={figure.src} alt={figure.alt} loading="lazy" decoding="async" />
+                  {figure.kind === "video" ? (
+                    <video
+                      src={figure.src}
+                      poster={figure.poster}
+                      aria-label={figure.alt}
+                      muted
+                      loop
+                      playsinline
+                      controls
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img src={figure.src} alt={figure.alt} loading="lazy" decoding="async" />
+                  )}
                   {figure.caption && <figcaption>{figure.caption}</figcaption>}
                 </figure>
               ))}
