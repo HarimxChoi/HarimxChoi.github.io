@@ -11,7 +11,10 @@ interface Props {
 
 const { content, lang } = Astro.props;
 const homeHref = lang === "ko" ? "/ko/" : "/";
-const projects = getProjects(content);
+const homepageHiddenProjectSlugs = new Set(["probabilistic-bid-mlops", "document-ai-ocr"]);
+const projects = getProjects(content).filter(
+  (project: any) => !homepageHiddenProjectSlugs.has(project.slug),
+);
 const welcome = "WELCOME TO HARIM'S PAGE.";
 const introductionLead =
   lang === "ko"
