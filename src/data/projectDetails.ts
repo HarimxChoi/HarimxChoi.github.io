@@ -269,7 +269,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "R2CCP", "Conformal prediction", "Entropy regularization", "Monte Carlo simulation"],
     },
     wsss: {
-      claim: "Contract WSSS research · 54.4% COCO-Val mIoU · +2.5 pp over WeCLIP+",
+      claim: "Contract WSSS research · 53.31% COCO-Val mIoU · +1.5 pp over WeCLIP+",
       lead: [
         "A client commissioned a study to improve WeCLIP+, then the state of the art, using only image-level labels. The pseudo-masks used for training accumulated wrong pixels at object boundaries and in the background, and those errors were amplified during self-training. The research question was whether only the unreliable pixels could be identified and repaired instead of rebuilding every mask.",
       ],
@@ -281,13 +281,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Refined WSSS",
-          value: "54.4% mIoU",
+          value: "53.31% mIoU",
           note: "Final semantic-segmentation performance",
         },
         {
           label: "Previous SOTA",
-          value: "+2.5 pp",
-          note: "Compared with WeCLIP+ at 51.9% mIoU",
+          value: "+1.5 pp",
+          note: "Compared with WeCLIP+ at 51.8% mIoU",
         },
       ],
       flow: {
@@ -315,7 +315,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       figures: [
         {
           src: "/img/projects/wsss/wsss-performance.svg",
-          alt: "Bar chart comparing WSSS performance of WeCLIP+ at 51.9 percent mIoU and the refined method at 54.4 percent mIoU on all 40,137 COCO-Val 2014 images",
+          alt: "Bar chart comparing WSSS performance of WeCLIP+ at 51.8 percent mIoU and the refined method at 53.31 percent mIoU on all 40,137 COCO-Val 2014 images",
           caption: "COCO-Val 2014 · all 40,137 validation images · mIoU",
         },
         {
@@ -329,8 +329,8 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           title: "COCO-Val comparison",
           columns: ["Method", "Supervision", "mIoU"],
           rows: [
-            ["WeCLIP+", "Image-level labels", "51.9%"],
-            ["Refined pseudo-label method", "Image-level labels", "54.4%"],
+            ["WeCLIP+", "Image-level labels", "51.8%"],
+            ["Refined pseudo-label method", "Image-level labels", "53.31%"],
           ],
           caption: "Both figures use the full COCO-Val 2014 evaluation set.",
         },
@@ -1027,7 +1027,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "R2CCP", "Conformal Prediction", "Entropy Regularization", "Monte Carlo Simulation"],
     },
     wsss: {
-      claim: "WSSS SOTA 연구용역 · COCO-Val mIoU 54.4% · WeCLIP+ 대비 +2.5%p",
+      claim: "WSSS SOTA 연구용역 · COCO-Val mIoU 53.31% · WeCLIP+ 대비 +1.5%p",
       lead: [
         "클라이언트로부터 이미지 단위 정답만 사용해 당시 SOTA였던 WeCLIP+의 성능을 개선하는 연구용역을 의뢰받았습니다. 자동으로 만든 pseudo-mask에는 객체 경계와 배경의 잘못된 pixel이 포함됐고, 이 오류는 self-training을 반복할수록 누적됐습니다. 전체 mask를 다시 만드는 대신 신뢰하기 어려운 pixel만 찾아 복원할 수 있는지가 핵심 연구 질문이었습니다.",
       ],
@@ -1039,13 +1039,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Refined WSSS",
-          value: "54.4% mIoU",
+          value: "53.31% mIoU",
           note: "최종 semantic segmentation 성능",
         },
         {
           label: "기존 SOTA 대비",
-          value: "+2.5%p",
-          note: "WeCLIP+ 51.9% mIoU 기준",
+          value: "+1.5%p",
+          note: "WeCLIP+ 51.8% mIoU 기준",
         },
       ],
       flow: {
@@ -1073,7 +1073,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       figures: [
         {
           src: "/img/projects/wsss/wsss-performance.svg",
-          alt: "COCO-Val 2014 전체 40,137개 이미지에서 WeCLIP+ 51.9% mIoU와 refined method 54.4% mIoU를 비교한 막대그래프",
+          alt: "COCO-Val 2014 전체 40,137개 이미지에서 WeCLIP+ 51.8% mIoU와 refined method 53.31% mIoU를 비교한 막대그래프",
           caption: "COCO-Val 2014 · validation image 40,137개 전체 · mIoU",
         },
         {
@@ -1087,8 +1087,8 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           title: "COCO-Val 성능 비교",
           columns: ["Method", "Supervision", "mIoU"],
           rows: [
-            ["WeCLIP+", "Image-level labels", "51.9%"],
-            ["Refined pseudo-label method", "Image-level labels", "54.4%"],
+            ["WeCLIP+", "Image-level labels", "51.8%"],
+            ["Refined pseudo-label method", "Image-level labels", "53.31%"],
           ],
           caption: "두 결과 모두 COCO-Val 2014 전체 평가셋을 사용했습니다.",
         },

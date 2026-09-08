@@ -16,14 +16,6 @@ const projects = getProjects(content).filter(
   (project: any) => !homepageHiddenProjectSlugs.has(project.slug),
 );
 const welcome = "WELCOME TO HARIM'S PAGE.";
-const introductionLead =
-  lang === "ko"
-    ? "데이터 구축부터 모델 학습·배포·운영까지 연결하는 머신러닝 엔지니어입니다."
-    : "I am a machine learning engineer working from data preparation through model deployment and operations.";
-const introductionSupport =
-  lang === "en"
-    ? "Across 7+ years, I have worked with public-procurement, construction, and retail data, connecting tabular ML, NLP, computer vision, and LLM agents from data collection through evaluation and deployment. I quickly learn unfamiliar domains and inherited systems, then turn data, models, and operating workflows into working services. I build systems that balance predictive performance with reliability, cost, and operational constraints."
-    : "7년 이상 공공조달·건설·리테일 데이터를 다루며 Tabular ML, NLP, Computer Vision과 LLM Agent를 데이터 수집부터 평가·배포까지 연결해 왔습니다. 낯선 도메인과 기존 시스템의 구조를 빠르게 파악하고, 데이터·모델·운영 흐름을 실제 서비스로 구현해 왔습니다. 정확도뿐 아니라 결과의 신뢰도·비용·운영 제약을 함께 만족하는 시스템을 만듭니다.";
 ---
 
 <BlogHeader homeHref={homeHref} lang={lang} />
@@ -36,8 +28,26 @@ const introductionSupport =
       <section class="blog-intro" aria-labelledby="blog-intro-title">
         <div class="intro-copy">
           <h1 id="blog-intro-title">{welcome}</h1>
-          <p>{introductionLead}</p>
-          {introductionSupport && <p class="intro-support">{introductionSupport}</p>}
+          <p class="intro-support">{content.hero.body}</p>
+        </div>
+        <div class="highlights" aria-labelledby="highlights-title">
+          <h2 id="highlights-title">{lang === "ko" ? "핵심 성과" : "Highlights"}</h2>
+          <ul>
+            {content.hero.highlights.map((item: { title: string; detail: string; href: string }) => (
+              <li>
+                <a href={item.href}>{item.title}</a>
+                <p>{item.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="competencies" aria-labelledby="competencies-title">
+          <h2 id="competencies-title">{lang === "ko" ? "핵심 역량" : "Core Strengths"}</h2>
+          <dl>
+            {content.hero.competencies.map(([title, description]: [string, string]) => (
+              <div><dt>{title}</dt><dd>{description}</dd></div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -56,3 +66,18 @@ const introductionSupport =
     </div>
   </div>
 </main>
+
+<style>
+  .competencies { margin-top: 32px; }
+  .competencies h2 { margin: 0 0 16px; font-size: 0.85rem; color: var(--muted); }
+  .competencies dl { display: grid; gap: 18px; margin: 0; }
+  .competencies dt { font-size: 1rem; font-weight: 600; }
+  .competencies dd { margin: 5px 0 0; font-size: 0.9rem; line-height: 1.7; color: var(--muted); word-break: keep-all; }
+  .highlights { margin-top: 28px; }
+  .highlights h2 { margin: 0 0 16px; font-size: 0.85rem; color: var(--muted); }
+  .highlights ul { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+  .highlights a { font-size: 1rem; font-weight: 600; word-break: keep-all; }
+  .highlights a:hover { color: var(--accent-ink); }
+  .highlights a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .highlights p { margin: 5px 0 0; font-size: 0.85rem; line-height: 1.6; color: var(--muted); }
+</style>
