@@ -10,7 +10,7 @@ export const portfolio = {
     meta: {
       title: "Harim Choi | Machine Learning Engineer",
       description:
-        "Machine learning engineer building reliable systems from tabular ML, NLP, computer vision, and LLM agents.",
+        "Machine learning engineer working across data preparation, model development, deployment, operations, and open-source research.",
     },
     nav: {
       brand: "Harim Choi",
@@ -22,7 +22,7 @@ export const portfolio = {
       eyebrow: "Harim Choi · Seoul",
       title: "Machine Learning Engineer",
       body:
-        "I turn data, models, and operating workflows into reliable machine-learning systems.",
+        "I started in data analysis and workflow automation, then expanded into model development and production operations. I build public-procurement prediction systems from data preparation through training, deployment, and operations, alongside research and open-source work on model quality and efficiency.",
       links: sharedLinks,
     },
     careerIntro: {
@@ -36,7 +36,7 @@ export const portfolio = {
       {
         company: "Sejong Bid Institute",
         role: "Researcher",
-        period: "Apr 2026–Present",
+        period: "Apr 2026–Aug 2026",
         context:
           "Public-procurement probabilistic ML, Document AI, and production operations",
         categories: ["Tabular ML", "Probabilistic ML", "MLOps", "Document AI"],
@@ -147,7 +147,7 @@ export const portfolio = {
           {
             title: "Uncertainty-Aware Bid ML",
             status: "Production ML / probabilistic decision system",
-            period: "Apr 2026–Present",
+            period: "Apr 2026–Aug 2026",
             summary:
               "A q1000 and Monte Carlo decision system that provides bid-win probabilities and uncertainty for each client.",
             categories: ["Probabilistic ML", "Uncertainty Quantification", "MLOps"],
@@ -161,7 +161,7 @@ export const portfolio = {
           {
             title: "Document AI OCR",
             status: "Production Document AI / batch extraction",
-            period: "Apr 2026–Present",
+            period: "Apr 2026–Aug 2026",
             summary:
               "A deterministic Document AI pipeline that structures HWP, HWPX, and PDF notices while separating field copying from amount, ratio, and unit validation.",
             categories: ["Document AI", "OCR", "Batch Processing"],
@@ -327,8 +327,8 @@ export const portfolio = {
           "Research and systems that separate observed performance from what can be known before acting.",
         projects: [
           {
-            title: "Vargo",
-            status: "Private research / reliable agent evaluation",
+            title: "The Pre-Execution Identifiability Bottleneck in Fixed-Pool LLM Agent Configuration Selection",
+            status: "Agent evaluation research / NeurIPS 2026 FAST submission",
             period: "2026–Present",
             summary:
               "Research asking whether task text, embeddings, or hidden states can identify the best LLM-agent configuration before execution.",
@@ -345,9 +345,9 @@ export const portfolio = {
             ],
             bullets: [
               "Ran the same 134 ALFWorld tasks across 29 agent configurations and compared pre-execution routers with bounded candidate execution and verification.",
-              "Verified execution increased recovered oracle gap from 54% to 85% and recovered 100% within an 11-configuration deployable pool; the paper is under review at TMLR.",
+              "Verified execution increased recovered oracle gap from 54% to 85% and recovered 100% within an 11-configuration deployable pool; the paper was submitted to the NeurIPS 2026 FAST Workshop.",
             ],
-            metric: "Oracle-gap recovery 54% → 85% · TMLR review",
+            metric: "Performance-gap recovery 54% → 85% · NeurIPS 2026 FAST submission",
           },
           {
             title: "EMH Agent",
@@ -439,7 +439,7 @@ export const portfolio = {
             image: "/img/wsss-architecture.png",
             imageAlt: "Architecture diagram for weakly supervised semantic segmentation and pseudo-label refinement",
             imageCaption: "Model and pseudo-label refinement architecture",
-            metric: "Commissioned WSSS SOTA research · 53.31% mIoU · +1.5 pp over WeCLIP+",
+            metric: "Commissioned WSSS SOTA research · 54.4% mIoU · +2.5 pp over WeCLIP+",
           },
           {
             title: "MyShot",
@@ -599,7 +599,7 @@ export const portfolio = {
     meta: {
       title: "최하림 | Machine Learning Engineer",
       description:
-        "Tabular ML, NLP, Computer Vision과 LLM Agent를 실제 의사결정 시스템으로 연결하는 머신러닝 엔지니어 최하림의 포트폴리오입니다.",
+        "데이터 구축부터 모델 학습·배포·운영까지 수행하고, 모델 성능과 효율을 개선하는 연구와 오픈소스 개발을 이어가는 머신러닝 엔지니어 최하림의 포트폴리오입니다.",
     },
     nav: {
       brand: "최하림",
@@ -611,7 +611,7 @@ export const portfolio = {
       eyebrow: "최하림 · 서울",
       title: "Machine Learning Engineer",
       body:
-        "데이터·모델·운영 흐름을 신뢰할 수 있는 머신러닝 시스템으로 구현합니다.",
+        "데이터 분석과 업무 자동화에서 시작해 모델 개발과 서비스 운영까지 경험을 쌓았습니다. 공공조달 예측 시스템을 데이터 구축부터 학습·배포·운영까지 개발하고, 모델 성능과 효율을 개선하는 연구와 오픈소스 개발도 이어가고 있습니다.",
       links: sharedLinks,
     },
     careerIntro: {
@@ -625,7 +625,7 @@ export const portfolio = {
       {
         company: "세종분석연구원",
         role: "연구원",
-        period: "2026.04–현재",
+        period: "2026.04–2026.08",
         context:
           "공공조달 확률예측·Document AI 시스템 재구축 및 운영",
         categories: ["Tabular ML", "Probabilistic ML", "MLOps", "Document AI"],
@@ -734,7 +734,7 @@ export const portfolio = {
           {
             title: "Uncertainty-Aware Bid ML",
             status: "Production ML / 확률적 의사결정 시스템",
-            period: "2026.04–현재",
+            period: "2026.04–2026.08",
             summary:
               "고객사별 낙찰확률과 불확실성을 함께 제공하는 q1000·Monte Carlo 의사결정 ML입니다.",
             categories: ["Probabilistic ML", "Uncertainty Quantification", "MLOps"],
@@ -748,7 +748,7 @@ export const portfolio = {
           {
             title: "Document AI OCR",
             status: "Production Document AI / batch extraction",
-            period: "2026.04–현재",
+            period: "2026.04–2026.08",
             summary:
               "HWP·HWPX·PDF 공고문을 구조화하고 필드 복사와 금액·비율·단위 검증을 분리한 결정론적 Document AI pipeline입니다.",
             categories: ["Document AI", "OCR", "Batch Processing"],
@@ -914,8 +914,8 @@ export const portfolio = {
           "관측된 성능과 실행 전에 알 수 있는 정보를 분리해 평가하는 연구와 의사결정 시스템입니다.",
         projects: [
           {
-            title: "Vargo",
-            status: "Private research / 신뢰 가능한 Agent 평가",
+            title: "The Pre-Execution Identifiability Bottleneck in Fixed-Pool LLM Agent Configuration Selection",
+            status: "Agent 평가 연구 / NeurIPS 2026 FAST 제출",
             period: "2026–현재",
             summary:
               "Task text, embedding이나 hidden state만으로 실행 전에 최적 LLM Agent 설정을 선택할 수 있는지 검증한 연구입니다.",
@@ -932,9 +932,9 @@ export const portfolio = {
             ],
             bullets: [
               "같은 134개 ALFWorld task를 29개 Agent 설정으로 실행하고, 실행 전 router와 여러 후보를 직접 실행한 뒤 검증하는 방식을 비교했습니다.",
-              "검증된 실행은 최적 성능과의 격차 회수율을 54%에서 85%로 높였고 11개 배포 후보군에서는 100% 회수했습니다. 논문은 TMLR review 중입니다.",
+              "검증된 실행은 최적 성능과의 격차 회수율을 54%에서 85%로 높였고 11개 배포 후보군에서는 100% 회수했습니다. NeurIPS 2026 FAST Workshop에 논문을 제출했습니다.",
             ],
-            metric: "최적 격차 회수 54% → 85% · TMLR review",
+            metric: "성능 격차 회수율 54% → 85% · NeurIPS 2026 FAST 제출",
           },
           {
             title: "EMH Agent",
@@ -1026,7 +1026,7 @@ export const portfolio = {
             image: "/img/wsss-architecture.png",
             imageAlt: "약지도학습 semantic segmentation과 pseudo-label refinement 구조",
             imageCaption: "모델 및 pseudo-label refinement 구조",
-            metric: "WSSS SOTA 연구용역 · mIoU 53.31% · WeCLIP+ 대비 +1.5%p",
+            metric: "WSSS SOTA 연구용역 · mIoU 54.4% · WeCLIP+ 대비 +2.5%p",
           },
           {
             title: "MyShot",

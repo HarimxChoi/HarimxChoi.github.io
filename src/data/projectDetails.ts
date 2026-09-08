@@ -269,7 +269,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "R2CCP", "Conformal prediction", "Entropy regularization", "Monte Carlo simulation"],
     },
     wsss: {
-      claim: "Contract WSSS research · 53.31% COCO-Val mIoU · +1.5 pp over WeCLIP+",
+      claim: "Contract WSSS research · 54.4% COCO-Val mIoU · +2.5 pp over WeCLIP+",
       lead: [
         "A client commissioned a study to improve WeCLIP+, then the state of the art, using only image-level labels. The pseudo-masks used for training accumulated wrong pixels at object boundaries and in the background, and those errors were amplified during self-training. The research question was whether only the unreliable pixels could be identified and repaired instead of rebuilding every mask.",
       ],
@@ -281,13 +281,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Refined WSSS",
-          value: "53.31% mIoU",
+          value: "54.4% mIoU",
           note: "Final semantic-segmentation performance",
         },
         {
           label: "Previous SOTA",
-          value: "+1.5 pp",
-          note: "Compared with WeCLIP+ at 51.8% mIoU",
+          value: "+2.5 pp",
+          note: "Compared with WeCLIP+ at 51.9% mIoU",
         },
       ],
       flow: {
@@ -315,7 +315,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       figures: [
         {
           src: "/img/projects/wsss/wsss-performance.svg",
-          alt: "Bar chart comparing WSSS performance of WeCLIP+ at 51.8 percent mIoU and the refined method at 53.31 percent mIoU on all 40,137 COCO-Val 2014 images",
+          alt: "Bar chart comparing WSSS performance of WeCLIP+ at 51.9 percent mIoU and the refined method at 54.4 percent mIoU on all 40,137 COCO-Val 2014 images",
           caption: "COCO-Val 2014 · all 40,137 validation images · mIoU",
         },
         {
@@ -329,8 +329,8 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           title: "COCO-Val comparison",
           columns: ["Method", "Supervision", "mIoU"],
           rows: [
-            ["WeCLIP+", "Image-level labels", "51.80%"],
-            ["Refined pseudo-label method", "Image-level labels", "53.31%"],
+            ["WeCLIP+", "Image-level labels", "51.9%"],
+            ["Refined pseudo-label method", "Image-level labels", "54.4%"],
           ],
           caption: "Both figures use the full COCO-Val 2014 evaluation set.",
         },
@@ -444,7 +444,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       category: "Reinforcement Learning · Portfolio Decision",
       builtWith: ["Python", "TQC", "Point-in-time data", "Gymnasium", "Stable-Baselines3"],
     },
-    vargo: {
+    "agent-configuration-selection": {
       claim: "Agent routing hits an identification wall · verified execution reaches the deployable ceiling",
       lead: [
         "The best combination of agent scaffold, memory, retry, and verifier changed from task to task. Could task text, embeddings, or hidden states identify that best configuration before any candidate was run? If not, the practical question became how much of the performance gap could be recovered by executing and verifying a limited number of candidates.",
@@ -490,12 +490,12 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       },
       figures: [
         {
-          src: "/img/projects/vargo/vargo-identification-wall.png",
+          src: "/img/projects/agent-configuration-selection/identification-wall.png",
           alt: "Bar chart showing that task-side features, 2026 routing methods, deployment bandits, and activation probes fail to identify the per-task winning agent configuration before execution",
           caption: "Every tested pre-execution signal falls short of reliably identifying the per-task winner",
         },
         {
-          src: "/img/projects/vargo/vargo-verified-execution.png",
+          src: "/img/projects/agent-configuration-selection/verified-execution.png",
           alt: "Capture curve showing the percentage of oracle gap recovered as the verified execution budget increases from 3 to 13 agent configurations",
           caption: "Corrected ALFWorld matrix · anchor-failure subset n=42 · 90% task-bootstrap intervals",
         },
@@ -512,7 +512,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "Built the 134-task × 29-configuration evaluation matrix and separated oracle headroom from what a deployable selector can actually identify.",
-        "Implemented routing baselines, activation probes, contamination controls, and verified-execution capture evaluation; the resulting paper is under review at TMLR.",
+        "Implemented routing baselines, activation probes, contamination controls, and verified-execution capture evaluation; the resulting paper was submitted to the NeurIPS 2026 FAST Workshop.",
       ],
       category: "Agent Evaluation · Decision Science",
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],
@@ -1027,7 +1027,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       builtWith: ["Python", "R2CCP", "Conformal Prediction", "Entropy Regularization", "Monte Carlo Simulation"],
     },
     wsss: {
-      claim: "WSSS SOTA 연구용역 · COCO-Val mIoU 53.31% · WeCLIP+ 대비 +1.5%p",
+      claim: "WSSS SOTA 연구용역 · COCO-Val mIoU 54.4% · WeCLIP+ 대비 +2.5%p",
       lead: [
         "클라이언트로부터 이미지 단위 정답만 사용해 당시 SOTA였던 WeCLIP+의 성능을 개선하는 연구용역을 의뢰받았습니다. 자동으로 만든 pseudo-mask에는 객체 경계와 배경의 잘못된 pixel이 포함됐고, 이 오류는 self-training을 반복할수록 누적됐습니다. 전체 mask를 다시 만드는 대신 신뢰하기 어려운 pixel만 찾아 복원할 수 있는지가 핵심 연구 질문이었습니다.",
       ],
@@ -1039,13 +1039,13 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
         },
         {
           label: "Refined WSSS",
-          value: "53.31% mIoU",
+          value: "54.4% mIoU",
           note: "최종 semantic segmentation 성능",
         },
         {
           label: "기존 SOTA 대비",
-          value: "+1.5%p",
-          note: "WeCLIP+ 51.8% mIoU 기준",
+          value: "+2.5%p",
+          note: "WeCLIP+ 51.9% mIoU 기준",
         },
       ],
       flow: {
@@ -1073,7 +1073,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       figures: [
         {
           src: "/img/projects/wsss/wsss-performance.svg",
-          alt: "COCO-Val 2014 전체 40,137개 이미지에서 WeCLIP+ 51.8% mIoU와 refined method 53.31% mIoU를 비교한 막대그래프",
+          alt: "COCO-Val 2014 전체 40,137개 이미지에서 WeCLIP+ 51.9% mIoU와 refined method 54.4% mIoU를 비교한 막대그래프",
           caption: "COCO-Val 2014 · validation image 40,137개 전체 · mIoU",
         },
         {
@@ -1087,8 +1087,8 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
           title: "COCO-Val 성능 비교",
           columns: ["Method", "Supervision", "mIoU"],
           rows: [
-            ["WeCLIP+", "Image-level labels", "51.80%"],
-            ["Refined pseudo-label method", "Image-level labels", "53.31%"],
+            ["WeCLIP+", "Image-level labels", "51.9%"],
+            ["Refined pseudo-label method", "Image-level labels", "54.4%"],
           ],
           caption: "두 결과 모두 COCO-Val 2014 전체 평가셋을 사용했습니다.",
         },
@@ -1202,7 +1202,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       category: "Reinforcement Learning · Portfolio Decision",
       builtWith: ["Python", "TQC", "Point-in-time data", "Gymnasium", "Stable-Baselines3"],
     },
-    vargo: {
+    "agent-configuration-selection": {
       claim: "Agent routing의 identification wall · 실행·검증으로 deployable ceiling 도달",
       lead: [
         "Agent의 scaffold, memory, retry와 verifier 조합은 task마다 최적값이 달랐습니다. 그렇다면 task text, embedding이나 hidden state만 보고 실행 전에 가장 좋은 구성을 선택할 수 있을까? 그것이 어렵다면 제한된 후보를 직접 실행하고 검증하는 방식이 최적 성능과의 차이를 얼마나 회복할 수 있는지가 핵심 연구 질문이었습니다.",
@@ -1248,12 +1248,12 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       },
       figures: [
         {
-          src: "/img/projects/vargo/vargo-identification-wall.png",
+          src: "/img/projects/agent-configuration-selection/identification-wall.png",
           alt: "Task-side feature, 2026 routing method, deployment bandit와 activation probe가 실행 전에 과제별 최적 Agent 구성을 식별하지 못한 결과를 보여주는 그래프",
           caption: "비교한 모든 pre-execution signal이 과제별 승자를 안정적으로 식별하지 못했습니다",
         },
         {
-          src: "/img/projects/vargo/vargo-verified-execution.png",
+          src: "/img/projects/agent-configuration-selection/verified-execution.png",
           alt: "검증하며 실행하는 Agent 구성 수를 3개에서 13개까지 늘릴 때 회수한 oracle gap 비율을 보여주는 곡선",
           caption: "Corrected ALFWorld matrix · anchor 실패 subset n=42 · 90% task-bootstrap interval",
         },
@@ -1270,7 +1270,7 @@ const details: Record<ProjectLanguage, Record<string, ProjectDetail>> = {
       ],
       contribution: [
         "134개 과제 × 29개 구성의 평가 matrix를 만들고, 사후에 알 수 있는 oracle headroom과 실제 selector가 식별할 수 있는 성능을 분리했습니다.",
-        "Routing baseline, activation probe, contamination control과 verified-execution capture 평가를 구현했으며, 이 결과를 바탕으로 작성한 논문은 TMLR review 중입니다.",
+        "Routing baseline, activation probe, contamination control과 verified-execution capture 평가를 구현했으며, 이 결과를 바탕으로 작성한 논문을 NeurIPS 2026 FAST Workshop에 제출했습니다.",
       ],
       category: "Agent Evaluation · Decision Science",
       builtWith: ["Python", "ALFWorld", "Agent routing", "Verifier cascade", "Reproducible evaluation"],

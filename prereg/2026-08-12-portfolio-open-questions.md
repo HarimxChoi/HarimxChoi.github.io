@@ -14,7 +14,7 @@ A bilingual career narrative, four roles, and nine representative systems should
 ## Still open
 
 - Add a new LangGraph Travel Agent capture after rerunning one internally consistent itinerary.
-- Add Vargo figures only after anonymous review no longer creates a disclosure risk.
+- Add agent-configuration-selection figures only after anonymous review no longer creates a disclosure risk.
 - Add MyShot overlays only after the image redistribution rights are confirmed.
 - Replace synthetic Bau Browser imagery when a publishable real-session capture exists.
 - Test alternate project ordering for CV-focused and agent-focused visitors.

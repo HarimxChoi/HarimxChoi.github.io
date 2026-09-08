@@ -9,7 +9,7 @@ const projectOrder = [
   ["google-surf-mcp", "google-surf-mcp"],
   ["Monogram", "monogram"],
   ["Bau Browser", "bau-browser"],
-  ["Vargo", "vargo"],
+  ["The Pre-Execution Identifiability Bottleneck in Fixed-Pool LLM Agent Configuration Selection", "agent-configuration-selection"],
   ["EMH Agent", "emh-agent"],
   ["MyShot", "myshot"],
   ["EAT", "eat"],

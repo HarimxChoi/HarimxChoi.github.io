@@ -233,13 +233,13 @@ The default is raw-artifact-first regeneration, not image hunting. Prefer CSV, J
 - Visual B: external API sequence and approval-gated messaging flow.
 - Visual C: itinerary, CRM, SMS, or checkpointed run output.
 
-#### Vargo
+#### Agent Configuration Selection
 
 - Story: show why the best agent configuration cannot reliably be identified before execution and how verification changes the decision path.
 - Visual A: the attached wall-floor identification graph.
 - Visual B: oracle gap / verifier-cascade main paper figure.
 - Visual C: experiment matrix or sealed evaluation design.
-- Evidence search: Vargo paper figures, artifact bundle, result tables, and experiment manifests.
+- Evidence search: agent-configuration-selection paper figures, artifact bundle, result tables, and experiment manifests.
 
 #### Construction Cost Agent at Hanmac
 
