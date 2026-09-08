@@ -64,13 +64,31 @@ const cardVisuals: Record<string, { src: string; alt: { en: string; ko: string }
   },
 };
 
-function estimateReadingTime(project: any) {
-  const text = [project.summary, ...project.bullets, JSON.stringify(project.detail ?? {})].join(" ");
-  const isKorean = /[가-힣]/.test(text);
-  const units = isKorean ? text.replace(/\s/g, "").length / 450 : text.trim().split(/\s+/).length / 200;
-  const minutes = Math.max(1, Math.ceil(units));
+// WarpQuant has a separate article template; these estimates use its rendered body.
+export const warpQuantReadingTime = { en: "~7 min", ko: "약 8분" };
 
-  return isKorean ? `${minutes}분` : `${minutes} min`;
+function estimateReadingTime(project: any, lang: "en" | "ko") {
+  if (project.slug === "warpquant") return warpQuantReadingTime[lang];
+
+  const detail = project.detail;
+  const parts = detail ? [
+    project.title, detail.claim, detail.category, "Built with", ...detail.builtWith,
+    "WHY", ...detail.lead,
+    ...(detail.metricCards ?? []).flatMap((item: any) => [item.label, item.value, item.note]),
+    ...(detail.figures ?? []).map((item: any) => item.caption),
+    ...(detail.flow ? ["HOW", detail.flow.title, detail.flow.intro,
+      ...detail.flow.steps.flatMap((step: any, index: number) => [index + 1, step.label, step.description])] : []),
+    "RESULT", ...(detail.resultTables ?? []).flatMap((table: any) =>
+      [table.title, ...table.columns, ...table.rows.flat(), table.caption]),
+    lang === "ko" ? "기여" : "Contribution", ...(detail.contribution ?? []),
+  ] : [project.title, project.summary, project.status, project.metric,
+    project.imageCaption, ...project.bullets, ...project.categories, ...project.tools];
+  const text = parts.filter((part) => part != null).join(" ");
+  const koreanCharacters = (text.match(/[가-힣ㄱ-ㅎㅏ-ㅣ]/g) ?? []).length;
+  const words = (text.match(/[A-Za-z0-9]+(?:[.+'’-][A-Za-z0-9]+)*/g) ?? []).length;
+  const minutes = Math.max(1, Math.ceil(koreanCharacters / 450 + words / 200));
+
+  return lang === "ko" ? `약 ${minutes}분` : `~${minutes} min`;
 }
 
 export function getProjects(content: any) {
@@ -107,7 +125,7 @@ export function getProjects(content: any) {
 
         return {
           ...enrichedProject,
-          readingTime: estimateReadingTime(enrichedProject),
+          readingTime: estimateReadingTime(enrichedProject, lang),
         };
       }),
     )

@@ -1,5 +1,6 @@
 ---
 import BlogHeader from "./BlogHeader.astro";
+import { warpQuantReadingTime } from "../lib/projects";
 
 interface Props {
   lang: "en" | "ko";
@@ -87,7 +88,7 @@ def output_fisher_score(W, W_base, X, H_G, index_bits=32):
     <header class="wq-header">
       <div class="wq-meta">
         <span>2026.08.16</span>
-        <span>{ko ? "14분" : "14 min"}</span>
+        <span>{warpQuantReadingTime[lang]}</span>
         <span class="report-label">Technical Report</span>
       </div>
       <h1>{ko ? "WarpQuant: 하다마르 회전과 Output-Fisher 기반의 듀얼 도메인 LLM 양자화" : "WarpQuant: Dual-Domain LLM Quantization via Hadamard Rotation and Output-Fisher Sensitivity"}</h1>
