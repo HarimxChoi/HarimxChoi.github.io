@@ -30,8 +30,8 @@ const cardVisuals: Record<string, { src: string; alt: { en: string; ko: string }
   "google-surf-mcp": {
     src: "/img/projects/google-surf-mcp/google-surf-card.svg",
     alt: {
-      en: "One MCP connecting search, web extraction, academic PDF parsing, and recovery",
-      ko: "검색, 웹 본문, 학술 PDF parsing과 복구를 하나로 연결한 MCP",
+      en: "MCP search flow from web, papers, and code to an automatic knowledge graph and hybrid retrieval",
+      ko: "웹·논문·코드 검색에서 지식 그래프 자동 구축과 하이브리드 검색으로 이어지는 MCP",
     },
   },
   monogram: {

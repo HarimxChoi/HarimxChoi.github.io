@@ -60,84 +60,69 @@ def generate_architecture(repo: Path, output: Path) -> None:
     package = json.loads((repo / "package.json").read_text(encoding="utf-8"))
     source = (repo / "src" / "index.ts").read_text(encoding="utf-8")
     tools = re.findall(r"server\.registerTool\('([^']+)'", source)
-    expected = ["search", "scholar_search", "search_parallel", "extract", "search_extract", "health"]
+    expected = ["search", "scholar_search", "search_parallel", "extract", "project_memory_search", "project_memory", "health"]
     if tools != expected:
         raise ValueError(f"Unexpected MCP tool surface: {tools}")
-    for name in ["agent.ts", "pool.ts", "extract.ts", "extract-pdf.ts", "searchApi.ts", "strategyHealing.ts", "telemetry.ts"]:
-        if not (repo / "src" / name).is_file():
-            raise FileNotFoundError(name)
-
     parts = svg_open(
         1440,
-        1040,
+        1120,
         "Google Surf MCP architecture",
-        "Six MCP tools route through browser or SearchApi providers, guarded extraction, parser recovery, cache, telemetry, and health controls.",
+        "Seven MCP tools connect web, paper and code search to automatic local storage, ontology, lineage, and hybrid graph retrieval.",
     )
     parts += [
-        line_text(60, 62, "Google Surf MCP · search that survives real web failure modes", "title ink"),
-        line_text(60, 94, f"v{package['version']} · browser-first, API-routable, extraction-aware", "subtitle muted"),
-        box(60, 125, 1320, 125),
-        line_text(88, 161, "MCP tool surface", "head ink"),
+        line_text(60, 62, "Search results become reusable knowledge", "title ink"),
+        line_text(60, 94, f"google-surf-mcp v{package['version']} · automatic knowledge graph + hybrid retrieval", "subtitle muted"),
+        box(60, 125, 1320, 190),
+        line_text(88, 161, "Seven MCP tools · research memory enabled by default", "head ink"),
     ]
-    widths = [132, 188, 200, 125, 180, 110]
-    cursor = 88
-    for name, width in zip(tools, widths):
-        parts += chip(cursor, 184, width, name)
-        cursor += width + 18
+    for row, names, widths in [(184, tools[:4], [132, 200, 220, 132]),
+                               (245, tools[4:], [270, 220, 132])]:
+        cursor = 88
+        for name, width in zip(names, widths):
+            parts += chip(cursor, row, width, name)
+            cursor += width + 18
 
     parts += [
-        box(60, 310, 360, 275),
-        line_text(88, 353, "Routing + orchestration", "head ink"),
-        *bullet_lines(88, 397, [
-            "browser · searchapi · fallback",
-            "single request or 2–10 query fan-out",
-            "per-query fallback keeps successful rows",
-            "structured, retryable error contracts",
+        box(60, 370, 400, 255),
+        line_text(88, 413, "SEARCH + EXTRACT", "head ink"),
+        *bullet_lines(88, 457, [
+            "Web + papers + codebases",
+            "HTML and PDF body extraction",
+            "Tree-sitter symbols, imports, calls",
+            "Browser / API + recovery",
         ]),
-        box(470, 310, 440, 275, "soft"),
-        line_text(498, 353, "Browser provider", "head ink"),
-        *bullet_lines(498, 397, [
-            "persistent Playwright profile",
-            "sequential context + parallel worker pool",
-            "Google Search + Scholar parsers",
-            "normal → stealth → human CAPTCHA recovery",
+        box(510, 370, 400, 255, "soft"),
+        line_text(538, 413, "AUTOMATIC CAPTURE", "head ink"),
+        *bullet_lines(538, 457, [
+            "Embedded SurrealDB / RocksDB",
+            "One broker, multiple MCP sessions",
+            "Project-scoped source records",
+            "Documents, chunks, code index",
         ]),
-        box(960, 310, 420, 275, "soft2"),
-        line_text(988, 353, "SearchApi provider", "head ink"),
-        *bullet_lines(988, 397, [
-            "Google Search + Scholar engines",
-            "primary route or browser fallback",
-            "cloud-compatible execution path",
-            "fallback reason preserved in metadata",
+        box(960, 370, 420, 255, "soft2"),
+        line_text(988, 413, "ONTOLOGY + LINEAGE", "head ink"),
+        *bullet_lines(988, 457, [
+            "Versioned entity and relation types",
+            "Source → evidence → assertion",
+            "Verified cross-project identity links",
+            "Host-supplied plans and decisions",
         ]),
-        box(60, 650, 360, 245),
-        line_text(88, 693, "Operating controls", "head ink"),
-        *bullet_lines(88, 737, [
-            "rate limiter + unified TTL cache",
-            "parser drift detection + strategy healing",
-            "telemetry events + health snapshot",
-            "pool reset and dead-worker recovery",
-        ]),
-        box(470, 650, 910, 245, "surface"),
-        line_text(498, 693, "HTML + academic PDF extraction", "head ink"),
-        f'<rect class="risk-soft" x="498" y="720" width="854" height="48" rx="12"/>',
-        line_text(522, 751, "SSRF boundary: URL · DNS · every redirect · Playwright navigation", "body risk"),
-        *bullet_lines(498, 804, [
-            "HTML: metadata → Mozilla Readability → clean Markdown",
-            "PDF: content type + magic bytes + citation/domain discovery → LiteParse",
-            "metadata / abstract / full modes · untrusted content fenced",
-        ], 31),
-        box(60, 940, 1320, 68, "soft"),
-        line_text(88, 982, "Output", "head ink"),
-        line_text(188, 982, "content + provider + cache + parser strategy + quality + bounded error", "body ink"),
-        arrow("M240 250 V310"),
-        arrow("M420 438 H470"),
-        arrow("M420 390 C470 275 1170 275 1170 310"),
-        arrow("M690 585 V650"),
-        arrow("M1170 585 V620 C1170 620 900 620 900 650"),
-        arrow("M925 895 V940"),
-        arrow("M240 585 V650", True),
-        arrow("M240 895 V940", True),
+        box(60, 700, 1320, 235),
+        line_text(88, 743, "LIVE + MEMORY RETRIEVAL", "head ink"),
+        line_text(88, 786, "Fresh web · exact identifiers · BM25 keywords · vector similarity · code and graph links", "body ink"),
+        line_text(88, 827, "Personalized PageRank expands related evidence in the project graph", "body muted"),
+        f'<rect class="soft" x="88" y="857" width="1264" height="48" rx="12"/>',
+        line_text(720, 888, "Reciprocal Rank Fusion → shared reranker → evidence with provenance", "body ink", "middle"),
+        box(60, 1010, 1320, 68, "soft2"),
+        line_text(88, 1052, "REUSE", "head ink"),
+        line_text(210, 1052, "Agent context · interactive PKM / Lineage / Ontology views · HTML / Neo4j export", "body ink"),
+        arrow("M260 315 V370"),
+        arrow("M460 495 H510"),
+        arrow("M910 495 H960"),
+        arrow("M710 625 V700"),
+        arrow("M1170 625 V700"),
+        arrow("M260 625 V700", True),
+        arrow("M720 935 V1010"),
     ]
     parts.append("</svg>")
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -225,11 +210,12 @@ def generate_validation(repo: Path, report: Path, output: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, required=True)
-    parser.add_argument("--test-report", type=Path, required=True)
+    parser.add_argument("--test-report", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
     generate_architecture(args.repo, args.output_dir / "google-surf-architecture.svg")
-    generate_validation(args.repo, args.test_report, args.output_dir / "google-surf-validation.svg")
+    if args.test_report:
+        generate_validation(args.repo, args.test_report, args.output_dir / "google-surf-validation.svg")
 
 
 if __name__ == "__main__":
