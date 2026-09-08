@@ -28,12 +28,6 @@ export const portfolio = {
         { title: "State-of-the-art ultra-low-bit LLM quantization", detail: "CUDA kernel optimization · 7.36× decoding speed", href: "/projects/warpquant/" },
         { title: "MCP search server with automatic knowledge graph construction", detail: "Top 1% on MCP TOPLIST", href: "/projects/google-surf-mcp/" },
       ],
-      competencies: [
-        ["Predictive Modeling & Decision Systems","Built predictive models with tabular foundation models and decision models with reinforcement learning. Used uncertainty quantification, behavioral modeling, and simulation to compare outcomes and risks and support real-world decisions."],
-        ["Agent & Search Systems","Built agents that connect external tools through LangGraph and MCP. Implemented systems that automatically capture search and extraction results in knowledge graphs and reuse them through hybrid retrieval and RAG."],
-        ["Model Training & Inference Optimization","Improved loss functions and training methods for weak supervision and uncertainty calibration. Implemented ultra-low-bit quantization and C++/CUDA kernels to improve model accuracy and inference efficiency."],
-        ["Data Pipelines & Production Operations","Managed data collection and preparation through model training, deployment, and operations. Connected Airflow batch pipelines with FastAPI services to deliver predictions for operational use."],
-      ],
       links: sharedLinks,
     },
     careerIntro: {
@@ -627,12 +621,6 @@ export const portfolio = {
         { title: "약지도 시맨틱 세그멘테이션 SOTA 달성", detail: "COCO-Val mIoU 53.31%", href: "/ko/projects/wsss/" },
         { title: "극저비트 LLM 양자화 SOTA 달성", detail: "CUDA 커널 최적화 · 디코딩 처리속도 7.36×", href: "/ko/projects/warpquant/" },
         { title: "검색 결과를 지식 그래프로 축적하는 MCP 서버 개발", detail: "MCP TOPLIST 상위 1%", href: "/ko/projects/google-surf-mcp/" },
-      ],
-      competencies: [
-        ["예측 모델링 및 의사결정 시스템","Tabular Foundation Model로 예측 모델을, 강화학습으로 의사결정 모델을 개발했습니다. 불확실성 정량화와 행동 모델링·시뮬레이션으로 선택에 따른 결과와 위험을 비교했습니다."],
-        ["Agent 및 검색 시스템 개발","LangGraph·MCP로 외부 도구를 연결하는 Agent를 개발했습니다. 검색·추출 결과를 지식 그래프로 축적하고, 하이브리드 검색과 RAG로 재사용하는 시스템을 구현했습니다."],
-        ["모델 학습 및 추론 최적화","약지도학습과 불확실성 보정에서 손실함수·학습 방법을 개선했습니다. 극저비트 양자화와 C++/CUDA 커널을 구현해 모델 정확도와 추론 효율을 높였습니다."],
-        ["데이터 구축 및 서비스 운영","데이터 수집·정제부터 모델 학습·배포·운영까지 담당했습니다. Airflow 배치와 FastAPI 서비스를 연결해 예측 결과를 실제 업무에 제공했습니다."],
       ],
       links: sharedLinks,
     },

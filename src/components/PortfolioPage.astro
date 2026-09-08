@@ -41,14 +41,6 @@ const welcome = "WELCOME TO HARIM'S PAGE.";
             ))}
           </ul>
         </div>
-        <div class="competencies" aria-labelledby="competencies-title">
-          <h2 id="competencies-title">{lang === "ko" ? "핵심 역량" : "Core Strengths"}</h2>
-          <dl>
-            {content.hero.competencies.map(([title, description]: [string, string]) => (
-              <div><dt>{title}</dt><dd>{description}</dd></div>
-            ))}
-          </dl>
-        </div>
       </section>
 
       <section id="projects" class="section projects-section">
@@ -68,11 +60,6 @@ const welcome = "WELCOME TO HARIM'S PAGE.";
 </main>
 
 <style>
-  .competencies { margin-top: 32px; }
-  .competencies h2 { margin: 0 0 16px; font-size: 0.85rem; color: var(--muted); }
-  .competencies dl { display: grid; gap: 18px; margin: 0; }
-  .competencies dt { font-size: 1rem; font-weight: 600; }
-  .competencies dd { margin: 5px 0 0; font-size: 0.9rem; line-height: 1.7; color: var(--muted); word-break: keep-all; }
   .highlights { margin-top: 28px; }
   .highlights h2 { margin: 0 0 16px; font-size: 0.85rem; color: var(--muted); }
   .highlights ul { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
